@@ -1,0 +1,220 @@
+<!doctype html>
+<!--
+ The Oximouse website is licensed under the CC BY 4.0 license: https://creativecommons.org/licenses/by/4.0/
+ @author Devin Schweppe <devin_schweppe@hms.harvard.edu>
+-->
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="icon" href="img/oximouse-02.png">
+	
+	    <title>Oximouse Dashboard</title>
+	
+	    <!-- Oximouse CSS -->
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/oximouse.css" rel="stylesheet">
+	
+	    <!-- Custom styles for this template -->
+	    <link href="css/dashboard.css" rel="stylesheet">
+	    <link href="css/jquery-eu-cookie-law-popup.css" rel="stylesheet">
+	</head>
+
+	<body class="eupopup eupopup-top">
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<div id = "brandSidebar" class = "col-lg-2 col-md-3 col-sm-4 mr-0">
+				<a class="navbar-brand" href="index.html">
+					<img border="0" src="img/oximouse.png" width="100" height="30">
+				</a>
+				<button class="btn btn-outline-secondary" type="button" id = "sidebarToggle">
+					<span data-feather="align-left"></span>
+				</button>
+			</div>
+			<h2>Select Help Options Below</h2>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebarDiv"></div>
+			</div>
+		</div>
+		<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4"  id = "dashboardBody">
+			<div id = "helpAccordion">
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "bgHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#bgCard" aria-expanded = "false" aria-controls = "bgCard">
+								<span data-feather="plus-circle"></span>
+								Background
+							</button>
+						</h2>
+					</div>
+					<div id = "bgCard" class="collapse show" aria-labelledby="bgHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<p>
+								Mammalian tissues engage in specialized physiology that is regulated by post-translational protein modification.  A major mode of protein regulation is initiated by reactive oxygen species (ROS) that reversibly modify protein cysteine residues.  ROS regulate a myriad of biological processes and ROS dysregulation has long been implicated in driving age-related dysfunction.  However, the protein targets of ROS modification that drive tissue-specific function in vivo are largely unknown.  Here we develop a mass spectrometric technology for the first comprehensive and quantitative mapping of the mouse cysteine redox proteome in vivo.  We report the cysteine redox landscape across 10 tissues in young and old mice and establish several unexpected and fundamental paradigms of redox signaling. We define and validate cysteine redox networks within each tissue that are highly tissue-selective and underlie tissue-specific biology. We determine a common mechanism for encoding cysteine redox sensitivity by local electrostatic gating. Finally, we comprehensively identify redox-modified disease networks that remodel in aged mice, providing a systemic molecular basis for the longstanding proposed links between redox dysregulation and tissue aging. We provide the Oximouse compendium as a framework for understanding mechanisms of redox regulation in physiology and aging.							</p>
+							<p>
+								The OxiMouse web application was developed by Devin Schweppe (Gygi Lab, HMS) and Haopeng Xiao (Chouchani Lab, DFCI/HMS).
+							</p>
+							<p>
+								Please Cite: <b>Haopeng Xiao, et al.</b>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "sitesHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#sitesCard" aria-expanded = "false" aria-controls = "sitesCard">
+								<span data-feather="plus-circle"></span>
+								Oxidation Sites
+							</button>
+						</h2>
+					</div>
+					<div id = "sitesCard" class="collapse" aria-labelledby="sitesHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Cysteine Oxidation</b></h4>
+							<p>
+								<h4><b>Searching</b></h4>
+								To search for an oxidation sites on a protein of interest, enter a gene symbol or <a href="https://www.uniprot.org/">Uniprot accession</a> number into the search bar at the top of the <a href="index.html">Home</a> or <a href="sites.html">Sites</a> pages.
+							</p>
+							<image style = "max-width: 800px" src="img/searchBar.png"></image>
+							<p>
+								<h4><b>Protein Information</b></h4>
+								Protein information can be found on the left side of the screen for the current protein.
+							</p>
+							<image style = "max-height: 400px" src="img/proteinInformation.png"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "siteQuantHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#siteQuantCard" aria-expanded = "false" aria-controls = "siteQuantCard">
+								<span data-feather="plus-circle"></span>
+								Quantitation and Stoichiometry
+							</button>
+						</h2>
+					</div>
+					<div id = "siteQuantCard" class="collapse" aria-labelledby="siteQuantHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>OxiMouse Quantitation and Oxidation Stoichiometry</b></h4>
+							<p>
+								<h4><b>Site Stoichiometry</b></h4>
+								Explore site occupancy at the whole protein map level using either the heatmap or the sequence map on the <a target="_blank" href="sites.html">Sites</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/sitesPage.gif"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "networkHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#networkCard" aria-expanded = "false" aria-controls = "networkCard">
+								<span data-feather="plus-circle"></span>
+								Network Analysis
+							</button>
+						</h2>
+					</div>
+					<div id = "networkCard" class="collapse" aria-labelledby="networkHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Network Analysis Information</b></h4>
+							The <a target="_blank" href="communities.html">Communities</a> heatmap depicts the percentage of highly oxidized (>20%) proteins in each community. Clicking on an individual community will populate the graph display for further exploration of the queried BioPlex community colored by oxidation % values (red: greater than 20%; orange: 10-20%; skyblue: less than 10%; gray: NQ).
+							<p>
+								<h4><b>Protein Interactions and Cys-Oxidation</b></h4>
+								Explore the interplay between cys-oxidation and protein-protein interactions on the <a target="_blank" href="communities.html">Communities</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/communitiesPage.gif"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadCard" aria-expanded = "false" aria-controls = "downloadCard">
+								<span data-feather="plus-circle"></span>
+								Downloading OxiMouse Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadCard" class="collapse" aria-labelledby="downloadHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Downloads</b></h4>
+							<p>
+								Protein/sites of interest can be downloaded. The file includes oxidation% ± SE in each young and old tissue, along with peptide sequence information and protein annotations.
+							</p>
+							<p>
+								<h4><b>Sites and Communities</b></h4>
+								Download all underlying data on the <a target="_blank" href="download.html">Download</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/download.png"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "acknowledgementsHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#acknowledgementsCard" aria-expanded = "false" aria-controls = "acknowledgementsCard">
+								<span data-feather="plus-circle"></span>
+								Acknowledgements & Licenses
+							</button>
+						</h2>
+					</div>
+					<div id = "acknowledgementsCard" class="collapse" aria-labelledby="acknowledgementsHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<div class="container-fluid" id="copyright">
+								<h4><b>Acknowledgements</b></h4>
+								The OxiMouse website uses the following tools/frameworks/libraries:
+								<ul>
+									<li><a href="https://feathericons.com/">Feather: Icons</a></li>
+									<li><a href="http://js.cytoscape.org/">Cytoscape.js: Graph plotting</a></li>
+									<li><a href="https://plot.ly/javascript/">Plotly.js: General plotting</a></li>
+									<li><a href="https://github.com/calipho-sib/feature-viewer">nextProt Feature Viewer: Protein Sequence Map</a></li>
+								</ul>
+								<h4><b>Copyright and License Information</b></h4>
+								The OxiMouse website was developed and is licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+								<br /><br />
+								Images presented and generated on the OxiMouse website are licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "cookieHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#cookieCard" aria-expanded = "false" aria-controls = "cookieCard">
+								<span data-feather="plus-circle"></span>
+								OxiMouse Cookies
+							</button>
+						</h2>
+					</div>
+					<div id = "cookieCard" class="collapse" aria-labelledby="cookieHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Cookies</b></h4>
+							<p>
+								OxiMouse uses cookies for site improvement, and security. These cookies contain no information intended to track or identify users, but de-identifed data may be used to collect demographic information (e.g. for grant writing purposes).
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/oximouse_analytics.js"></script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse_general.js"></script>
+		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script>
+			feather.replace()
+	    </script>
+	</body>
+</html>

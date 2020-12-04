@@ -1,0 +1,137 @@
+<!doctype html>
+<!--
+ The Oximouse website is licensed under the CC BY 4.0 license: https://creativecommons.org/licenses/by/4.0/
+ @author Devin Schweppe <devin_schweppe@hms.harvard.edu>
+-->
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="icon" href="../img/oximouse-02.png">
+	
+	    <title>Oximouse Dashboard</title>
+	
+	    <!-- Oximouse CSS -->
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/pviz-core.css" rel="stylesheet">
+	    <link href="css/oximouse.css" rel="stylesheet">
+	
+	    <!-- Custom styles for this template -->
+	    <link href="css/dashboard.css" rel="stylesheet">
+	    <link href="css/jquery-eu-cookie-law-popup.css" rel="stylesheet">
+	</head>
+
+	<body class="eupopup eupopup-top">
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<div id = "brandSidebar" class = "col-lg-2 col-md-3 col-sm-4 mr-0">
+				<a class="navbar-brand" href="index.html">
+					<img border="0" src="img/oximouse.png" width="100" height="30">
+				</a>
+				<button class="btn btn-outline-secondary" type="button" id = "sidebarToggle" onClick="">
+					<span data-feather="align-left"></span>
+				</button>
+			</div>
+			<h2>Download OxiMouse Data</h2>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebarDiv"></div>
+			</div>
+		</div>
+		<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4"  id = "dashboardBody">
+			<div id = "downloadAccordion">
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadSiteHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSiteCard" aria-expanded = "false" aria-controls = "downloadSiteCard">
+								<span data-feather="plus-circle"></span>
+								Download OxiMouse Website Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadSiteCard" class="collapse" aria-labelledby="downloadSiteHeader" data-parent="#downloadAccordion">
+						<div class = "container-fluid">
+							<h5>Download site stochiometry data for all proteins.</h5>
+							<form id = "downloadSites" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>All Sites (.tsv)</button>
+							</form>
+							<h5>Download formatted site stochiometry information for OLD mouse proteins.</h5>
+							<form id = "downloadOldSites" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadOldSitesButton" type="submit"><span data-feather="download"></span>Old Sites (.xlsx)</button>
+							</form>
+							<h5>Download formatted site stochiometry information for YOUNG mouse proteins.</h5>
+							<form id = "downloadYoungSites" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadYoungSitesButton" type="submit"><span data-feather="download"></span>Young Sites (.xlsx)</button>
+							</form>
+							<h5>Download community enrichment percentages for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
+							<form id = "downloadCommunities" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Enriched Communities (.tsv)</button>
+							</form>
+							<h5>Download % oxidation overlaid on community proteins within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
+							<form id = "downloadCommunityOverlay" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunityOverlayButton" type="submit"><span data-feather="download"></span>Overlaid Communities (.tsv)</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadSuppHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSuppCard" aria-expanded = "false" aria-controls = "downloadSuppCard">
+								<span data-feather="plus-circle"></span>
+								Download OxiMouse Supplementary Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadSuppCard" class="collapse" aria-labelledby="downloadSuppHeader" data-parent="#downloadAccordion">
+						<div class = "container-fluid">
+							<h5>Download disease adjusted data for YOUNG mice.</h5>
+							<form id = "downloadDiseaseYoung" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseYoungButton" type="submit"><span data-feather="download"></span>Disease Adjusted Young (.xlsx)</button>
+							</form>
+							<h5>Download disease adjusted data for OLD mice.</h5>
+							<form id = "downloadDiseaseOld" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseOldButton" type="submit"><span data-feather="download"></span>Disease Adjusted Old (.xlsx)</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadSpecificHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSpecificCard" aria-expanded = "false" aria-controls = "downloadSpecificCard">
+								<span data-feather="plus-circle"></span>
+								Download Individual Protein Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadSpecificCard" class="collapse" aria-labelledby="downloadSpecificHeader" data-parent="#downloadAccordion">
+						<div class = "card-body">
+							To download site data (including error) for each protein, open the Site table at the bottom of the <a href="sites.html" target="_blank">Sites</a> page. Choose from one of the download options (copy, csv, excel, or pdf) and click the corresponding button.
+							<image style = "max-height: 400px" src="img/sitesTable.png"></image>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/oximouse_analytics.js"></script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse_download.js"></script>
+	    <script src="js/oximouse_general.js"></script>
+		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script>
+			feather.replace();
+	    </script>
+	</body>
+</html>
