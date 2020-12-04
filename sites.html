@@ -1,0 +1,403 @@
+<!doctype html>
+<!--
+ The Oximouse website is licensed under the CC BY 4.0 license: https://creativecommons.org/licenses/by/4.0/
+ @author Devin Schweppe <devin_schweppe@hms.harvard.edu>
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Oximouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Grady Clopton">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="assets/css/oximouse.css" type="text/css">
+</head>
+
+<body>
+<!--<div id="cookieDiv" class="alert alert-default alert-dismissible fade show sticky-top eupopup eupopup-top text-center text-light" role="alert">-->
+<!--    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--        <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--</div>-->
+
+<!--Navigation Drawer ########################################################################-->
+
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+        <!-- Brand -->
+        <div class="sidenav-header  d-flex  align-items-center">
+            <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+                <img src="assets/img/brand/oximouse.png" class="navbar-brand-img" alt="...">
+            </a>
+            <div class=" ml-auto ">
+                <!-- Sidenav toggler -->
+                <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+                    <div class="sidenav-toggler-inner">
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-inner">
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Nav items -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-link-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sites.html">
+                            <i class="fas fa-dna"></i>
+                            <span class="nav-link-text">Sites</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="communities.html">
+                            <i class="fas fa-users"></i>
+                            <span class="nav-link-text">Communities</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="download.html">
+                            <i class="fas fa-download"></i>
+                            <span class="nav-link-text">Download</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">
+                            <i class="fas fa-question"></i>
+                            <span class="nav-link-text">Help</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button"
+                           aria-expanded="true" aria-controls="navbar-dashboards">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span class="nav-link-text">External</span>
+                        </a>
+                        <div class="collapse show" id="navbar-dashboards">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="https://pubmed.ncbi.nlm.nih.gov/" class="nav-link">
+                                        <span class="sidenav-mini-icon"> PMD </span>
+                                        <span class="sidenav-normal"> PubMed </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://www.uniprot.org/" class="nav-link">
+                                        <span class="sidenav-mini-icon"> UN </span>
+                                        <span class="sidenav-normal"> Uniprot </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="http://www.rcsb.org/" class="nav-link">
+                                        <span class="sidenav-mini-icon"> PD </span>
+                                        <span class="sidenav-normal"> Protein Databank </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://phosphomouse.hms.harvard.edu/index.php" class="nav-link">
+                                        <span class="sidenav-mini-icon"> PM </span>
+                                        <span class="sidenav-normal"> PhosphoMouse </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://www.phosphosite.org/homeAction.action" class="nav-link">
+                                        <span class="sidenav-mini-icon"> PS </span>
+                                        <span class="sidenav-normal"> PhosphoSite + </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://bioplex.hms.harvard.edu/explorer/index.php" class="nav-link">
+                                        <span class="sidenav-mini-icon"> BP </span>
+                                        <span class="sidenav-normal"> BioPlex </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- End of Navigation Drawer ################################################################-->
+
+
+<!--Navbar ###################################################################################-->
+
+<nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary sticky-top p-0" id="topNavBar" style="z-index:4;">
+    <div class="container">
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend">
+                <select class="form-control" id="searchBarSelect" style="width:150px">
+                    <option>Mouse</option>
+                    <option>Human</option>
+                </select>
+            </div>
+
+            <input style="width: 40vw; " id="sitesSearchInput" class="form-control border border-secondary"
+                   type="text" placeholder="Uniprot Accession" aria-label="Search" aria-describedby="searchIcon">
+            <style>
+                .ui-autocomplete {
+                    background: white;
+                    margin-top:100px;
+                    border-radius: 0px;
+                    z-index: 10;
+                    width:600px;
+                    list-style-type:none;
+                }
+                .ui-autocomplete.source:hover {
+                    background: #454545;
+                }
+            </style>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" id="mainNavSearchButton" aria-describedby="searchIcon" onclick="initiate()" style="width:150px">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="help.html">Help</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- End of Navbar ###########################################################################-->
+
+<div class="d-flex justify-content-center mt-5" id="sequenceMapDiv">
+    <div id="seqMapDiv" style="width:80%;">
+        <div class="card card-frame">
+            <h4 id="seqMapLabel">Sequence Map
+                <button class="btn btn-outline-secondary d-inline" type="button" id="seqMapUnzoom"
+                        onclick="featureViewer.resetZoom()">
+                    <span data-feather="zoom-out"></span>
+                </button>
+            </h4>
+            <div class="my-2" id="sequenceMap"></div>
+        </div>
+    </div>
+</div>
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #5e72e4;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<div class="mt-3 container-fluid d-flex justify-content-center">
+    <div>
+        <!-- Main dashboard grid -->
+        <div id="dashboardBody">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg d-flex justify-content-center align-items-center">
+                        <div class="card card-frame">
+                            <div class="m-4 input-group-prepend" style="display:none" id="heatMapButtonGroup">
+                                <div class="d-flex">
+                                    <select class="form-control mr-4" id="cellLineSelect" style="width:170px">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body" id="chartTwo">
+                                <div class="d-flex justify-content-center">
+                                    <div id="loader" class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg d-flex flex-column justify-content-center align-items-center">
+                        <div id="barPlotDiv" style="display:none">
+                            <div class="col-lg d-flex flex-column space card card-frame" style="width:700px;" >
+                                <div class="d-flex flex-row mt-2">
+                                    <button type="button" class="btn btn-primary" id="toggleR-values">Order by R-Value</button>
+                                </div>
+                                <div id="chart-container"></div>
+                            </div>
+                        </div>
+                        <div id="proteinInfoDiv" style="width:600px; display:none">
+                            <div class="col-lg d-flex align-content-center" style="display:none; width:800px">
+                                <div class="card">
+                                    <div class="card-header border-0 bg-secondary">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h3 class="mb-0 text-center">Protein Info</h3>
+                                                <p id="accessionInfo"></p>
+                                                <p id="geneInfo"></p>
+                                                <p id="proteinInfo"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <!-- Projects table -->
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light text-center">
+                                            <tr>
+                                                <th scope="col">Function</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th class="text-wrap h5" scope="row" id="proteinFunctionInfo">
+
+                                                </th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dataTable"style="display:none">
+                <div class="d-flex justify-content-center">
+                    <div id="siteTableAccordion">
+                        <div class="card" style="max-width:1200px">
+                            <div id="siteTableCard" class="collapse.show" aria-labelledby="siteTableHeader"
+                                 data-parent="#siteTableAccordion">
+                                <div class="card-body">
+                                    <div class="table-responsive" id="siteTableWrapper"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div id="footerDiv" class="footer-section bg-primary p-3 pt-1 text-center text-light font-weight-bold" style="display:none">
+        <footer>
+            <p class="font-weight-bold">&copy; <a href="https://gygi.med.harvard.edu/" class="text-light">Gygi</a>  & <a href="https://chouchanilab.dana-farber.org/" class="text-light">Chouchani</a> Labs at HMS/DFCI.</p>
+        </footer>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="EbiNotFound" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">No protein with that Gene Symbol or Uniprot accession was observed in the OxiMouse dataset.</h4>
+            </div>
+            <div class="modal-body">
+                For a complete list of OxiMouse data, visit the Download page.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script>window.jQuery || document.write('<script src="assets/js/jquery-3.4.1.min.js"><\/script>')</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+
+<!--BootStrap and JQuery-->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="assets/js/lodash.js"></script>
+<script src="assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+
+<!-- Oximouse JS -->
+<script src="assets/js/oximouse.js"></script>
+<script src="assets/js/oximouse_analytics.js"></script>
+<script src="assets/js/feature-viewer.nextprot.js"></script>
+<script src="assets/js/oximouse_general.js"></script>
+<script src="assets/js/mouse_plots.js"></script>
+<script src="assets/js/mouse_sites.js"></script>
+
+<!--Charting Libraries-->
+<script src="assets/js/apexcharts.min.js"></script>
+<script src="assets/js/plotly-cartesian.js"></script>
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<script src="assets/js/datatables.min.js"></script>
+
+<!-- Contains old JQ ui, keep at top so other js overrides -->
+
+
+
+<!-- Other Project Dependencies -->
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/tippy_4-3-5.min.js"></script>
+<script src="assets/js/feather.min.js"></script>
+
+<!--JQery UI. Leave this here-->
+<script src="assets/js/jquery-ui.min.js"></script>
+
+
+
+<script>
+    var siteHeatmapColors = [['0', 'white'], ['0.1', 'rgb(141,141,141)'], ['0.25', 'rgb(164,11,11)'], ['1', 'rgb(214,0,0)']];
+    (function () {
+        tippy('#cysOxLabel', {
+            content: "Oxidation sites are colored according to their oxidation % values in each tissue. Click to plot Site Stoichiometry.",
+        });
+        tippy('#seqMapLabel', {
+            content: "Cysteine oxidation sites (identified by OxiMouse) and phosphorylation sites (annotated in Uniprot) mapped to the selected protein sequence.",
+        });
+        tippy('#siteStoichLabel', {
+            content: "Site stoichiometry for an individual cysteine oxidation site.",
+        });
+        feather.replace();
+    })();
+</script>
+</body>
+</html>
