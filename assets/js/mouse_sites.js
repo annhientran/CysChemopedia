@@ -26,8 +26,12 @@ let cysteinePositions = [];
 var AllCysteineR_Values = [];
 let quantArray;
 let proteinSet = [];
+let organism = "human";
 let cellLineSelect = document.getElementById("cellLineSelect");
+var humanSearchTags = [];
+var mouseSearchTags = [];
 var allHumanFastaData;
+var allHumanSiteData;
 var proteinFastaCysPos;
 var proteinOnFasta;
 var proteinOnCelltbl;
@@ -45,89 +49,138 @@ function mapValue(object, iteratee) {
 
 const searchBarSelect = document.getElementById("searchBarSelect");
 
-let organism;
 searchBarSelect.addEventListener("change", e => {
-  debugger;
   organism = e.target.value.toLowerCase();
-  if (organism == "human") {
-    d3.csv(humanCellPath, function (value) {
-      allHumanSiteData = value.sort((a, b) =>
-        a.Uniprot > b.Uniprot ? 1 : b.Uniprot > a.Uniprot ? -1 : 0
-      );
-      let geneNames = Array.from(
-        new Set(
-          Object.values(
-            mapValue(allHumanSiteData, ({ gene_symbol }) => gene_symbol)
-          )
-        )
-      );
-      let accessionArray = Array.from(
-        new Set(
-          Object.values(
-            mapValue(
-              allHumanSiteData,
-              ({ uniprot_accession }) => uniprot_accession
-            )
-          )
-        )
-      );
-      let searchArray = geneNames.concat(accessionArray);
-      $(function () {
-        var availableTags = searchArray;
-        $("#sitesSearchInput").autocomplete({
-          position: { my: "right top", at: "right bottom" },
-          source: availableTags,
-          minLength: 4
-        });
-      });
-    });
-  } else {
-    d3.csv("assets/data/grady_list.csv", function (value) {
-      allSiteData = value.sort((a, b) =>
-        a.Uniprot > b.Uniprot ? 1 : b.Uniprot > a.Uniprot ? -1 : 0
-      );
-      let geneNames = Array.from(
-        new Set(
-          Object.values(mapValue(allSiteData, ({ gene_symbol }) => gene_symbol))
-        )
-      );
-      let accessionArray = Array.from(
-        new Set(
-          Object.values(
-            mapValue(allSiteData, ({ uniprot_accession }) => uniprot_accession)
-          )
-        )
-      );
-      let searchArray = geneNames.concat(accessionArray);
-      $(function () {
-        var availableTags = searchArray;
-        $("#sitesSearchInput").autocomplete({
-          position: { my: "right top", at: "right bottom" },
-          source: availableTags,
-          minLength: 4
-        });
-      });
-    });
-  }
+  if (organism === "human" && !_.isEmpty(humanSearchTags))
+    getHumanSearchTagsAndSetAutocomplete();
+
+  if (organism === "mouse" && !_.isEmpty(mouseSearchTags))
+    getMouseSearchTagsAndSetAutocomplete();
 });
+
+function getHumanSearchTagsAndSetAutocomplete() {
+  d3.csv(humanCellPath, function (value) {
+    allHumanSiteData = value.sort((a, b) =>
+      a.Uniprot > b.Uniprot ? 1 : b.Uniprot > a.Uniprot ? -1 : 0
+    );
+    let geneCellNames = Array.from(
+      new Set(
+        Object.values(
+          mapValue(allHumanSiteData, ({ gene_symbol }) => gene_symbol)
+        )
+      )
+    );
+    let accessionCellArray = Array.from(
+      new Set(
+        Object.values(
+          mapValue(
+            allHumanSiteData,
+            ({ uniprot_accession }) => uniprot_accession
+          )
+        )
+      )
+    );
+    let cellTags = geneCellNames.concat(accessionCellArray);
+
+    d3.csv(humanFastaPath, function (value) {
+      allHumanFastaData = value.sort((a, b) =>
+        a.Uniprot > b.Uniprot ? 1 : b.Uniprot > a.Uniprot ? -1 : 0
+      );
+      let geneFastaNames = Array.from(
+        new Set(
+          Object.values(
+            mapValue(allHumanFastaData, site => site["Gene names (primary)"])
+          )
+        )
+      );
+      let accessionFastaArray = Array.from(
+        new Set(
+          Object.values(mapValue(allHumanFastaData, ({ Entry }) => Entry))
+        )
+      );
+      let fastaTags = geneFastaNames.concat(accessionFastaArray);
+
+      humanSearchTags = _.uniq(cellTags.concat(fastaTags)).sort();
+      setupAutoCompleteSearch(humanSearchTags);
+    });
+  });
+}
+
+function getMouseSearchTagsAndSetAutocomplete() {
+  d3.csv("assets/data/grady_list.csv", function (value) {
+    allSiteData = value.sort((a, b) =>
+      a.Uniprot > b.Uniprot ? 1 : b.Uniprot > a.Uniprot ? -1 : 0
+    );
+    let geneNames = Array.from(
+      new Set(
+        Object.values(mapValue(allSiteData, ({ gene_symbol }) => gene_symbol))
+      )
+    );
+    let accessionArray = Array.from(
+      new Set(
+        Object.values(
+          mapValue(allSiteData, ({ uniprot_accession }) => uniprot_accession)
+        )
+      )
+    );
+    let mouseSearchTags = geneNames.concat(accessionArray);
+    setupAutoCompleteSearch(mouseSearchTags);
+  });
+}
+
+function setupAutoCompleteSearch(searchTags) {
+  $(function () {
+    var availableTags = searchTags;
+    $("#sitesSearchInput").autocomplete({
+      position: { my: "left bottom", at: "left top", collision: "flip" },
+      source: availableTags,
+      minLength: 1,
+      autoFocus: true
+    });
+  });
+}
+
+function setAccession(enteredTerm) {
+  if (enteredTerm && organism) {
+    const enteredAccession = enteredTerm.toUpperCase();
+    if (
+      (organism === "mouse" &&
+        !_.isEmpty(mouseSearchTags) &&
+        _.includes(mouseSearchTags, enteredAccession)) ||
+      (organism === "human" &&
+        !_.isEmpty(humanSearchTags) &&
+        _.includes(humanSearchTags, enteredAccession))
+    ) {
+      accession = enteredAccession;
+    } else {
+      // TODO: show message in a pop up window
+      console.log("Gene symbol or uniprot accession doesn't exist");
+    }
+  }
+}
 
 function initiate() {
   document.getElementById("barPlotDiv").style.display = "none";
+  // const searchBarSelect = document.getElementById("searchBarSelect");
+  const enteredAccession = document.getElementById("sitesSearchInput").value;
   proteinSet = [];
-  compounds = []; // y-axis data
-  sitePositions = []; // x-axis data
+  compounds = []; // old y-axis data
+  sitePositions = []; // old x-axis data
 
+  setAccession(enteredAccession);
   if (organism && organism === "mouse") {
+    getMouseSearchTagsAndSetAutocomplete();
     getMouseChemoprotData();
   } else {
+    getHumanSearchTagsAndSetAutocomplete();
     getHumanChemoprotData();
   }
 }
 initiate();
 
-const searchBar = document.getElementById("sitesSearchInput");
-searchBar.addEventListener("keyup", e => {
-  accession = e.target.value.toUpperCase();
+let searchBar = document.getElementById("sitesSearchInput");
+searchBar.addEventListener("keydown", e => {
+  if (e.key === "Enter") initiate();
 });
 
 let result;
@@ -249,6 +302,7 @@ function getHumanChemoprotData() {
     //   trigger = false;
     //   // getEbiData();
     // }
+    getHumanFastaData();
   });
 }
 
@@ -260,7 +314,6 @@ function getHumanFastaData() {
     parseHumanFastaData();
   });
 }
-getHumanFastaData();
 
 function parseEbiData() {
   additionalSiteMapName = "Phospho";
@@ -405,75 +458,37 @@ function padCysCellArr(cysArr, cellLineList) {
   // else {
   _.forEach(cellLineList, cellLine => {
     if (_.isEmpty(_.filter(cysArr, ["x", cellLine])))
-      cysArr.push({ x: cellLine, y: null });
+      cysArr.push({ x: cellLine, y: 0 });
   });
   // }
 
   return _.sortBy(cysArr, ["x"]);
 }
 
+function setMapBase(cysArr, cellLineList) {
+  let ret = [];
+  let cysData = [];
+  let cysteineName = "";
+
+  cysArr.map(cys => {
+    cysData = [];
+    cysteineName = `C${parseInt(cys)}`;
+
+    cellLineList.map(cellLine => {
+      cysData.push({ x: cellLine, y: 0 });
+    });
+
+    ret.push({
+      name: cysteineName,
+      data: cysData
+    });
+  });
+
+  return ret;
+}
+
 function parseHumanChemoprotData() {
-  // siteObject = mapValue(proteinOnCelltbl, ({ site }) => site);
-  // sitePositionsString = Object.values(siteObject).map(
-  //   s => s.split("_")[s.split("_").length - 1]
-  // );
-  // sitePositions = sitePositionsString.map(i => Number(i));
-  // compounds = Object.keys(proteinOnCelltbl[0])
-  //   .filter(b => b.includes("C"))
-  //    .filter(b => !b.includes("Ce"));
-  // cellLines = Object.values(
-  //   mapValue(proteinOnCelltbl, ({ cell_line }) => cell_line)
-  // );
-  // proteinR_Values = RandomMultiDimArray(sequence.length, compounds.length, 0);
-
-  // sitesCysCell = mapValue(
-  //   proteinOnCelltbl,
-  //   ({
-  //     cysteine,
-  //     cell_line,
-  //     engaged,
-  //     C1,
-  //     C2,
-  //     C3,
-  //     C4,
-  //     C5,
-  //     C6,
-  //     C7,
-  //     C8,
-  //     C9,
-  //     C10,
-  //     C11,
-  //     C12,
-  //     C13,
-  //     C14
-  //   }) => [
-  //     cysteine,
-  //     cell_line,
-  //     engaged,
-  //     C1,
-  //     C2,
-  //     C3,
-  //     C4,
-  //     C5,
-  //     C6,
-  //     C7,
-  //     C8,
-  //     C9,
-  //     C10,
-  //     C11,
-  //     C12,
-  //     C13,
-  //     C14
-  //   ]
-  // );
-
-  // let cellLineList = mapValue(proteinOnCelltbl, ({ cell_line }) => cell_line);
-  // let unmappedCys = [];
-  // let mappedCys = [];
-  // let engagedCys = [];
-
   let cellLineList = [];
-  let cysCellData = [];
   let sitesCysCell = [];
   let rVals = [];
 
@@ -485,107 +500,60 @@ function parseHumanChemoprotData() {
       sitesCysCell.push({ ...site, cysteine: parseInt(cysNum) });
     });
   });
+  // TODO: check if sortedUniq works
   cellLineList = _.sortedUniq(cellLineList);
-  sitesCysCell = _.sortBy(sitesCysCell, [
-    function (s) {
-      return s.cysteine;
-    }
-  ]);
+  sitesCysCell = _.sortBy(sitesCysCell, ["cysteine", "cell_line"]);
+  let cysCellData = setMapBase(proteinFastaCysPos, cellLineList);
   // debugger;
+
   _.map(sitesCysCell, site => {
-    //debugger;
-    const status =
-      site.engaged === "2" ||
-      _.includes(proteinFastaCysPos, String(site.cysteine))
-        ? site.engaged
-        : 0;
+    // debugger;
     const cysteineName = `C${parseInt(site.cysteine)}`;
 
-    if (!_.find(cysCellData, e => e.name === cysteineName)){
-      let cysData = [{ x: site.cell_line, y: parseInt(status) }];
+    // if (!_.find(cysCellData, e => e.name === cysteineName)) {
+    //   let cysData = [{ x: site.cell_line, y: parseInt(site.engaged) }];
 
-      cysData = padCysCellArr(cysData, cellLineList);
-      cysCellData.push({
+    //   cysData = padCysCellArr(cysData, cellLineList);
+    //   cysCellData.push({
+    //     name: cysteineName,
+    //     data: cysData
+    //   });
+    // } else {
+    let existedCysPos = _.findIndex(cysCellData, e => e.name === cysteineName);
+    let dataArr = existedCysPos >= 0 ? cysCellData[existedCysPos].data : null;
+    let cellLinePos = _.findIndex(dataArr, e => e.x === site.cell_line);
+
+    if (existedCysPos >= 0 && cellLinePos >= 0) {
+      cysCellData[existedCysPos].data[cellLinePos].y = parseInt(site.engaged);
+      // }
+
+      rVals.push({
         name: cysteineName,
-        data: cysData
+        cellLine: site.cell_line,
+        values: [
+          site.C1,
+          site.C2,
+          site.C3,
+          site.C4,
+          site.C5,
+          site.C6,
+          site.C7,
+          site.C8,
+          site.C9,
+          site.C10,
+          site.C11,
+          site.C12,
+          site.C13,
+          site.C14
+        ]
       });
-    } else {
-      let existedCysPos = _.findIndex(cysCellData, e => e.name === cysteineName);
-      let dataArr = cysCellData[existedCysPos].data;
-      let cellLinePos = _.findIndex(dataArr, e => e.x === site.cell_line);
-
-      cysCellData[existedCysPos].data[cellLinePos].y = parseInt(status);
     }
-
-    rVals.push({
-      name: cysteineName,
-      cellLine: site.cell_line,
-      values: [
-        site.C1,
-        site.C2,
-        site.C3,
-        site.C4,
-        site.C5,
-        site.C6,
-        site.C7,
-        site.C8,
-        site.C9,
-        site.C10,
-        site.C11,
-        site.C12,
-        site.C13,
-        site.C14
-      ]
-    });
   });
 
-  let compoundLabels = Object.keys(proteinOnCelltbl[0])
-    .filter(b => b.includes("C"));
-  // debugger;   
-  // const cysVal = parseInt(cysNum);
-  // if (!_.includes(allCellLines, cellLine)) allCellLines.push(cellLine);
-  // if (engaged === 1) engagedCys.push({ x: cellLine, y: cysVal });
-  // else if (_.includes(proteinFastaCysPos, cysNum))
-  //   mappedCys.push({ x: cellLine, y: cysVal });
-  // else unmappedCys.push({ x: cellLine, y: cysVal });
-
-  // unmappedCys = padCysCellArr(unmappedCys, allCellLines);
-  // mappedCys = padCysCellArr(mappedCys, allCellLines);
-  // engagedCys = padCysCellArr(engagedCys, allCellLines);
+  let compoundLabels = Object.keys(proteinOnCelltbl[0]).filter(b =>
+    b.includes("C")
+  );
   // debugger;
-  // const cysCellData = [
-  //   {
-  //     name: "Unmapped Cysteine",
-  //     data: unmappedCys
-  //   },
-  //   { name: "Mapped Cysteine", data: mappedCys },
-  //   { name: "Engaged Cysteine", data: engagedCys }
-  // ];
-
-  // let cellLineOptions = _.union(cellLines);
-  // selectedOption = cellLineOptions[0];
-  // function addCellLineSelectOptions() {
-  // $(cellLineSelect).empty();
-  // for (var i = 0; i < cellLineOptions.length; i++) {
-  //   var option = cellLineOptions[i];
-  //   var el = document.createElement("option");
-  //   el.textContent = option;
-  //   el.value = option;
-  //   cellLineSelect.appendChild(el);
-  // }
-  // }
-  // addCellLineSelectOptions();
-  // _.filter(proteinOnCelltbl, function (o) {
-  //   if (o.cell_line == selectedOption) {
-  //     proteinSet.push(o);
-  //   }
-  // });
-  // proteinError = UpdateProteinSitesFromArray(
-  //   sitePositions,
-  //   "se_"
-  // );
-  // ConsumeSiteData("data/humanCellData.csv", accession);
-  // plotData();
   BuildMaps(cysCellData, cellLineList, rVals, compoundLabels);
 }
 
@@ -603,7 +571,7 @@ function parseHumanFastaData() {
   geneName = protein["Gene names (primary)"];
   proteinName = protein["Protein names"];
   sequence = protein.Sequence;
-  proteinFastaCysPos = protein.Cysteine.split(";");
+  proteinFastaCysPos = _.sortedUniq(protein.Cysteine.split(";"));
   // sequenceArray = sequence.split("").map((x, index) => x + (index + 1));
   // sequenceArray = protein.Cysteine.split(";").map(pos => `C${pos}`);
   parseHumanChemoprotData();

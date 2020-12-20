@@ -34,7 +34,7 @@ function NewHeatmap(
   // for (i in my_obj) {
   //   my_obj[i].data = values[i];
   // }
-  debugger;
+  // debugger;
   const options = {
     series: cysCellData, // y-axis data
     chart: {
@@ -51,7 +51,7 @@ function NewHeatmap(
       // background: "#C9C4BD",
       events: {
         click: function (event) {
-          debugger;
+          // debugger;
           document.getElementById("barPlotDiv").style.display = "block";
 
           let el = event.target;
@@ -98,14 +98,14 @@ function NewHeatmap(
             }
           });
           plotBar(selectedProtein, siteR_Values, compounds);
-          debugger;
+          // debugger;
         },
         mounted: function (chartContext, config) {
-          debugger;
+          // debugger;
           var loaderDiv = document.getElementById("loader");
-          var heatMapButtonGroup = document.getElementById(
-            "heatMapButtonGroup"
-          );
+          // var heatMapButtonGroup = document.getElementById(
+          //   "heatMapButtonGroup"
+          // );
           document.getElementById("proteinInfoDiv").style.display = "block";
           document.getElementById("accessionInfo").innerText =
             "Accession:" + ` ${accession}`;
@@ -116,7 +116,7 @@ function NewHeatmap(
           document.getElementById("proteinFunctionInfo").innerText = "N/A"; //` ${commentFunction}`;
           document.getElementById("dataTable").style.display = "block";
           document.getElementById("footerDiv").style.display = "block";
-          heatMapButtonGroup.style.display = "block";
+          // heatMapButtonGroup.style.display = "block";
           if (loaderDiv)
             loaderDiv.style.display =
               loaderDiv.style.display === "none" ? "block" : "none";
@@ -138,13 +138,13 @@ function NewHeatmap(
     },
     plotOptions: {
       heatmap: {
-        shadeIntensity: false,
-        radius: 0,
+        // shadeIntensity: false,
+        // radius: 0,
         useFillColorAsStroke: true,
         colorScale: {
           ranges: [
             {
-              from: 0,
+              from: -30,
               to: 0.5,
               name: "Unmapped Cysteine",
               color: "#D9D9D9" //"#d3d3d3"
@@ -165,52 +165,41 @@ function NewHeatmap(
         }
       }
     },
-    // tooltip: {
-    //   x: { show: true },
-    //   y: {
-    //     formatter: function (
-    //       value,
-    //       { series, seriesIndex, dataPointIndex, w }
-    //     ) {
-    //       if (value === 2)  return "Engaged";
-    //       else if (value === 1) return "Mapped";
-    //       else if (value === 0) return "Unmmaped";
-    //       else return null;
-    //     }
-    //   }
-    // },
     tooltip: {
-      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        if (series[seriesIndex][dataPointIndex])
-          return (
-            // '<div class="arrow_box">' +
-            // "<span>" +
-            // w.globals.labels[dataPointIndex] +
-            // ": " +
-            // series[seriesIndex][dataPointIndex] +
-            // "</span>" +
-            // "</div>"
-            '<div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">' +
-            // {/* <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> */}
-            '<div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">' +
-            '<div class="apexcharts-tooltip-y-group">' +
-            '<span class="apexcharts-tooltip-text-value">' +
-            w.globals.initialSeries[seriesIndex].name +
-            ": </span>" +
-            '<span class="apexcharts-tooltip-text-value">' +
-            w.globals.labels[dataPointIndex] +
-            "</span>" +
-            "</div>" +
-            // '<div class="apexcharts-tooltip-z-group">'+
-            //<span class="apexcharts-tooltip-text-z-label"></span>
-            //<span class="apexcharts-tooltip-text-z-value"></span>
-            //</div>
-            "</div>" +
-            "</div>"
-          );
-        return null;
+      x: { show: true },
+      y: {
+        formatter: function (
+          value,
+          { series, seriesIndex, dataPointIndex, w }
+        ) {
+          if (value === 2)  return "Engaged";
+          else if (value === 1) return "Mapped";
+          else if (value === 0) return "Unmaped";
+          else return null;
+        }
       }
     },
+    // tooltip: {
+    //   custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+    //     if (series[seriesIndex][dataPointIndex])
+    //       return (
+    //         '<div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">' +
+    //         // {/* <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> */}
+    //         '<div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">' +
+    //         '<div class="apexcharts-tooltip-y-group">' +
+    //         '<span class="apexcharts-tooltip-text-value">' +
+    //         w.globals.initialSeries[seriesIndex].name +
+    //         ": </span>" +
+    //         '<span class="apexcharts-tooltip-text-value">' +
+    //         w.globals.labels[dataPointIndex] +
+    //         "</span>" +
+    //         "</div>" +
+    //         "</div>" +
+    //         "</div>"
+    //       );
+    //     return null;
+    //   }
+    // },
     dataLabels: {
       enabled: false
     },
