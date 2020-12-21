@@ -189,7 +189,7 @@ let trigger = false;
 function getEbiData(requestUrl) {
   d3.csv("assets/data/chemoprot_test_list.csv", function (list) {
     let searchParam = accession;
-    debugger;
+    // debugger;
     if (searchParam) {
       requestUrl =
         "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
@@ -283,7 +283,9 @@ function getHumanChemoprotData() {
     );
     // debugger;
     // get searched protein on HumanCellData - set proteinQuant to proteinOnCelltbl
-    proteinOnCelltbl = allHumanSiteData.filter(b => b.site.includes(accession));
+    proteinOnCelltbl = allHumanSiteData.filter(
+      b => b.uniprot_accession === accession || b.gene_symbol === accession
+    );
 
     // if (trigger) {
     //   accession = allHumanSiteData.find(
@@ -550,15 +552,27 @@ function parseHumanChemoprotData() {
     }
   });
 
-  let compoundLabels = Object.keys(proteinOnCelltbl[0]).filter(b =>
-    b.includes("C")
-  );
+  let compoundLabels = [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "C12",
+    "C13",
+    "C14"
+  ];
   // debugger;
   BuildMaps(cysCellData, cellLineList, rVals, compoundLabels);
 }
 
 function parseHumanFastaData() {
-  // debugger;
   proteinOnFasta = allHumanFastaData.filter(
     b =>
       _.includes(b.Entry, accession) ||
