@@ -160,7 +160,7 @@ function setAccession(enteredTerm) {
 }
 
 function initiate() {
-  document.getElementById("barPlotDiv").style.display = "none";
+  // document.getElementById("barPlotDiv").style.display = "none";
   // const searchBarSelect = document.getElementById("searchBarSelect");
   const enteredAccession = document.getElementById("sitesSearchInput").value;
   proteinSet = [];
@@ -668,20 +668,9 @@ function ConsumeSiteData(
 
 function BuildMaps(cysCellData, cellLineList, rVals, compoundLabels) {
   $(chartTwo).empty();
-  NewHeatmap(
-    // compounds,
-    // sitePositions,
-    // cellLines,
-    // sequenceArray,
-    // proteinR_Values,
-    // proteinQuant
-    cysCellData,
-    cellLineList,
-    rVals,
-    compoundLabels
-  );
-  // debugger;
-  // CysOxiChart(chartData);
+  NewHeatmap(cysCellData, cellLineList, rVals, compoundLabels);
+  document.getElementById("barPlotDiv").style.display = "block";
+  plotBar("non selected", [], compoundLabels);
   // debugger;
   // PlotlyBar(compounds, proteinSites[0], -1,proteinError);
   // NewTable(

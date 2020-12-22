@@ -27,6 +27,7 @@
     <!-- Page plugins -->
     <!-- Argon CSS -->
     <link rel="stylesheet" href="assets/css/oximouse.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/chart.css" type="text/css">
 </head>
 
 <body>
@@ -162,7 +163,8 @@
                 </div>
 
                 <input style="width: 40vw; " id="sitesSearchInput" class="form-control border border-secondary"
-                    type="text" placeholder="Enter Gene Symbol or Uniprot Accession" aria-label="Search" aria-describedby="searchIcon">
+                    type="text" placeholder="Enter Gene Symbol or Uniprot Accession" aria-label="Search"
+                    aria-describedby="searchIcon">
                 <style>
                     .ui-autocomplete {
                         background: white;
@@ -266,8 +268,8 @@
                             <div id="barPlotDiv" style="display:none">
                                 <div class="col-lg d-flex flex-column space card card-frame" style="width:700px;">
                                     <div class="d-flex flex-row mt-2">
-                                        <button type="button" class="btn btn-primary" id="toggleR-values">Order by
-                                            R-Value</button>
+                                        <button type="button" class="btn btn-primary" id="toggleR-values"
+                                            disabled="true">Order by R-Value</button>
                                     </div>
                                     <div id="chart-container"></div>
                                 </div>
