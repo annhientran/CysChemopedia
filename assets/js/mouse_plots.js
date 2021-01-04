@@ -52,7 +52,6 @@ function NewHeatmap(cysCellData, cellLines, proteinR_Values, compounds) {
             };
 
           let siteR_Values = selectedProtein.values;
-          // PlotlyBar(siteR_Values, compounds);
 
           // set up order button
           let barChartSortBtn = document.getElementById("toggleR-values");
@@ -335,68 +334,6 @@ function plotBar(site, siteR_Values, compounds) {
   $(chartContainer).empty();
   barChart.render();
 }
-
-// function PlotlyBar(xvals, yvals) {
-//   var options = {
-//     series: [
-//       {
-//         name: "R-value",
-//         data: xvals
-//       }
-//     ],
-//     chart: {
-//       height: 650,
-//       width: 1500,
-//       type: "bar"
-//     },
-//     plotOptions: {
-//       bar: {
-//         columnWidth: "40px"
-//       }
-//     },
-//     dataLabels: {
-//       enabled: false
-//     },
-//     stroke: {
-//       width: 2
-//     },
-
-//     grid: {
-//       row: {
-//         colors: ["#fff", "#f2f2f2"]
-//       }
-//     },
-//     xaxis: {
-//       labels: {
-//         rotate: -90,
-//         rotateAlways: true,
-//         minHeight: 300,
-//         trim: false,
-//         hideOverlappingLabels: true
-//       },
-//       categories: yvals,
-//       tickPlacement: "on"
-//     },
-//     yaxis: {
-//       title: {
-//         text: "R-Values"
-//       }
-//     },
-//     fill: {
-//       type: "gradient",
-//       gradient: {
-//         shade: "light",
-//         type: "horizontal",
-//         shadeIntensity: 0.25,
-//         gradientToColors: undefined,
-//         inverseColors: true,
-//         opacityFrom: 0.85,
-//         opacityTo: 0.85,
-//         stops: [50, 0, 100]
-//       }
-//     }
-//   };
-// }
 
 var fakeOptions = {
   series: [
