@@ -35,8 +35,10 @@ var allHumanSiteData;
 var proteinFastaCysPos;
 var proteinOnFasta;
 var proteinOnCelltbl;
-const humanCellPath = "assets/data/mockdata/HumanCellData.csv";
-const humanFastaPath = "assets/data/mockdata/HumanFasta.csv";
+const humanCellPath = "assets/data/HumanCellData.csv";
+const humanFastaPath = "assets/data/HumanFasta.csv";
+const mouseCellPath = "assets/data/MouseCellData.csv";
+const mouseFastaPath = "assets/data/MouseFasta.csv";
 
 function mapValue(object, iteratee) {
   object = Object(object);
