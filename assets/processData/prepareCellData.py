@@ -61,6 +61,8 @@ def writeToFile(dest, action, header, rows):
         csvwriter.writerows(rows)
 
 # TODO: test
+
+
 def addToDatabase(filename, isHuman):
     rows = []
     currfields = []
@@ -135,6 +137,14 @@ def createNewDatabase(filename, isHuman):
 
         # extracting field names through first row
         fields = next(csvreader)
+        # pid = fields.index('protein_id')
+        # fields.insert(pid, 'uniprot_accession')
+        # for row in csvreader:
+            # s = row[pid].find('|') + 1
+            # e = row[pid].find('|', s)
+            # uniprot_accession = row[pid][s:e]
+            # row.insert(pid,uniprot_accession)
+            # rows.append(row)
 
         for name in compoundNames:
             compoundPos.append(fields.index(name))

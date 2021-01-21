@@ -168,20 +168,48 @@
                 <style>
                     .ui-autocomplete {
                         background: white;
-                        /* margin-top: 100px; */
+                        margin-top: 100px;
                         border-radius: 0px;
-                        z-index: 10;
+                        z-index: 100;
                         width: 600px;
-                        list-style-type: none;
+                        list-style: none;
+                        box-shadow: 1px 1px 5px rgba(0, 0, 0, .44);
+                        position: absolute;
+                        height: auto;
+                        border-left: 1px solid rgba(0, 0, 0, .11);
+                        border-right: 1px solid rgba(0, 0, 0, .11);
+                        left: 0;
                     }
 
                     .ui-autocomplete.source:hover {
                         background: #454545;
                     }
+
+                    .ui-autocomplete-input {
+                        border-color: rgba(140, 130, 115, 0.19);
+                        padding: 9px;
+                        font-family: inherit;
+                        float: left;
+                        font-size: 1em;
+                        border: 1px solid rgba(0, 0, 0, .19);
+                        margin: 0;
+                    }
+
+                    .ui-autocomplete li {
+                        /* background-color: rgba(24, 26, 27, 0.8); */
+                        text-align: left;
+                        padding: 5px;
+                        font-family: inherit;
+                        border-bottom: 1px solid rgba(0, 0, 0, .16);
+                        height: 40px;
+                        line-height: 25px;
+                        background-color: rgba(255, 255, 255, .8);
+                        cursor: pointer;
+                    }
                 </style>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" id="mainNavSearchButton" aria-describedby="searchIcon"
-                        onclick="initiate();" style="width:150px">
+                        onclick="searchByGene();" style="width:150px">
                         Search
                     </button>
                 </div>
@@ -265,15 +293,6 @@
                             </div>
                         </div>
                         <div class="col-lg d-flex flex-column justify-content-center align-items-center">
-                            <div id="barPlotDiv" style="display:none">
-                                <div class="col-lg d-flex flex-column space card card-frame" style="width:700px;">
-                                    <div class="d-flex flex-row mt-2">
-                                        <button type="button" class="btn btn-primary" id="toggleR-values"
-                                            disabled="true">Order by R-Value</button>
-                                    </div>
-                                    <div id="chart-container"></div>
-                                </div>
-                            </div>
                             <div id="proteinInfoDiv" style="width:600px; display:none">
                                 <div class="col-lg d-flex align-content-center" style="display:none; width:800px">
                                     <div class="card">
@@ -287,31 +306,23 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="table-responsive">
-                                            <!-- Projects table -->
-                                            <table class="table align-items-center table-flush">
-                                                <thead class="thead-light text-center">
-                                                    <tr>
-                                                        <th scope="col">Function</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th class="text-wrap h5" scope="row" id="proteinFunctionInfo">
-
-                                                        </th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div id="barPlotDiv" style="display:none">
+                                <div class="col-lg d-flex flex-column space card card-frame" style="width:700px;">
+                                    <div class="d-flex flex-row mt-2">
+                                        <button type="button" class="btn btn-primary" id="toggleR-values"
+                                            disabled="true">Order by R-Value</button>
+                                    </div>
+                                    <div id="chart-container"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="dataTable" style="display:none">
+                <!-- <div id="dataTable" style="display:none">
                     <div class="d-flex justify-content-center">
                         <div id="siteTableAccordion">
                             <div class="card" style="max-width:1200px">
@@ -324,7 +335,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

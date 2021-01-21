@@ -13,8 +13,13 @@
  * @param color
  * @returns
  */
-function NewHeatmap(cysCellData, cellLines, proteinR_Values, compounds) {
-  // debugger;
+function generateMaps(
+  protein,
+  cysCellData,
+  cellLines,
+  proteinR_Values,
+  compounds
+) {debugger;
   const options = {
     series: cysCellData, // y-axis data
     chart: {
@@ -62,7 +67,7 @@ function NewHeatmap(cysCellData, cellLines, proteinR_Values, compounds) {
             let toggleSort = true;
             let labeledRvals = siteR_Values.map((e, i) => ({
               R_Value: e,
-              label: `C${i}`
+              label: compounds[i]
             }));
             const sorted = _.sortBy(labeledRvals, e => e.R_Value);
             const sortedClabel = _.map(sorted, "label");
@@ -88,20 +93,15 @@ function NewHeatmap(cysCellData, cellLines, proteinR_Values, compounds) {
           // debugger;
           // show info details table
           var loaderDiv = document.getElementById("loader");
-          // var heatMapButtonGroup = document.getElementById(
-          //   "heatMapButtonGroup"
-          // );
           document.getElementById("proteinInfoDiv").style.display = "block";
           document.getElementById("accessionInfo").innerText =
-            "Accession:" + ` ${accession}`;
+            "Accession:" + ` ${protein["Entry"]}`;
           document.getElementById("geneInfo").innerText =
-            "Gene:" + ` ${geneName}`;
+            "Gene:" + ` ${protein["Gene names (primary)"]}`;
           document.getElementById("proteinInfo").innerText =
-            "Protein:" + ` ${proteinName}`;
-          document.getElementById("proteinFunctionInfo").innerText = "N/A"; //` ${commentFunction}`;
+            "Protein:" + ` ${protein["Protein names"]}`;
           document.getElementById("dataTable").style.display = "block";
           document.getElementById("footerDiv").style.display = "block";
-          // heatMapButtonGroup.style.display = "block";
           if (loaderDiv)
             loaderDiv.style.display =
               loaderDiv.style.display === "none" ? "block" : "none";
@@ -192,7 +192,7 @@ function NewHeatmap(cysCellData, cellLines, proteinR_Values, compounds) {
       width: 1
     },
     title: {
-      text: "Cys-Oxidation Stoichiometry: " + ` ${accession}`,
+      text: `Cys-Oxidation Stoichiometry: ${protein["Entry"]} - Gene: ${protein["Gene names (primary)"]}`,
       align: "left",
       margin: 10,
       offsetX: 0,
