@@ -19,7 +19,7 @@ function generateMaps(
   cellLines,
   proteinR_Values,
   compounds
-) {debugger;
+) {
   const options = {
     series: cysCellData, // y-axis data
     chart: {

@@ -53,17 +53,18 @@ searchBarSelect.addEventListener("change", e => {
 });
 
 function buildSearchTags(type, activate) {
-  let cellTags = {};
   let fastaTags = {};
+  let cellTags = {};
 
-  allCellData[type].forEach(site => {
-    cellTags[site.uniprot_accession] = site.gene_symbol;
-    cellTags[site.gene_symbol] = site.gene_symbol;
-  });
   allFastaData[type].forEach(protein => {
     fastaTags[protein.Entry] = protein["Gene names (primary)"];
     fastaTags[protein["Gene names (primary)"]] =
       protein["Gene names (primary)"];
+  });
+
+  allCellData[type].forEach(site => {
+    cellTags[site.uniprot_accession] = site.gene_symbol;
+    cellTags[site.gene_symbol] = site.gene_symbol;
   });
 
   const allTags = _.mergeWith(cellTags, fastaTags, x => {
@@ -118,7 +119,8 @@ searchBar.addEventListener("keydown", e => {
 
 function buildDatabase(type, gene) {
   d3.csv(fastaPath[type], function (value) {
-    allFastaData[type] = _.sortBy(value, ["Entry", "Gene names  (primary)"]);
+    const reviewed = _.filter(value, ["Status", "reviewed"]);
+    allFastaData[type] = _.sortBy(reviewed, ["Entry", "Gene names (primary)"]);
     const proteinOnFasta = parseFastaData(type, gene);
 
     d3.csv(cellPath[type], function (value) {
