@@ -18,14 +18,14 @@ var allCellData = {
   mouse: []
 };
 const fastaPath = {
-  human: "assets/data/HumanFasta.csv",
-  mouse: "assets/data/MouseFasta.csv"
+  human: "assets/data/mockdata/HumanFasta.csv",
+  mouse: "assets/data/mockdata/MouseFasta.csv"
 };
 const cellPath = {
-  human: "assets/data/HumanCellData.csv",
-  mouse: "assets/data/MouseCellData.csv"
+  human: "assets/data/mockdata/HumanCellData.csv",
+  mouse: "assets/data/mockdata/MouseCellData.csv"
 };
-const compoundListPath = "assets/data/Compounds.csv";
+const compoundListPath = "assets/data/mockdata/Compounds.csv";
 
 function fetchCompoundList() {
   d3.csv(compoundListPath, function (value) {
