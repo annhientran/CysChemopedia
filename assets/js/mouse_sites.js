@@ -107,7 +107,7 @@ function setupAutoCompleteSearch(searchTags) {
 
 function searchByGene() {
   const enteredGene = document.getElementById("sitesSearchInput").value;
-  const type = document.getElementById("searchBarSelect").value;
+  const type = document.querySelector("#searchBarSelect li.active").innerHTML;
   const proteinOnFasta = parseFastaData(type, enteredGene);
   parseCellData(type, enteredGene, proteinOnFasta);
 }
