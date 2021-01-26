@@ -44,13 +44,22 @@ function mapValue(object, iteratee) {
   return result;
 }
 
-searchBarSelect.addEventListener("change", e => {
-  const species = e.target.value.toLowerCase();
+function setSearchType(type) {
+  let curr = document.querySelector("#searchBarSelect li.active");
 
-  if (!_.isEmpty(searchTags[species]))
-    setupAutoCompleteSearch(searchTags[species]);
-  else buildSearchTags(species, true);
-});
+  if (type === curr.innerHTML) return;
+
+  let newSelect = document.querySelector(
+    "#searchBarSelect li:not([class=active])"
+  );
+
+  curr.classList.remove("active");
+  newSelect.classList.add("active");
+
+  if (!_.isEmpty(searchTags[type])) 
+    setupAutoCompleteSearch(searchTags[type]);
+  else buildSearchTags(type, true);
+}
 
 function buildSearchTags(type, activate) {
   let fastaTags = {};

@@ -25,9 +25,11 @@
     <link rel="stylesheet" href="assets/vendor/nucleo/css/nucleo.css" type="text/css">
     <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Page plugins -->
-    <!-- Argon CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/oximouse.css" type="text/css">
     <link rel="stylesheet" href="assets/css/chart.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/sites.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//use.fontawesome.com/releases/v5.7.2/css/all.css">
 </head>
 
 <body>
@@ -37,32 +39,147 @@
     <!--    </button>-->
     <!--</div>-->
 
-    <!--Navigation Drawer ########################################################################-->
+    <!-- Left Side Bar Navigation Drawer ########################################################################-->
 
-    <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <!-- <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
         <div class="scrollbar-inner">
+            <!- - Brand - ->
+                <div class="sidenav-header  d-flex  align-items-center">
+                    <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+                        <img src="assets/img/brand/oximouse.png" class="navbar-brand-img" alt="...">
+                    </a>
+                    <div class=" ml-auto ">
+                        <!- - Sidenav toggler - ->
+                            <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin"
+                                data-target="#sidenav-main">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="navbar-inner">
+                    <!- - Collapse - ->
+                        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                            <!- - Nav items - ->
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.html">
+                                            <i class="fas fa-home"></i>
+                                            <span class="nav-link-text">Home</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="sites.html">
+                                            <i class="fas fa-dna"></i>
+                                            <span class="nav-link-text">Sites</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="communities.html">
+                                            <i class="fas fa-users"></i>
+                                            <span class="nav-link-text">Communities</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="download.html">
+                                            <i class="fas fa-download"></i>
+                                            <span class="nav-link-text">Download</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="help.html">
+                                            <i class="fas fa-question"></i>
+                                            <span class="nav-link-text">Help</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse"
+                                            role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            <span class="nav-link-text">External</span>
+                                        </a>
+                                        <div class="collapse show" id="navbar-dashboards">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="https://pubmed.ncbi.nlm.nih.gov/" class="nav-link">
+                                                        <span class="sidenav-mini-icon"> PMD </span>
+                                                        <span class="sidenav-normal"> PubMed </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="https://www.uniprot.org/" class="nav-link">
+                                                        <span class="sidenav-mini-icon"> UN </span>
+                                                        <span class="sidenav-normal"> Uniprot </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="http://www.rcsb.org/" class="nav-link">
+                                                        <span class="sidenav-mini-icon"> PD </span>
+                                                        <span class="sidenav-normal"> Protein Databank </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="https://phosphomouse.hms.harvard.edu/index.php"
+                                                        class="nav-link">
+                                                        <span class="sidenav-mini-icon"> PM </span>
+                                                        <span class="sidenav-normal"> PhosphoMouse </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="https://www.phosphosite.org/homeAction.action"
+                                                        class="nav-link">
+                                                        <span class="sidenav-mini-icon"> PS </span>
+                                                        <span class="sidenav-normal"> PhosphoSite + </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="https://bioplex.hms.harvard.edu/explorer/index.php"
+                                                        class="nav-link">
+                                                        <span class="sidenav-mini-icon"> BP </span>
+                                                        <span class="sidenav-normal"> BioPlex </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </div>
+                </div>
+        </div>
+    </nav> --->
+
+    <!-- End of Navigation Drawer ################################################################-->
+
+
+    <!--Navbar ###################################################################################-->
+
+    <!-- <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary sticky-top p-0" id="topNavBar"
+        style="z-index:4;">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="help.html">Help</a>
+            </li>
+        </ul>
+    </nav> -->
+<!--sticky-top---> 
+    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary p-0" id="topNavBar"
+        style="z-index:4;">
+        <div class="container-fluid">
             <!-- Brand -->
-            <div class="sidenav-header  d-flex  align-items-center">
+            <div class="d-flex  align-items-center">
                 <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
                     <img src="assets/img/brand/oximouse.png" class="navbar-brand-img" alt="...">
                 </a>
-                <div class=" ml-auto ">
-                    <!-- Sidenav toggler -->
-                    <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin"
-                        data-target="#sidenav-main">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="navbar-inner">
+
                 <!-- Collapse -->
                 <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                     <!-- Nav items -->
-                    <ul class="navbar-nav">
+                    <ul class="nav navbar-nav navbar-right topnavbar-nav-primary">
                         <li class="nav-item">
                             <a class="nav-link" href="index.html">
                                 <i class="fas fa-home"></i>
@@ -75,12 +192,12 @@
                                 <span class="nav-link-text">Sites</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="communities.html">
                                 <i class="fas fa-users"></i>
                                 <span class="nav-link-text">Communities</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="download.html">
                                 <i class="fas fa-download"></i>
@@ -95,11 +212,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button"
-                                aria-expanded="true" aria-controls="navbar-dashboards">
+                                aria-expanded="false" aria-controls="navbar-dashboards">
                                 <i class="fas fa-external-link-alt"></i>
                                 <span class="nav-link-text">External</span>
                             </a>
-                            <div class="collapse show" id="navbar-dashboards">
+                            <div class="collapse" id="navbar-dashboards">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                         <a href="https://pubmed.ncbi.nlm.nih.gov/" class="nav-link">
@@ -146,82 +263,6 @@
         </div>
     </nav>
 
-    <!-- End of Navigation Drawer ################################################################-->
-
-
-    <!--Navbar ###################################################################################-->
-
-    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary sticky-top p-0" id="topNavBar"
-        style="z-index:4;">
-        <div class="container">
-            <div class="input-group mt-3 mb-3">
-                <div class="input-group-prepend">
-                    <select class="form-control" id="searchBarSelect" style="width:150px">
-                        <option value="mouse">Mouse</option>
-                        <option value="human" selected>Human</option>
-                    </select>
-                </div>
-
-                <input style="width: 40vw; " id="sitesSearchInput" class="form-control border border-secondary"
-                    type="text" placeholder="Enter Gene Symbol or Uniprot Accession" aria-label="Search"
-                    aria-describedby="searchIcon">
-                <style>
-                    .ui-autocomplete {
-                        background: white;
-                        margin-top: 100px;
-                        border-radius: 0px;
-                        z-index: 100;
-                        width: 600px;
-                        list-style: none;
-                        box-shadow: 1px 1px 5px rgba(0, 0, 0, .44);
-                        position: absolute;
-                        height: auto;
-                        border-left: 1px solid rgba(0, 0, 0, .11);
-                        border-right: 1px solid rgba(0, 0, 0, .11);
-                        left: 0;
-                    }
-
-                    .ui-autocomplete.source:hover {
-                        background: #454545;
-                    }
-
-                    .ui-autocomplete-input {
-                        border-color: rgba(140, 130, 115, 0.19);
-                        padding: 9px;
-                        font-family: inherit;
-                        float: left;
-                        font-size: 1em;
-                        border: 1px solid rgba(0, 0, 0, .19);
-                        margin: 0;
-                    }
-
-                    .ui-autocomplete li {
-                        /* background-color: rgba(24, 26, 27, 0.8); */
-                        text-align: left;
-                        padding: 5px;
-                        font-family: inherit;
-                        border-bottom: 1px solid rgba(0, 0, 0, .16);
-                        height: 40px;
-                        line-height: 25px;
-                        background-color: rgba(255, 255, 255, .8);
-                        cursor: pointer;
-                    }
-                </style>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" id="mainNavSearchButton" aria-describedby="searchIcon"
-                        onclick="searchByGene();" style="width:150px">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </div>
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="help.html">Help</a>
-            </li>
-        </ul>
-    </nav>
-
     <!-- End of Navbar ###########################################################################-->
 
     <!-- <div class="d-flex justify-content-center mt-5" id="sequenceMapDiv">
@@ -237,45 +278,30 @@
         </div>
     </div>
 </div> -->
-    <style>
-        .loader {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #5e72e4;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-        }
-
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-
     <div class="mt-3 container-fluid d-flex justify-content-center">
         <div>
             <!-- Main dashboard grid -->
             <div id="dashboardBody">
                 <div class="container-fluid">
+                    <div id="searchBar" class="row">
+                        <div class="input-group-prepend">
+                            <ul id="searchBarSelect">
+                                <li value="human" onclick="setSearchType('human');" class="active">human</li>
+                                <li value="mouse" onclick="setSearchType('mouse');">mouse</li>
+                            </ul>
+                        </div>
+                        <div class="input-group">
+                            <input id="sitesSearchInput" class="form-control" type="text"
+                                placeholder="Enter Gene Symbol or Uniprot Accession" aria-label="Search"
+                                aria-describedby="searchIcon">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" id="sitesSearchSubmit" aria-describedby="searchIcon"
+                                    onclick="searchByGene();" style="width:150px">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg d-flex justify-content-center align-items-center">
                             <div class="card card-frame">
@@ -299,7 +325,7 @@
                                         <div class="card-header border-0 bg-secondary">
                                             <div class="row align-items-center">
                                                 <div class="col">
-                                                    <h3 class="mb-0 text-center">Protein Info</h3>
+                                                    <h3 class="mb-0 text-center">Protein Information</h3>
                                                     <p id="accessionInfo"></p>
                                                     <p id="geneInfo"></p>
                                                     <p id="proteinInfo"></p>
@@ -310,12 +336,28 @@
                                 </div>
                             </div>
                             <div id="barPlotDiv" style="display:none">
-                                <div class="col-lg d-flex flex-column space card card-frame" style="width:700px;">
-                                    <div class="d-flex flex-row mt-2">
-                                        <button type="button" class="btn btn-primary" id="toggleR-values"
-                                            disabled="true">Order by R-Value</button>
-                                    </div>
+                                <div class="col-lg d-flex flex-column space card card-frame barChart"
+                                    style="width:700px;">
                                     <div id="chart-container"></div>
+                                    <div class="d-flex flex-row mt-2">
+                                        <div class="barChartSortWrapper">
+                                            <div class="barChartText"><b>Sort by</b></div>
+                                            <div class="barChartSort">
+                                                <div id="barChartSortBtn" class="disabledSort" disabled="true">
+                                                    <input id="toggle-compound" class="toggle toggle-left"
+                                                        name="toggleBarChartSort" value="Compound" type="radio"
+                                                        disabled="true" checked>
+                                                    <label for="toggle-compound"
+                                                        class="barChartSortLabel">Compound</label>
+                                                    <input id="toggle-rval" class="toggle toggle-right"
+                                                        name="toggleBarChartSort" value="R-Value" type="radio"
+                                                        disabled="true">
+                                                    <label for="toggle-rval" class="barChartSortLabel">R-Value</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -407,10 +449,8 @@
     <script src="assets/js/tippy_4-3-5.min.js"></script>
     <script src="assets/js/feather.min.js"></script>
 
-    <!--JQery UI. Leave this here-->
+    <!-- jQuery UI -->
     <script src="assets/js/jquery-ui.min.js"></script>
-
-
 
     <script>
         var siteHeatmapColors = [['0', 'white'], ['0.1', 'rgb(141,141,141)'], ['0.25', 'rgb(164,11,11)'], ['1', 'rgb(214,0,0)']];

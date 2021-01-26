@@ -36,9 +36,6 @@ function generateMaps(
       // background: "#C9C4BD",
       events: {
         click: function (event) {
-          // debugger;
-          // document.getElementById("barPlotDiv").style.display = "block";
-
           let el = event.target;
           const i = el.getAttribute("i");
           const j = el.getAttribute("j");
@@ -57,14 +54,12 @@ function generateMaps(
             };
 
           let siteR_Values = selectedProtein.values;
-
           // set up order button
-          let barChartSortBtn = document.getElementById("toggleR-values");
-          barChartSortBtn.innerText = "Order by R-Value";
-          if (!_.isEmpty(siteR_Values)) {
-            barChartSortBtn.disabled = false;
+          let barChartSortBtn = document.getElementById("barChartSortBtn");
 
-            let toggleSort = true;
+          if (sortIsDisabled()) {
+            toggleSort();
+
             let labeledRvals = siteR_Values.map((e, i) => ({
               R_Value: e,
               label: compounds[i]
@@ -72,20 +67,18 @@ function generateMaps(
             const sorted = _.sortBy(labeledRvals, e => e.R_Value);
             const sortedClabel = _.map(sorted, "label");
             const sortedR_Values = _.map(sorted, "R_Value");
-            // debugger;
-            barChartSortBtn.innerText = "Order by R-Value";
+
             barChartSortBtn.addEventListener("click", event => {
-              if (toggleSort) {
-                barChartSortBtn.innerText = "Order by Compound";
+              const barChartOrder = document.querySelector(
+                "input[name='toggleBarChartSort']:checked"
+              ).value;
+              if (barChartOrder === "R-Value") {
                 plotBar(selectedProtein.name, sortedR_Values, sortedClabel);
-                toggleSort = false;
               } else {
-                barChartSortBtn.innerText = "Order by R-Value";
                 plotBar(selectedProtein.name, siteR_Values, compounds);
-                toggleSort = true;
               }
             });
-          } else barChartSortBtn.disabled = true;
+          } else toggleSort();
 
           plotBar(selectedProtein.name, siteR_Values, compounds);
         },
@@ -100,7 +93,6 @@ function generateMaps(
             "Gene:" + ` ${protein["Gene names (primary)"]}`;
           document.getElementById("proteinInfo").innerText =
             "Protein:" + ` ${protein["Protein names"]}`;
-          document.getElementById("dataTable").style.display = "block";
           document.getElementById("footerDiv").style.display = "block";
           if (loaderDiv)
             loaderDiv.style.display =
@@ -397,3 +389,25 @@ var fakeOptions = {
     }
   }
 };
+
+function toggleSort() {
+  if (sortIsDisabled()) {
+    $("#barChartSortBtn").removeClass("disabledSort");
+    $("#barChartSortBtn")
+      .find("input")
+      .each(function () {
+        $(this).prop("disabled", false);
+      });
+  } else {
+    $("#barChartSortBtn").addClass("disabledSort");
+    $("#barChartSortBtn")
+      .find("input")
+      .each(function () {
+        $(this).attr("disabled", true);
+      });
+  }
+}
+
+function sortIsDisabled() {
+  return $("#barChartSortBtn").hasClass("disabledSort");
+}
