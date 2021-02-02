@@ -164,9 +164,10 @@
             </li>
         </ul>
     </nav> -->
+    <!--sticky-top--->
 <!--sticky-top---> 
-    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary p-0" id="topNavBar"
-        style="z-index:4;">
+    <!--sticky-top--->
+    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-primary p-0" id="topNavBar" style="z-index:4;">
         <div class="container-fluid">
             <!-- Brand -->
             <div class="d-flex  align-items-center">
@@ -363,21 +364,137 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div id="dataTable" style="display:none">
-                    <div class="d-flex justify-content-center">
-                        <div id="siteTableAccordion">
-                            <div class="card" style="max-width:1200px">
-                                <div id="siteTableCard" class="collapse.show" aria-labelledby="siteTableHeader"
+                
+                <div id="dataTable" style="display:block;">
+                    <div class="d-flex justify-content-center card card-frame">
+                        <div class="space" style="max-width:1200px">
+                            <div class="multi-carousel">
+                                <!-- Tabs navs -->
+                                  <!--  d-block for showing tabs in carousel with fixed width,  d-md-flex to show all tabs on specific viewport  -->
+                                <ul class="multi-carousel-inner nav nav-fill nav-tabs mb-3  d-block d-md-flex" id="ex1" role="tablist">
+                                  <li class="nav-item multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link active"
+                                      id="ex1-tab-1"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-1"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-1"
+                                      aria-selected="true"
+                                      >Tab 1</a
+                                    >
+                                  </li>
+                                  <li class="nav-item  multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link"
+                                      id="ex1-tab-2"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-2"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-2"
+                                      aria-selected="false"
+                                      >Tab 2</a
+                                    >
+                                  </li>
+                                  <li class="nav-item multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link"
+                                      id="ex1-tab-3"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-3"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-3"
+                                      aria-selected="false"
+                                      >Tab 3</a
+                                    >
+                                  </li>
+                                      <li class="nav-item multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link"
+                                      id="ex1-tab-1"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-4"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-4"
+                                      aria-selected="true"
+                                      >Tab 4</a
+                                    >
+                                  </li>
+                                  <li class="nav-item multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link"
+                                      id="ex1-tab-2"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-5"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-5"
+                                      aria-selected="false"
+                                      >Tab 5</a
+                                    >
+                                  </li>
+                                  <li class="nav-item multi-carousel-item" role="presentation">
+                                    <a
+                                      class="nav-link"
+                                      id="ex1-tab-3"
+                                      data-toggle="tab"
+                                      href="#ex1-tabs-6"
+                                      role="tab"
+                                      aria-controls="ex1-tabs-6"
+                                      aria-selected="false"
+                                      >Tab 6</a
+                                    >
+                                  </li>
+                                </ul>
+                                <!-- Tabs navs -->
+                              
+                                
+                                  <!--  d-md-none to disable controls on non mobile viewports -->
+                                <a class="carousel-control-prev d-md-none" tabindex="0" role="button" data-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next d-md-none" tabindex="0" role="button" data-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                              </div>
+                              
+                              <!-- Tabs content -->
+                              <!-- <div class="tab-content" id="ex1-content">
+                                <div
+                                  class="tab-pane fade show active"
+                                  id="ex1-tabs-1"
+                                  role="tabpanel"
+                                  aria-labelledby="ex1-tab-1"
+                                >
+                                  Tab 1 content
+                                </div>
+                                <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                                  Tab 2 content
+                                </div>
+                                <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                                  Tab 3 content
+                                </div>
+                                  <div class="tab-pane fade" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+                                  Tab 4 content
+                                </div>
+                                  <div class="tab-pane fade" id="ex1-tabs-5" role="tabpanel" aria-labelledby="ex1-tab-5">
+                                  Tab 5 content
+                                </div>
+                                  <div class="tab-pane fade" id="ex1-tabs-6" role="tabpanel" aria-labelledby="ex1-tab-6">
+                                  Tab 6 content
+                                </div>
+                              </div> -->
+                              <!-- Tabs content -->
+                            <div id="hockeyStickTable">
+                                <!-- <div id="siteTableCard" class="collapse.show" aria-labelledby="siteTableHeader"
                                     data-parent="#siteTableAccordion">
                                     <div class="card-body">
                                         <div class="table-responsive" id="siteTableWrapper"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -445,27 +562,39 @@
 
 
     <!-- Other Project Dependencies -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/tippy_4-3-5.min.js"></script>
+    <!-- <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/tippy_4-3-5.min.js"></script> -->
     <script src="assets/js/feather.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 
     <!-- jQuery UI -->
     <script src="assets/js/jquery-ui.min.js"></script>
 
     <script>
-        var siteHeatmapColors = [['0', 'white'], ['0.1', 'rgb(141,141,141)'], ['0.25', 'rgb(164,11,11)'], ['1', 'rgb(214,0,0)']];
-        (function () {
-            tippy('#cysOxLabel', {
-                content: "Oxidation sites are colored according to their oxidation % values in each tissue. Click to plot Site Stoichiometry.",
-            });
-            tippy('#seqMapLabel', {
-                content: "Cysteine oxidation sites (identified by OxiMouse) and phosphorylation sites (annotated in Uniprot) mapped to the selected protein sequence.",
-            });
-            tippy('#siteStoichLabel', {
-                content: "Site stoichiometry for an individual cysteine oxidation site.",
-            });
-            feather.replace();
-        })();
+        // var siteHeatmapColors = [['0', 'white'], ['0.1', 'rgb(141,141,141)'], ['0.25', 'rgb(164,11,11)'], ['1', 'rgb(214,0,0)']];
+        // $(function () {
+        // tippy('#cysOxLabel', {
+        //     content: "Oxidation sites are colored according to their oxidation % values in each tissue. Click to plot Site Stoichiometry.",
+        // });
+
+        // $(".barchart-xlabel").each(function () {
+        //     let currId = $(this).attr("id");
+        //     let compound = $("#" + currId + " > title").text();
+        //     debugger;
+        //     tippy('#' + currId, {
+        //         content: "meow",//"<img src='assets/data/images/" + compound + ".jpg' alt='compound_" + compound + "_image' width='50' height='50'>",
+        //         // allowHTML: true,
+        //         placement: 'bottom-end'
+        //     });
+        // });
+        // tippy('#SvgjsTspan1977', {
+        //     content: "meow",//"<img src='assets/data/images/BMX_IN_1.jpg' alt='compound_BMX_IN_1_image' width='50' height='50'>",
+        //     // allowHTML: true,
+        //     placement: 'bottom-end'
+        // });
+            // feather.replace();
+        // });
     </script>
 </body>
 

@@ -5,7 +5,6 @@
  */
 
 const defaultGene = "Q15910";
-const searchBarSelect = document.getElementById("searchBarSelect");
 let organism = "human";
 var searchTags = { human: [], mouse: [] };
 var compoundLabels = { human: [], mouse: [] };
@@ -14,6 +13,10 @@ var allFastaData = {
   mouse: []
 };
 var allCellData = {
+  human: [],
+  mouse: []
+};
+var hockeyStickData = {
   human: [],
   mouse: []
 };
@@ -44,6 +47,26 @@ function mapValue(object, iteratee) {
   return result;
 }
 
+function setBarChartLabelImage() {
+  $(function () {
+    $(".barchart-xlabel").each(function () {
+      let currId = $(this).attr("id");
+      let compound = $("#" + currId + " > title").text();
+      // debugger;
+      tippy(`#${currId}`, {
+        content:
+          "<img src='assets/data/images/" +
+          compound +
+          ".jpg' alt='compound_" +
+          compound +
+          "_image' width='150' height='150'>",
+        allowHTML: true,
+        placement: "bottom-end"
+      });
+    });
+  });
+}
+
 function setSearchType(type) {
   let curr = document.querySelector("#searchBarSelect li.active");
 
@@ -56,12 +79,11 @@ function setSearchType(type) {
   curr.classList.remove("active");
   newSelect.classList.add("active");
 
-  if (!_.isEmpty(searchTags[type])) 
-    setupAutoCompleteSearch(searchTags[type]);
+  if (!_.isEmpty(searchTags[type])) setupAutoCompleteSearch(searchTags[type]);
   else buildSearchTags(type, true);
 }
 
-function buildSearchTags(type, activate) {
+function buildSearchTags(type, active) {
   let fastaTags = {};
   let cellTags = {};
 
@@ -86,7 +108,7 @@ function buildSearchTags(type, activate) {
     ["label", "value"]
   );
 
-  if (activate) setupAutoCompleteSearch(searchTags[type]);
+  if (active) setupAutoCompleteSearch(searchTags[type]);
 }
 
 function setupAutoCompleteSearch(searchTags) {
@@ -137,8 +159,29 @@ function buildDatabase(type, gene) {
       parseCellData(type, gene, proteinOnFasta);
 
       if (_.isEmpty(searchTags[type])) buildSearchTags(type, gene);
+
+      setUpHockeyStick(type, gene);
     });
   });
+}
+
+function setUpHockeyStick(type, active) {
+  if (!compoundLabels[type]) return null;
+  // debugger;
+  compoundLabels[type].map(label => {
+    const sortedData = _.sortBy(allCellData[type], [
+      function (site) {
+        return site[label];
+      }
+    ]);
+    const seriesData = sortedData.map((curr, i) => {
+      return [i, parseFloat(curr[label])];
+    });
+    // return { name: label, data: [] };
+    hockeyStickData[type].push({ name: label, data: seriesData });
+  });
+  
+  if (active) plotHockeyStick(type, { name: "meow", data: [[1,1],[2,2]] });//plotHockeyStick(type, hockeyStickData[type][0]);
 }
 
 function parseFastaData(type, gene) {
@@ -218,7 +261,6 @@ function parseCellData(type, gene, protein) {
 
     if (existedCysPos >= 0 && cellLinePos >= 0) {
       cysCellData[existedCysPos].data[cellLinePos].y = parseInt(site.engaged);
-      // }
 
       const val = compoundLabels[type].map(label => {
         return site[label];

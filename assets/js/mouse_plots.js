@@ -86,6 +86,7 @@ function generateMaps(
           // debugger;
           // show info details table
           var loaderDiv = document.getElementById("loader");
+
           document.getElementById("proteinInfoDiv").style.display = "block";
           document.getElementById("accessionInfo").innerText =
             "Accession:" + ` ${protein["Entry"]}`;
@@ -94,6 +95,7 @@ function generateMaps(
           document.getElementById("proteinInfo").innerText =
             "Protein:" + ` ${protein["Protein names"]}`;
           document.getElementById("footerDiv").style.display = "block";
+
           if (loaderDiv)
             loaderDiv.style.display =
               loaderDiv.style.display === "none" ? "block" : "none";
@@ -218,7 +220,17 @@ function plotBar(site, siteR_Values, compounds) {
     series: [{ name: "R-values", data: siteR_Values }],
     chart: {
       type: "bar",
-      height: 350
+      height: 350,
+      // redrawOnWindowResize: true,
+      // redrawOnParentResize: true,
+      events: {
+        mounted: function (chartContext, config) {
+          setBarChartLabelImage();
+        },
+        updated: function (chartContext, config) {
+          setBarChartLabelImage();
+        }
+      }
     },
     colors: ["#909FF1"],
     plotOptions: {
@@ -239,6 +251,11 @@ function plotBar(site, siteR_Values, compounds) {
           fontSize: "15px",
           fontFamily: "Source Sans Pro",
           fontWeight: 900
+        }
+      },
+      labels: {
+        style: {
+          cssClass: "barchart-xlabel" //'apexcharts-xaxis-label'
         }
       }
     },
@@ -325,6 +342,108 @@ function plotBar(site, siteR_Values, compounds) {
 
   $(chartContainer).empty();
   barChart.render();
+}
+
+function plotHockeyStick(type, rvalsByGene) {
+  const hockeyStickOptions = {
+    series: [rvalsByGene],
+    chart: {
+      height: 350,
+      type: "scatter",
+      zoom: {
+        enabled: true,
+        type: "xy"
+      },
+      animations: {
+        enabled: false
+      }
+      //       events: {
+      //         // mounted: function (chartContext, config) {},
+      //         legendClick: function (chartContext, seriesIndex, config) {
+      //           if (!allCellData[type]) return null;
+      // debugger;
+      //           let allSeries = config.config.series;
+
+      //           if (_.isEmpty(allSeries[seriesIndex].data)) {
+      //             const label = allSeries[seriesIndex].name;
+      //             const data = _.sortBy(allCellData[type], [
+      //               function (site) {
+      //                 return site[label];
+      //               }
+      //             ]);
+      //             const seriesData = data.map((curr, i) => {
+      //               return [i, curr[label]];
+      //             });
+
+      //             allSeries[seriesIndex].data = seriesData;
+      //             chartContext.updateSeries(allSeries);
+      //           }
+      //           debugger;
+      //           // allSeries.forEach((s, i) => {
+      //           //   if (i === seriesIndex) chartContext.showSeries(s.name);
+      //           //   else chartContext.hideSeries(s.name);
+      //           // });
+      //           // debugger;
+      //         }
+      //       }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    fill: {
+      colors: [
+        function ({ value, seriesIndex, w }) {
+          if (value >= 2) {
+            return "#FF7B7B";
+          } else {
+            return "#909FF1";
+          }
+        }
+      ]
+    },
+    markers: {
+      strokeColors: [
+        function ({ value, seriesIndex, w }) {
+          if (value >= 2) {
+            return "#e60000";
+          } else {
+            return "#4961e9";
+          }
+        }
+      ] //'#7789ee',
+    },
+    xaxis: {
+      tickAmount: 5,
+      min: 0,
+      max: 25000,
+      forceNiceScale: true
+    },
+    yaxis: {
+      tickAmount: 7,
+      min: 0,
+      max: 8,
+      forceNiceScale: true,
+      labels: {
+        formatter: function (val) {
+          return parseFloat(val).toFixed(1);
+        }
+      }
+    }
+  };
+  // debugger;
+  var hockeyStickChart = new ApexCharts(
+    document.querySelector("#hockeyStickTable"),
+    hockeyStickOptions
+  );
+
+  hockeyStickChart.render();
+  // debugger;
+  // hockeyStickChart.w.config.series.forEach((s, i) => {
+  //   hockeyStickChart.hideSeries(s.name);
+  // });
 }
 
 var fakeOptions = {
