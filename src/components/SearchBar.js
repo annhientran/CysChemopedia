@@ -5,17 +5,19 @@ import {
   Row,
   FormGroup,
   FormControl,
-  FormLabel
+  FormLabel,
+  InputGroup,
+  InputLabel
 } from "react-bootstrap";
+import IconLabel from "components/IconLabel";
 
-const SearchBar = () => {
-  const setSearchType = () => {}
-  const searchByGene = () => {}
+const SearchBar = ({searchGene, onSubmit}) => {
+  const setSearchType = () => {};
 
   return (
     <div className="mt-3 d-flex justify-content-center">
       {/* <Row> */}
-        {/* <div class="input-group-prepend">
+      {/* <div class="input-group-prepend">
           <ul id="searchBarSelect">
             <li value="human" onclick="setSearchType('human');" class="active">
               human
@@ -65,9 +67,9 @@ const SearchBar = () => {
             variant="outline-secondary"
             className="btn btn-secondary"
             aria-describedby="searchIcon"
-            onClick={() => searchByGene()}
+            onClick={() => {onSubmit()}}
           >
-            <IconcLabel awesomeIcon="search" label="Search" />
+            <IconLabel awesomeIcon="search" label="Search" />
           </Button>
         </InputGroup.Append>
       </InputGroup>
