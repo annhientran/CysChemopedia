@@ -26,4 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # files
-assets/data/**
+src/data/mockdata
+src/data/realdata
