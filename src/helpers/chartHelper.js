@@ -1,6 +1,18 @@
 import _ from "lodash";
 
-export const getHeatmapOptions = (proteinOnFasta, cysCellData, cellLines, proteinR_Values, compounds) => {
+export barChartSortOptions = {
+  rvals: 1,
+  compounds: 2
+}
+
+export const getHeatmapOptions = (
+  proteinOnFasta,
+  cysCellData,
+  cellLines,
+  proteinR_Values,
+  compounds,
+  onCysClick
+) => {
   return {
     chart: {
       // type: "heatmap",
@@ -31,34 +43,35 @@ export const getHeatmapOptions = (proteinOnFasta, cysCellData, cellLines, protei
               values: []
             };
 
-          let siteR_Values = selectedProtein.values;
-          // set up order button
-          let barChartSortBtn = document.getElementById("barChartSortBtn");
+          onCysClick(selectedProtein.name, selectedProtein.values, compounds);
+          // let siteR_Values = selectedProtein.values;
+          // // set up order button
+          // let barChartSortBtn = document.getElementById("barChartSortBtn");
 
-          if (sortIsDisabled()) {
-            toggleSort();
+          // if (sortIsDisabled()) {
+          //   toggleSort();
 
-            let labeledRvals = siteR_Values.map((e, i) => ({
-              R_Value: e,
-              label: compounds[i]
-            }));
-            const sorted = _.sortBy(labeledRvals, e => e.R_Value);
-            const sortedClabel = _.map(sorted, "label");
-            const sortedR_Values = _.map(sorted, "R_Value");
+          //   let labeledRvals = siteR_Values.map((e, i) => ({
+          //     R_Value: e,
+          //     label: compounds[i]
+          //   }));
+          //   const sorted = _.sortBy(labeledRvals, e => e.R_Value);
+          //   const sortedClabel = _.map(sorted, "label");
+          //   const sortedR_Values = _.map(sorted, "R_Value");
 
-            barChartSortBtn.addEventListener("click", event => {
-              const barChartOrder = document.querySelector(
-                "input[name='toggleBarChartSort']:checked"
-              ).value;
-              if (barChartOrder === "R-Value") {
-                plotBar(selectedProtein.name, sortedR_Values, sortedClabel);
-              } else {
-                plotBar(selectedProtein.name, siteR_Values, compounds);
-              }
-            });
-          } else toggleSort();
+          //   barChartSortBtn.addEventListener("click", event => {
+          //     const barChartOrder = document.querySelector(
+          //       "input[name='toggleBarChartSort']:checked"
+          //     ).value;
+          //     if (barChartOrder === "R-Value") {
+          //       plotBar(selectedProtein.name, sortedR_Values, sortedClabel);
+          //     } else {
+          //       plotBar(selectedProtein.name, siteR_Values, compounds);
+          //     }
+          //   });
+          // } else toggleSort();
 
-          plotBar(selectedProtein.name, siteR_Values, compounds);
+          // plotBar(selectedProtein.name, siteR_Values, compounds);
         },
         mounted: function (chartContext, config) {
           // debugger;
@@ -183,7 +196,7 @@ export const getHeatmapOptions = (proteinOnFasta, cysCellData, cellLines, protei
   };
 };
 
-const getBarChartOptions = () => {
+export const getBarChartOptions = (site, compounds) => {
   return {
     chart: {
       type: "bar",

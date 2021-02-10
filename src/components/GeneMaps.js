@@ -16,7 +16,7 @@ class GeneMaps extends Component {
   constructor(props) {
     super(props);
 
-    const { proteinOnFasta, proteinOnCell, compounds } = props;
+    const { proteinOnFasta, proteinOnCell, compounds } = this.props;
     const { cysCellData, cellLines, proteinR_Values } = parseGeneData(
       proteinOnFasta,
       proteinOnCell,
@@ -30,14 +30,64 @@ class GeneMaps extends Component {
         cysCellData,
         cellLines,
         proteinR_Values,
-        compounds
+        compounds,
+        onCysClick
       ),
-      barChartSeries: [{ name: "R-values", data: siteR_Values }],
-      barChartOptions: chart.getBarChartOptions()
+      barChartSeries: [{ name: "R-values", data: [] }],
+      barChartOptions: chart.getBarChartOptions("none selected", compounds),
+      rvalsSorted: false
     };
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps) {
+    const { proteinOnFasta, proteinOnCell, compounds } = this.props;
+
+    if (
+      !_.isEqual(prevProps.proteinOnFasta, proteinOnFasta) &&
+      !_.isEqual(prevProps.proteinOnCell, proteinOnCell)
+    ) {
+      const { cysCellData, cellLines, proteinR_Values } = parseGeneData(
+        proteinOnFasta,
+        proteinOnCell,
+        compounds
+      );
+
+      this.setState({
+        heatmapSeries: cysCellData,
+        heatmapOptions: chart.getHeatmapOptions(
+          proteinOnFasta,
+          cysCellData,
+          cellLines,
+          proteinR_Values,
+          compounds,
+          onCysClick
+        ),
+
+        barChartSeries: [{ name: "R-values", data: [] }],
+        barChartOptions: chart.getBarChartOptions("none selected", compounds)
+      });
+    }
+  }
+
+  onCysClick = (proteinName, siteR_Values, compoundLabels) => {
+    const labeledRvals = siteR_Values.map((e, i) => ({
+      R_Value: e,
+      label: compounds[i]
+    }));
+    const sorted = _.sortBy(labeledRvals, e => e.R_Value);
+    const sortedR_Values = _.map(sorted, "R_Value");
+    const sortedCompoundLabels = _.map(sorted, "label");
+
+    this.setState({
+      barChartSeries: [{ name: "R-values", data: siteR_Values }],
+      barChartOptions: chart.getBarChartOptions(proteinName, compoundLabels),
+      sortedBarChartSeries: [{ name: "R-values", data: sortedR_Values }],
+      sortedBarChartOptions: chart.getBarChartOptions(
+        proteinName,
+        sortedCompoundLabels
+      )
+    });
+  };
 
   render() {
     return (
@@ -61,14 +111,45 @@ class GeneMaps extends Component {
             <Col class="d-flex flex-column space card card-frame barChart">
               <Row>
                 <Chart
-                  options={this.state.barChartOptions}
-                  series={this.state.barChartSeries}
+                  options={
+                    this.state.rvalsSorted
+                      ? this.state.sortedBarChartOptions
+                      : this.state.barChartOptions
+                  }
+                  series={
+                    this.state.rvalsSorted
+                      ? this.state.sortedBarChartSeries
+                      : this.state.barChartSeries
+                  }
                   type="bar"
                   height="900"
                   width="600"
                 />
               </Row>
               <Row className="d-flex flex-row mt-2">
+                Sorted by{" "}
+                <ButtonToolbar>
+                  <ToggleButtonGroup
+                    type="checkbox"
+                    value={listToggled}
+                    onChange={onChange || onToggleChange}
+                  >
+                    <ToggleButton
+                      key="barChartRvals"
+                      value={chart.barChartSortOptions.rvals}
+                      disabled={option.disabled}
+                    >
+                      {option.label}
+                    </ToggleButton>
+                    <ToggleButton
+                      key="barChartCompound"
+                      value={chart.barChartSortOptions.compounds}
+                      disabled={option.disabled}
+                    >
+                      {option.label}
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </ButtonToolbar>
                 {/* <div className="barChartSortWrapper">
                       <div className="barChartText"><b>Sort by</b></div>
                       <div className="barChartSort">

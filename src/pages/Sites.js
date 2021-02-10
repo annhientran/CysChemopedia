@@ -12,13 +12,12 @@ const Sites = () => {
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
-  const [gene, setGene] = useState("Q15910");
   const [type, setType] = useState("human");
   const [geneOnFasta, setGeneOnFasta] = useState(
-    site.getGeneOnFasta(type, fastaData, gene)
+    site.getGeneOnFasta(type, fastaData, "Q15910")
   );
   const [geneOnCell, setGeneOnCell] = useState(
-    site.getGeneOnCell(type, cellData, gene)
+    site.getGeneOnCell(type, cellData, "Q15910")
   );
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Sites = () => {
         <SiteSearchBar
           searchGene={gene}
           searchType={type}
-          selectType={() => setType()}
+          selectType={(type) => setType(type)}
           onSubmit={gene => {
             setGene(gene);
             searchGene(gene);

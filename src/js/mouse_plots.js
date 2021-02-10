@@ -209,11 +209,11 @@ function generateMaps(
 }
 
 function plotBar(site, siteR_Values, compounds) {
-  let R_values = [];
-  R_values = siteR_Values.map(e => ({ value: e }));
-  function sortR_Values() {
-    R_values = R_values.sort((a, b) => (a.value < b.value ? 1 : -1));
-  }
+  // let R_values = [];
+  // R_values = siteR_Values.map(e => ({ value: e }));
+  // function sortR_Values() {
+  //   R_values = R_values.sort((a, b) => (a.value < b.value ? 1 : -1));
+  // }
 
   // bar chart using ApexCharts js
   const barChartOptions = {
