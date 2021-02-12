@@ -14,6 +14,7 @@
  * @returns
  */
 function generateMaps(
+  type,
   protein,
   cysCellData,
   cellLines,
@@ -73,14 +74,14 @@ function generateMaps(
                 "input[name='toggleBarChartSort']:checked"
               ).value;
               if (barChartOrder === "R-Value") {
-                plotBar(selectedProtein.name, sortedR_Values, sortedClabel);
+                plotBar(type, selectedProtein.name, sortedR_Values, sortedClabel);
               } else {
-                plotBar(selectedProtein.name, siteR_Values, compounds);
+                plotBar(type, selectedProtein.name, siteR_Values, compounds);
               }
             });
           } else toggleSort();
 
-          plotBar(selectedProtein.name, siteR_Values, compounds);
+          plotBar(type, selectedProtein.name, siteR_Values, compounds);
         },
         mounted: function (chartContext, config) {
           // debugger;
@@ -95,6 +96,7 @@ function generateMaps(
           document.getElementById("proteinInfo").innerText =
             "Protein:" + ` ${protein["Protein names"]}`;
           document.getElementById("footerDiv").style.display = "block";
+          document.getElementById("hockeyStickTable").style.display = "block";
 
           if (loaderDiv)
             loaderDiv.style.display =
@@ -208,13 +210,7 @@ function generateMaps(
   chartTwo.render();
 }
 
-function plotBar(site, siteR_Values, compounds) {
-  let R_values = [];
-  R_values = siteR_Values.map(e => ({ value: e }));
-  function sortR_Values() {
-    R_values = R_values.sort((a, b) => (a.value < b.value ? 1 : -1));
-  }
-
+function plotBar(type, site, siteR_Values, compounds) {
   // bar chart using ApexCharts js
   const barChartOptions = {
     series: [{ name: "R-values", data: siteR_Values }],
@@ -225,10 +221,10 @@ function plotBar(site, siteR_Values, compounds) {
       // redrawOnParentResize: true,
       events: {
         mounted: function (chartContext, config) {
-          setBarChartLabelImage();
+          setBarChartLabelImage(type);
         },
         updated: function (chartContext, config) {
-          setBarChartLabelImage();
+          setBarChartLabelImage(type);
         }
       }
     },
@@ -356,6 +352,11 @@ function plotHockeyStick(type, rvalsByGene) {
       },
       animations: {
         enabled: false
+      },
+      events: {
+        mounted: function (chartContext, config) {
+          document.getElementById("hockeyStickTable").style.display = "block";
+        }
       }
       //       events: {
       //         // mounted: function (chartContext, config) {},
@@ -434,11 +435,10 @@ function plotHockeyStick(type, rvalsByGene) {
     }
   };
   // debugger;
-  var hockeyStickChart = new ApexCharts(
-    document.querySelector("#hockeyStickTable"),
-    hockeyStickOptions
-  );
+  const chartContainer = document.querySelector("#hockeyStickChart");
+  var hockeyStickChart = new ApexCharts(chartContainer, hockeyStickOptions);
 
+  $(chartContainer).empty();
   hockeyStickChart.render();
   // debugger;
   // hockeyStickChart.w.config.series.forEach((s, i) => {

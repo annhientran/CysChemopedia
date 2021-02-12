@@ -47,7 +47,7 @@ function mapValue(object, iteratee) {
   return result;
 }
 
-function setBarChartLabelImage() {
+function setBarChartLabelImage(type) {
   $(function () {
     $(".barchart-xlabel").each(function () {
       let currId = $(this).attr("id");
@@ -63,8 +63,39 @@ function setBarChartLabelImage() {
         allowHTML: true,
         placement: "bottom-end"
       });
+      $("#" + currId).click(() => {
+        // debugger;
+        let labelIndex = _.findIndex(hockeyStickData[type], { name: compound });
+        
+        document.querySelector(".multi-carousel-item > a.active").classList.remove("active");
+        document.getElementById(`hk-tab-${labelIndex}`).classList.add("active");
+        plotHockeyStick(type, hockeyStickData[type][labelIndex]);
+      });
     });
   });
+}
+
+function setupHockeyStickTabs(type) {
+  let tabContainer = document.getElementById("hk-tabs");
+
+  compoundLabels[type].forEach((label, i) => {
+    let tab = document.createElement("li");
+    tab.setAttribute("class", "nav-item multi-carousel-item");
+    tab.setAttribute("role", "presentation");
+    tab.innerHTML = `<a
+      class="nav-link"
+      id="hk-tab-${i}"
+      data-toggle="tab"
+      href="#hk-tabs-${i}"
+      role="tab"
+      aria-controls="hk-tabs-${i}"
+      aria-selected="true"
+      onclick="plotHockeyStick('${type}', hockeyStickData['${type}'][${i}]);"
+      >${label}</a>`;
+    tabContainer.appendChild(tab);
+  });
+
+  document.getElementById("hk-tab-0").classList.add("active");
 }
 
 function setSearchType(type) {
@@ -180,8 +211,18 @@ function setUpHockeyStick(type, active) {
     // return { name: label, data: [] };
     hockeyStickData[type].push({ name: label, data: seriesData });
   });
-  
-  if (active) plotHockeyStick(type, { name: "meow", data: [[1,1],[2,2]] });//plotHockeyStick(type, hockeyStickData[type][0]);
+
+  if (active) {
+    // plotHockeyStick(type, {
+    //   name: "meow",
+    //   data: [
+    //     [1, 1],
+    //     [2, 2]
+    //   ]
+    // });
+    setupHockeyStickTabs(type);
+    plotHockeyStick(type, hockeyStickData[type][0]);
+  }
 }
 
 function parseFastaData(type, gene) {
@@ -274,13 +315,20 @@ function parseCellData(type, gene, protein) {
     }
   });
 
-  buildMaps(protein, cysCellData, cellLineList, rVals, compoundLabels[type]);
+  buildMaps(
+    type,
+    protein,
+    cysCellData,
+    cellLineList,
+    rVals,
+    compoundLabels[type]
+  );
 }
 
-function buildMaps(protein, cysCellData, cellLineList, rVals, xLabels) {
+function buildMaps(type, protein, cysCellData, cellLineList, rVals, xLabels) {
   $(chartTwo).empty();
-  generateMaps(protein, cysCellData, cellLineList, rVals, xLabels);
+  generateMaps(type, protein, cysCellData, cellLineList, rVals, xLabels);
 
   document.getElementById("barPlotDiv").style.display = "block";
-  plotBar("non selected", [], xLabels);
+  plotBar(type, "non selected", [], xLabels);
 }
