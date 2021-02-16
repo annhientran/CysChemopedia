@@ -1,0 +1,291 @@
+.button-right-offset {
+  margin-right: 15px;
+}
+
+.nav {
+  flex-wrap: nowrap;
+}
+
+/* width of the tabs in carousel mode */
+.nav-item {
+  max-width:33%;
+}
+
+/* Custom colors for carousel navigation */
+.carousel-control-next-icon {
+ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z'/%3E%3C/svg%3E")
+}
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z'/%3E%3C/svg%3E")
+}
+
+.barchart-xlabel {
+  font-weight: 600;
+}
+/* Search bar */
+/* .input-group, .input-group-prepend {
+  padding: 0 10px;
+} */
+#searchBar {
+  padding: 45px;
+  max-width: 60vw;
+  margin: auto;
+}
+
+.input-group,
+#searchBarSelect {
+  padding: 0 34px;
+  padding-bottom: 0;
+}
+
+#searchBarSelect::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+@media (max-width: 767px) {
+  .input-group,
+  #searchBarSelect {
+    padding: 0 10px;
+  }
+
+  #searchBarSelect {
+    padding-top: 40px;
+  }
+
+  #searchBarSelect li {
+    font-size: 22px;
+  }
+}
+
+#searchBarSelect {
+  float: left;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--gray);
+  list-style: none;
+  margin-bottom: 0;
+}
+
+#searchBarSelect:hover {
+  color: var(--gray-dark);
+}
+
+#searchBarSelect li {
+  display: inline-block;
+  padding: 20px;
+  cursor: pointer;
+}
+
+#searchBarSelect li.active {
+  color: var(--primary);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .input-group {
+    padding-bottom: 45px;
+  }
+}
+
+#sitesSearchInput {
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--border-gray);
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: black;
+  background-color: white;
+}
+
+#sitesSearchSubmit {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* autocomplete */
+.ui-autocomplete {
+  background: white;
+  margin-top: 100px;
+  border-radius: 0px;
+  z-index: 100;
+  width: 600px;
+  list-style: none;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.44);
+  position: absolute;
+  height: auto;
+  border-left: 1px solid rgba(0, 0, 0, 0.11);
+  border-right: 1px solid rgba(0, 0, 0, 0.11);
+  left: 0;
+}
+
+.ui-autocomplete-input {
+  border-color: rgba(140, 130, 115, 0.19);
+  padding: 9px;
+  font-family: inherit;
+  float: left;
+  font-size: 1em;
+  border: 1px solid rgba(0, 0, 0, 0.19);
+  margin: 0;
+}
+
+.ui-autocomplete li {
+  /* background-color: rgba(24, 26, 27, 0.8); */
+  text-align: left;
+  padding: 5px;
+  font-family: inherit;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  height: 40px;
+  line-height: 25px;
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.ui-autocomplete li:hover {
+  background-color: var(--primary);
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  color: white;
+}
+
+.ui-helper-hidden-accessible{
+  display: none;
+}
+/*  Loader Spinner */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid var(--primary);
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.barChart {
+  padding: 30px 10px 20px 10px;
+}
+/* sort button on bar chart */
+.barChartSortWrapper {
+  display: table;
+  vertical-align: middle;
+  width: 100%;
+  border-collapse: separate;
+  z-index: 1;
+}
+
+.barChartText {
+  vertical-align: middle;
+  text-align: right;
+  display: table-cell;
+  padding: 0 10px;
+  width: 1%;
+  white-space: nowrap;
+}
+
+.barChartSort {
+  display: table-cell;
+}
+
+#barChartSortBtn {
+  width: 35%;
+  z-index: 2;
+}
+
+.barChartSortLabel {
+  border: 1px solid var(--primary);
+  display: inline-block;
+  padding: 5px;
+  position: relative;
+  text-align: center;
+  transition: background 600ms ease, color 600ms ease;
+}
+
+input[type="radio"].toggle {
+  display: none;
+}
+
+input[type="radio"].toggle + label {
+  cursor: pointer;
+  min-width: 60px;
+  width: 50%;
+  margin-bottom: 0;
+}
+
+input[type="radio"].toggle + label:hover {
+  background: none;
+  color: var(--primary);
+}
+
+input[type="radio"].toggle + label:after {
+  background: var(--primary);
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+  width: 100%;
+  z-index: -1;
+}
+
+input[type="radio"].toggle-left + label {
+  border-right: 0;
+}
+
+input[type="radio"].toggle-left + label:after {
+  left: 100%;
+}
+
+input[type="radio"].toggle-right + label {
+  margin-left: -5px;
+}
+
+input[type="radio"].toggle-right + label:after {
+  left: -100%;
+}
+
+input[type="radio"].toggle:checked + label {
+  cursor: default;
+  color: #fff;
+  transition: color 200ms;
+}
+
+input[type="radio"].toggle:checked + label:after {
+  left: 0;
+}
+
+.disabledSort {
+  pointer-events: none;
+  opacity: 0.4;
+}
