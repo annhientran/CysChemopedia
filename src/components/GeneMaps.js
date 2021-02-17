@@ -8,62 +8,48 @@ import {
   ToggleButton
 } from "react-bootstrap";
 import Chart from "react-apexcharts";
+import InlinePreloader from "components/Preloader/InlinePreloader/index";
 import { parseGeneData } from "helpers/siteHelper";
 import * as chart from "helpers/chartHelper";
+import "styles/sites.css";
 
 class GeneMaps extends Component {
   constructor(props) {
     super(props);
-    debugger;
-    const { proteinOnFasta, proteinOnCell, compounds } = this.props;
-    const { cysCellData, cellLines, proteinR_Values } = parseGeneData(
-      proteinOnFasta,
-      proteinOnCell,
-      compounds
-    );
-debugger;
+
     this.state = {
-      heatmapSeries:  [],
-      heatmapOptions: chart.getHeatmapOptions(
-        proteinOnFasta,
-        cysCellData,
-        cellLines,
-        proteinR_Values,
-        compounds,
-        () => {
-          return null;
-        }
-      ),
-      barChartSeries: [{ name: "R-values", data: [] }],
-      barChartOptions: chart.getBarChartOptions("none selected", compounds),
+      heatmapSeries: null,
+      heatmapOptions: null,
+      barChartSeries: null,
+      barChartOptions: null,
       rvalsSorted: false
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { proteinOnFasta, proteinOnCell, compounds } = this.props;
-
+    const { gene, compounds } = this.props;
+    debugger;
     if (
-      !_.isEqual(prevProps.proteinOnFasta, proteinOnFasta) &&
-      !_.isEqual(prevProps.proteinOnCell, proteinOnCell)
+      !_.isEqual(prevProps.gene, gene) &&
+      !_.isEmpty(gene.fasta) &&
+      !_.isEmpty(gene.cell)
     ) {
-      const { cysCellData, cellLines, proteinR_Values } = parseGeneData(
-        proteinOnFasta,
-        proteinOnCell,
+      const { cysCellData, cellLineList, rVals } = parseGeneData(
+        gene.fasta,
+        gene.cell,
         compounds
       );
 
       this.setState({
         heatmapSeries: cysCellData,
         heatmapOptions: chart.getHeatmapOptions(
-          proteinOnFasta,
+          gene.fasta,
           cysCellData,
-          cellLines,
-          proteinR_Values,
+          cellLineList,
+          rVals,
           compounds,
           this.onCysClick
         ),
-
         barChartSeries: [{ name: "R-values", data: [] }],
         barChartOptions: chart.getBarChartOptions("none selected", compounds)
       });
@@ -105,52 +91,65 @@ debugger;
       <Row>
         <Col className="d-flex justify-content-center align-items-center">
           <div className="card card-frame">
-            <Chart
-              options={this.state.heatmapOptions}
-              series={this.state.heatmapSeries}
-              type="heatmap"
-              height="900"
-              width="600"
-            />
+            {!this.state.heatmapSeries || !this.state.barChartOptions ? (
+              <div className="card-body heatmapContent">
+                <InlinePreloader />
+              </div>
+            ) : (
+              <Chart
+                options={this.state.heatmapOptions}
+                series={this.state.heatmapSeries}
+                type="heatmap"
+                height="900"
+                width="600"
+              />
+            )}
           </div>
         </Col>
         <Col className="d-flex flex-column justify-content-center align-items-center">
           <Row className="d-flex align-content-center">
             <div className="card card-header border-0 bg-secondary"></div>
           </Row>
-          <Row id="barPlotDiv">
+          <Row>
             <Col className="d-flex flex-column space card card-frame barChart">
-              <Row>
-                <Chart
-                  options={
-                    this.state.rvalsSorted
-                      ? this.state.sortedBarChartOptions
-                      : this.state.barChartOptions
-                  }
-                  series={
-                    this.state.rvalsSorted
-                      ? this.state.sortedBarChartSeries
-                      : this.state.barChartSeries
-                  }
-                  type="bar"
-                  height="900"
-                  width="600"
-                />
-              </Row>
-              <Row className="d-flex flex-row mt-2">
-                Sorted by{" "}
-                <ButtonToolbar>
-                  <ToggleButtonGroup
-                    type="checkbox"
-                    value={chart.barChartSortOptions}
-                    onChange={this.onSortToggleChange}
-                  >
-                    {chart.barChartSortOptions.map(option =>
-                      this.renderSortButtons(option)
-                    )}
-                  </ToggleButtonGroup>
-                </ButtonToolbar>
-                {/* <div className="barChartSortWrapper">
+              {!this.state.barChartSeries || !this.state.barChartOptions ? (
+                <div className="card-body barChartContent">
+                  &nbsp;
+                  <InlinePreloader />
+                </div>
+              ) : (
+                <div className="card-body">
+                  <Row>
+                    <Chart
+                      options={
+                        this.state.rvalsSorted
+                          ? this.state.sortedBarChartOptions
+                          : this.state.barChartOptions
+                      }
+                      series={
+                        this.state.rvalsSorted
+                          ? this.state.sortedBarChartSeries
+                          : this.state.barChartSeries
+                      }
+                      type="bar"
+                      height="350"
+                      width="600"
+                    />
+                  </Row>
+                  <Row className="d-flex flex-row mt-2">
+                    Sorted by{" "}
+                    <ButtonToolbar>
+                      <ToggleButtonGroup
+                        type="checkbox"
+                        value={chart.barChartSortOptions}
+                        onChange={this.onSortToggleChange}
+                      >
+                        {chart.barChartSortOptions.map(option =>
+                          this.renderSortButtons(option)
+                        )}
+                      </ToggleButtonGroup>
+                    </ButtonToolbar>
+                    {/* <div className="barChartSortWrapper">
                       <div className="barChartText"><b>Sort by</b></div>
                       <div className="barChartSort">
                           <div id="barChartSortBtn" className="disabledSort" disabled="true">
@@ -166,7 +165,9 @@ debugger;
                           </div>
                       </div>
                   </div> */}
-              </Row>
+                  </Row>
+                </div>
+              )}
             </Col>
           </Row>
         </Col>

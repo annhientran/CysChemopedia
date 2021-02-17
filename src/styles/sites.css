@@ -8,15 +8,15 @@
 
 /* width of the tabs in carousel mode */
 .nav-item {
-  max-width:33%;
+  max-width: 33%;
 }
 
 /* Custom colors for carousel navigation */
 .carousel-control-next-icon {
- background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z'/%3E%3C/svg%3E")
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z'/%3E%3C/svg%3E");
 }
 .carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z'/%3E%3C/svg%3E")
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z'/%3E%3C/svg%3E");
 }
 
 .barchart-xlabel {
@@ -157,7 +157,7 @@
   color: white;
 }
 
-.ui-helper-hidden-accessible{
+.ui-helper-hidden-accessible {
   display: none;
 }
 /*  Loader Spinner */
@@ -191,6 +191,11 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.heatmapContent {
+  height: 900px;
+  width: 600px;
 }
 
 .barChart {
@@ -230,6 +235,11 @@
   position: relative;
   text-align: center;
   transition: background 600ms ease, color 600ms ease;
+}
+
+.barChartContent {
+  height: 450px;
+  width: 600px;
 }
 
 input[type="radio"].toggle {

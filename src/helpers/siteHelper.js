@@ -41,10 +41,10 @@ export function fetchCompoundList() {
   });
 }
 
-export function getGeneOnFasta(type, fastaData, gene) {
-  if (!gene || !_.isEmpty(fastaData)) return null;
+export function getGeneOnFasta(fastaData, gene) {
+  if (!gene || _.isEmpty(fastaData)) return null;
 
-  const proteinOnFasta = fastaData[type].filter(
+  const proteinOnFasta = fastaData.filter(
     b =>
       _.includes(b.Entry, gene) || _.includes(b["Gene names (primary)"], gene)
   );
@@ -54,10 +54,10 @@ export function getGeneOnFasta(type, fastaData, gene) {
   return proteinOnFasta[0];
 }
 
-export function getGeneOnCell(type, cellData, gene) {
-  if (!gene || !_.isEmpty(cellData)) return null;
+export function getGeneOnCell(cellData, gene) {
+  if (!gene || _.isEmpty(cellData)) return null;
 
-  const proteinOnCelltbl = cellData[type].filter(
+  const proteinOnCelltbl = cellData.filter(
     b => b.uniprot_accession === gene || b.gene_symbol === gene
   );
 
@@ -99,8 +99,10 @@ function setHeatMapBase(cysArr, cellLineList) {
 
 export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
   debugger;
-  if (!proteinOnFasta || !proteinOnCell)
-    return { name: "", data: { x: 0, y: 0 } };
+  if (!proteinOnFasta || !proteinOnCell) {
+    const emptyCysData = { name: "", data: { x: 0, y: 0 } };
+    return { cysCellData: [emptyCysData], cellLineList: [], rVals: [] };
+  }
 
   let cellLineList = [];
   let sitesCysCell = [];

@@ -28,7 +28,7 @@ export const getHeatmapOptions = (
       },
       // background: "#C9C4BD",
       events: {
-        click: function (event) {
+        click: function (event) {debugger;
           if (!cysCellData || !cellLines) return;
 
           let el = event.target;

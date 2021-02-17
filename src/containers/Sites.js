@@ -15,8 +15,7 @@ const Sites = () => {
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
-  const [geneOnFasta, setGeneOnFasta] = useState(null);
-  const [geneOnCell, setGeneOnCell] = useState(null);
+  const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
 
   useEffect(() => {
     site
@@ -24,20 +23,43 @@ const Sites = () => {
       .then(setCompoundLabels)
       .then(() => {
         setLoading("Parsing Human Fasta data");
-        site.parseFastaData("human");
+        return site.parseFastaData("human");
       })
       .then(data => {
-        site.getGeneOnFasta("human", fastaData, defaultGene);
+        debugger;
         setFastaData({ ...fastaData, human: data });
+        debugger;
+        setSearchGene({
+          ...searchGene,
+          fasta: site.getGeneOnFasta(data, defaultGene)
+        });
       })
       .then(() => {
         setLoading("Parsing Human Cell data");
-        site.parseCellData("human");
+        return site.parseCellData("human");
       })
       .then(data => {
-        site.getGeneOnCell("human", cellData, defaultGene);
-        setCellData({ ...cellData, human: data });
+        setCellData({ ...cellData, human: data });debugger;
+        setSearchGene({
+          ...searchGene,
+          cell: site.getGeneOnCell(data, defaultGene)
+        });
       })
+      // .then(() => {
+      //   debugger;
+      //   const initialGeneOnFasta = site.getGeneOnFasta(
+      //     "human",
+      //     fastaData,
+      //     defaultGene
+      //   );
+      //   const initialGeneOnCell = site.getGeneOnCell(
+      //     "human",
+      //     cellData,
+      //     defaultGene
+      //   );
+      //   debugger;
+      //   setSearchGene({ fasta: initialGeneOnFasta, cell: initialGeneOnCell });
+      // })
       // .then(() => site.parseFastaData("mouse"))
       // .then(data => setFastaData({ ...fastaData, mouse: data }))
       // .then(() => site.parseCellData("mouse"))
@@ -46,9 +68,11 @@ const Sites = () => {
       .catch(() => setLoading(""));
   }, []);
 
-  const searchGene = gene => {
-    setGeneOnFasta(site.getGeneOnFasta(type, fastaData, gene));
-    setGeneOnCell(site.getGeneOnCell(type, cellData, gene));
+  const fetchGene = gene => {
+    const geneOnFasta = site.getGeneOnFasta(fastaData[type], gene);
+    const geneOnCell = site.getGeneOnCell(cellData[type], gene);
+
+    setSearchGene({ fasta: geneOnFasta, cell: geneOnCell });
   };
 
   return (
@@ -62,16 +86,12 @@ const Sites = () => {
           selectType={type => setType(type)}
           onSubmit={gene => {
             // setGene(gene);
-            searchGene(gene);
+            fetchGene(gene);
           }}
         />
       </Row>
       <Row>
-        <GeneMaps
-          compounds={compoundLabels[type]}
-          proteinOnFasta={geneOnFasta}
-          proteinOnCell={geneOnCell}
-        />
+        <GeneMaps compounds={compoundLabels[type]} gene={searchGene} />
       </Row>
       <Row>{/* <HockeyStickChart /> */}</Row>
       {/* <Lines
