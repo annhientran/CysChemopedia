@@ -21,50 +21,21 @@ const Sites = () => {
     site
       .fetchCompoundList()
       .then(setCompoundLabels)
-      .then(() => {
-        setLoading("Parsing Human Fasta data");
-        return site.parseFastaData("human");
-      })
+      .then(() => site.parseData("human"))
       .then(data => {
-        debugger;
-        setFastaData({ ...fastaData, human: data });
-        debugger;
+        setFastaData({ ...fastaData, human: data.fasta });
+        setCellData({ ...cellData, human: data.cell });
         setSearchGene({
-          ...searchGene,
-          fasta: site.getGeneOnFasta(data, defaultGene)
+          fasta: site.getGeneOnFasta(data.fasta, defaultGene),
+          cell: site.getGeneOnCell(data.cell, defaultGene)
         });
       })
-      .then(() => {
-        setLoading("Parsing Human Cell data");
-        return site.parseCellData("human");
-      })
-      .then(data => {
-        setCellData({ ...cellData, human: data });debugger;
-        setSearchGene({
-          ...searchGene,
-          cell: site.getGeneOnCell(data, defaultGene)
-        });
-      })
-      // .then(() => {
-      //   debugger;
-      //   const initialGeneOnFasta = site.getGeneOnFasta(
-      //     "human",
-      //     fastaData,
-      //     defaultGene
-      //   );
-      //   const initialGeneOnCell = site.getGeneOnCell(
-      //     "human",
-      //     cellData,
-      //     defaultGene
-      //   );
-      //   debugger;
-      //   setSearchGene({ fasta: initialGeneOnFasta, cell: initialGeneOnCell });
-      // })
-      // .then(() => site.parseFastaData("mouse"))
-      // .then(data => setFastaData({ ...fastaData, mouse: data }))
-      // .then(() => site.parseCellData("mouse"))
-      // .then(data => setCellData({ ...cellData, mouse: data }))
       .then(() => setLoading(""))
+      // .then(() => site.parseData("mouse"))
+      // .then(data => {
+      //   setFastaData({ ...fastaData, mouse: data.fasta });
+      //   setCellData({ ...cellData, mouse: data.cell });
+      // })
       .catch(() => setLoading(""));
   }, []);
 

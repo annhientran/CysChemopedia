@@ -750,7 +750,7 @@ pre code {
   padding-left: 0;
 }
 
-/* .col-1,
+.col-1,
 .col-2,
 .col-3,
 .col-4,
@@ -821,11 +821,10 @@ pre code {
 .col-xl,
 .col-xl-auto {
   position: relative;
-
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
-} */
+}
 
 .col {
   max-width: 100%;
@@ -2289,10 +2288,10 @@ select.form-control:focus::-ms-value {
 .col-form-label {
   font-size: inherit;
   line-height: 1.5;
-
+  font-weight: 700;
   margin-bottom: 0;
-  padding-top: calc(0.625rem + 1px);
-  padding-bottom: calc(0.625rem + 1px);
+  /* padding-top: calc(0.625rem + 1px);
+  padding-bottom: calc(0.625rem + 1px); */
 }
 
 .col-form-label-lg {
@@ -2361,9 +2360,9 @@ textarea.form-control {
   height: auto;
 }
 
-.form-group {
+/* .form-group {
   margin-bottom: 1.5rem;
-}
+} */
 
 .form-text {
   display: block;
@@ -2742,6 +2741,30 @@ textarea.form-control {
   }
 }
 
+/* added */
+.btn-group .active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-primary,
+.btn-primary[disabled]:hover {
+  color: #fff;
+  background-color: #5c6670;
+  border-color: #545e67;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #545e67;
+  border-color: #545e67;
+}
+
+.btn-primary[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* origin oximouse */
 .btn {
   font-size: 0.875rem;
   font-weight: 600;
@@ -2765,6 +2788,7 @@ textarea.form-control {
   border-radius: 0.25rem;
   background-color: transparent;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
@@ -2772,7 +2796,6 @@ textarea.form-control {
 }
 .btn:hover {
   text-decoration: none;
-
   color: var(--greytext);
 }
 .btn:focus,
@@ -2785,10 +2808,10 @@ textarea.form-control {
   opacity: 0.65;
   box-shadow: none;
 }
-.btn:not(:disabled):not(.disabled):active,
+/* .btn:not(:disabled):not(.disabled):active,
 .btn:not(:disabled):not(.disabled).active {
   box-shadow: none;
-}
+} */
 .btn:not(:disabled):not(.disabled):active:focus,
 .btn:not(:disabled):not(.disabled).active:focus {
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
@@ -16943,9 +16966,8 @@ a.btn-icon-only {
 }
 
 .footer-auto-bottom {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
-
   width: 100%;
 }
 

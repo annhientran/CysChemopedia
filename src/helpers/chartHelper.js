@@ -2,7 +2,7 @@ import _ from "lodash";
 
 export const barChartSortOptions = [
   { label: "R-value", value: 1 },
-  { label: "compound", value: 2 }
+  { label: "Compound", value: 2 }
 ];
 
 export const getHeatmapOptions = (
@@ -12,7 +12,7 @@ export const getHeatmapOptions = (
   proteinR_Values,
   compounds,
   onCysClick
-) => {debugger;
+) => {
   const chartTitle = proteinOnFasta
     ? `Cys-Oxidation Stoichiometry: ${proteinOnFasta["Entry"]} - Gene: ${proteinOnFasta["Gene names (primary)"]}`
     : "";
@@ -28,7 +28,7 @@ export const getHeatmapOptions = (
       },
       // background: "#C9C4BD",
       events: {
-        click: function (event) {debugger;
+        click: function (event) {
           if (!cysCellData || !cellLines) return;
 
           let el = event.target;
@@ -49,51 +49,6 @@ export const getHeatmapOptions = (
             };
 
           onCysClick(selectedProtein.name, selectedProtein.values, compounds);
-          // let siteR_Values = selectedProtein.values;
-          // // set up order button
-          // let barChartSortBtn = document.getElementById("barChartSortBtn");
-
-          // if (sortIsDisabled()) {
-          //   toggleSort();
-
-          //   let labeledRvals = siteR_Values.map((e, i) => ({
-          //     R_Value: e,
-          //     label: compounds[i]
-          //   }));
-          //   const sorted = _.sortBy(labeledRvals, e => e.R_Value);
-          //   const sortedClabel = _.map(sorted, "label");
-          //   const sortedR_Values = _.map(sorted, "R_Value");
-
-          //   barChartSortBtn.addEventListener("click", event => {
-          //     const barChartOrder = document.querySelector(
-          //       "input[name='toggleBarChartSort']:checked"
-          //     ).value;
-          //     if (barChartOrder === "R-Value") {
-          //       plotBar(selectedProtein.name, sortedR_Values, sortedClabel);
-          //     } else {
-          //       plotBar(selectedProtein.name, siteR_Values, compounds);
-          //     }
-          //   });
-          // } else toggleSort();
-
-          // plotBar(selectedProtein.name, siteR_Values, compounds);
-        },
-        mounted: function (chartContext, config) {
-          // debugger;
-          // show info details table
-          // if (!proteinOnFasta) return;
-          // let loaderDiv = document.getElementById("loader");
-          // document.getElementById("proteinInfoDiv").style.display = "block";
-          // document.getElementById("accessionInfo").innerText =
-          //   "Accession:" + ` ${proteinOnFasta["Entry"]}`;
-          // document.getElementById("geneInfo").innerText =
-          //   "Gene:" + ` ${proteinOnFasta["Gene names (primary)"]}`;
-          // document.getElementById("proteinInfo").innerText =
-          //   "Protein:" + ` ${proteinOnFasta["Protein names"]}`;
-          // // document.getElementById("footerDiv").style.display = "block";
-          // if (loaderDiv)
-          //   loaderDiv.style.display =
-          //     loaderDiv.style.display === "none" ? "block" : "none";
         }
       }
     },
@@ -321,25 +276,3 @@ export const getBarChartOptions = (site, compounds) => {
     }
   };
 };
-
-// function toggleSort() {
-//   if (sortIsDisabled()) {
-//     $("#barChartSortBtn").removeClass("disabledSort");
-//     $("#barChartSortBtn")
-//       .find("input")
-//       .each(function () {
-//         $(this).prop("disabled", false);
-//       });
-//   } else {
-//     $("#barChartSortBtn").addClass("disabledSort");
-//     $("#barChartSortBtn")
-//       .find("input")
-//       .each(function () {
-//         $(this).attr("disabled", true);
-//       });
-//   }
-// }
-
-// function sortIsDisabled() {
-//   return $("#barChartSortBtn").hasClass("disabledSort");
-// }

@@ -15,16 +15,13 @@ const cellPath = {
   mouse: CellMouseCSV
 };
 
-export function parseFastaData(type) {
-  return csv(fastaPath[type]).then(data => {
-    const reviewed = _.filter(data, ["Status", "reviewed"]);
-    return _.sortBy(reviewed, ["Entry", "Gene names (primary)"]);
-  });
-}
+export function parseData(type) {
+  return Promise.all([csv(fastaPath[type]), csv(cellPath[type])]).then(data => {
+    const reviewed = _.filter(data[0], ["Status", "reviewed"]);
+    const _fasta = _.sortBy(reviewed, ["Entry", "Gene names (primary)"]);
+    const _cell = _.sortBy(data[1], ["uniprot_accession", "gene_symbol"]);
 
-export function parseCellData(type) {
-  return csv(cellPath[type]).then(data => {
-    return _.sortBy(data, ["uniprot_accession", "gene_symbol"]);
+    return { fasta: _fasta, cell: _cell };
   });
 }
 
@@ -98,7 +95,6 @@ function setHeatMapBase(cysArr, cellLineList) {
 }
 
 export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
-  debugger;
   if (!proteinOnFasta || !proteinOnCell) {
     const emptyCysData = { name: "", data: { x: 0, y: 0 } };
     return { cysCellData: [emptyCysData], cellLineList: [], rVals: [] };
