@@ -3276,15 +3276,16 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #f7fafc;
+  color: #6c757d;
   border-color: #f7fafc;
-  background-color: transparent;
+  background-color: white;
   background-image: none;
+  border-color: #6c757d;
 }
 .btn-outline-secondary:hover {
-  color: #212529;
-  border-color: #f7fafc;
-  background-color: #f7fafc;
+  color: #f7fafc;
+  border-color: var(--primary);
+  background-color: var(--primary);
 }
 .btn-outline-secondary:focus,
 .btn-outline-secondary.focus {
@@ -15360,10 +15361,6 @@ a.text-darker:focus {
 
 [class*="btn-outline-"] {
   border-width: 1px;
-}
-
-.btn-outline-secondary {
-  color: #4385b1;
 }
 
 .btn-inner--icon i:not(.fas):not(.fab) {

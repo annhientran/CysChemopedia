@@ -6,6 +6,11 @@ import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
 import CellMouseCSV from "data/mockdata/MouseCellData.csv";
 import CompoundsCSV from "data/mockdata/Compounds.csv";
 
+export const typeOptions = [
+  { label: "HUMAN", value: "human" },
+  { label: "MOUSE", value: "mouse" }
+];
+
 const fastaPath = {
   human: FastaHumanCSV,
   mouse: FastaMouseCSV
@@ -51,7 +56,7 @@ export function getGeneOnFasta(fastaData, gene) {
   return proteinOnFasta[0];
 }
 
-export function getGeneOnCell(cellData, gene) {
+export function getGeneOnCell(cellData, gene) {//debugger;
   if (!gene || _.isEmpty(cellData)) return null;
 
   const proteinOnCelltbl = cellData.filter(
@@ -141,4 +146,27 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
   });
 
   return { cysCellData, cellLineList, rVals };
+}
+
+export function getSearchTags(fastaData, cellData) {
+  const fastaTags = fastaData.map(protein => {
+    return {
+      accession: protein.Entry,
+      value: protein["Gene names (primary)"],
+      label: `Uniprot Accession: ${protein.Entry} — Gene: ${protein["Gene names (primary)"]}`
+    };
+  });
+  const cellTags = cellData.map(site => {
+    return {
+      accession: site.uniprot_accession,
+      value: site.gene_symbol,
+      label: `Uniprot Accession: ${site.uniprot_accession} — Gene: ${site.gene_symbol}`
+    };
+  });
+  // temp solution to deal with empty value data
+  const allTags = fastaTags.concat(cellTags).filter(tag => {
+    return tag.accession !== "" && tag.value !== "";
+  });
+
+  return _.uniqBy(allTags, "label");
 }

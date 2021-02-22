@@ -1,78 +1,61 @@
-import React from "react";
+import _ from "lodash";
+import React, { useState } from "react";
 import {
-  Button,
-  // Col,
-  Row,
-  FormGroup,
+  // Button,
   FormControl,
-  FormLabel,
+  Row,
   InputGroup,
-  InputLabel
+  ToggleButton,
+  ToggleButtonGroup
 } from "react-bootstrap";
-import IconLabel from "components/IconLabel";
+// import IconLabel from "components/IconLabel";
+import GeneAutocomplete from "components/GeneAutocomplete";
+import { typeOptions } from "helpers/siteHelper";
 
-const SearchBar = ({searchGene, onSubmit}) => {
-  const setSearchType = () => {};
+const SearchBar = ({ searchTags, searchType, onSelectType, onSubmit }) => {
+  const onFieldSubmit = enteredGene => {
+    const existingModel = _.find(searchTags, gene => {
+      return gene.accession === enteredGene || gene.value === enteredGene;
+    });
+
+    if (existingModel) onSubmit(enteredGene);
+  };
+
+  const renderTypeButtons = option => {
+    return (
+      <ToggleButton
+        key={`barChart-${option.label}`}
+        value={option.value}
+        variant="outline-secondary"
+        onChange={onSelectType}
+      >
+        {option.label}
+      </ToggleButton>
+    );
+  };
 
   return (
-    <div className="mt-3 d-flex justify-content-center">
-      {/* <Row> */}
-      {/* <div class="input-group-prepend">
-          <ul id="searchBarSelect">
-            <li value="human" onclick="setSearchType('human');" class="active">
-              human
-            </li>
-            <li value="mouse" onclick="setSearchType('mouse');">
-              mouse
-            </li>
-          </ul>
-        </div>
-        <div class="input-group">
-          <input
-            id="sitesSearchInput"
-            class="form-control"
-            type="text"
-            placeholder="Enter Gene Symbol or Uniprot Accession"
-            aria-label="Search"
-            aria-describedby="searchIcon"
-          >
-            <div class="input-group-append">
-              <button
-                class="btn btn-secondary"
-                id="sitesSearchSubmit"
-                aria-describedby="searchIcon"
-                onclick="searchByGene();"
-                style="width:150px"
-              >
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </div> */}
-      {/* </Row> */}
-      <InputGroup className="mb-3">
-        <FormLabel id="searchBarSelect">
-          <Button variant="link">HUMAN</Button>
-          <Button variant="link">MOUSE</Button>
-        </FormLabel>
-        <FormControl
-          id="sitesSearchInput"
-          placeholder="Enter Gene Symbol or Uniprot Accession"
-          aria-label="Search By Gene"
-          aria-describedby="searchIcon"
-        />
-        <InputGroup.Append>
-          <Button
-            id="sitesSearchSubmit"
-            variant="outline-secondary"
-            className="btn btn-secondary"
-            aria-describedby="searchIcon"
-            onClick={() => {onSubmit()}}
-          >
-            <IconLabel awesomeIcon="search" label="Search" />
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+    <div
+      id="searchBarSelect"
+      className="mb-3 mt-3 d-flex justify-content-center"
+      width="100%"
+    >
+      <ToggleButtonGroup
+        type="radio"
+        name="type"
+        onChange={e => onSelectType(e.target.value)}
+        value={searchType}
+      >
+        {typeOptions.map(option => renderTypeButtons(option))}
+      </ToggleButtonGroup>
+      <GeneAutocomplete
+        id="sitesSearchInput"
+        options={searchTags}
+        onSubmit={onFieldSubmit}
+        minInputLength={2}
+        maxInputLength={10}
+        placeholderText="Enter Gene Symbol or Uniprot Accession"
+      />
     </div>
   );
 };

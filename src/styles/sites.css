@@ -26,25 +26,26 @@
 /* .input-group, .input-group-prepend {
   padding: 0 10px;
 } */
-#searchBar {
+ /* #searchBar {
   padding: 45px;
   max-width: 60vw;
-  margin: auto;
-}
+  margin: auto; 
+}*/
 
-.input-group,
+
 #searchBarSelect {
   padding: 0 34px;
   padding-bottom: 0;
+  width: 100%
 }
-
+/*
 #searchBarSelect::after {
   content: "";
   clear: both;
   display: table;
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .input-group,
   #searchBarSelect {
     padding: 0 10px;
@@ -83,7 +84,7 @@
 #searchBarSelect li.active {
   color: var(--primary);
   pointer-events: none;
-}
+} */
 
 @media (max-width: 767px) {
   .input-group {
@@ -96,7 +97,7 @@
   width: 100%;
   border: 1px solid var(--border-gray);
   border-right: none;
-  border-radius: 5px 0 0 5px;
+  /* border-radius: 5px 0 0 5px; */
   outline: none;
   color: black;
   background-color: white;
@@ -207,7 +208,7 @@
   padding: 30px 10px 20px 10px;
 }
 /* sort button on bar chart */
-.barChartSortWrapper {
+/* .barChartSortWrapper {
   display: table;
   vertical-align: middle;
   width: 100%;
@@ -240,7 +241,7 @@
   position: relative;
   text-align: center;
   transition: background 600ms ease, color 600ms ease;
-}
+} */
 
 .barChartContent {
   height: 450px;

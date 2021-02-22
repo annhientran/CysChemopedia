@@ -10,14 +10,16 @@ import * as site from "helpers/siteHelper";
 const defaultGene = "Q15910";
 
 const Sites = () => {
-  const [loading, setLoading] = useState("Loading");
+  const [loading, setLoading] = useState(null);
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
+  const [searchTags, setSearchTags] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
   const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
 
   useEffect(() => {
+    setLoading("Loading");
     site
       .fetchCompoundList()
       .then(setCompoundLabels)
@@ -29,17 +31,26 @@ const Sites = () => {
           fasta: site.getGeneOnFasta(data.fasta, defaultGene),
           cell: site.getGeneOnCell(data.cell, defaultGene)
         });
+        
+        setSearchTags({
+          ...searchTags,
+          human: site.getSearchTags(data.fasta, data.cell)
+        });
       })
       .then(() => setLoading(""))
       // .then(() => site.parseData("mouse"))
       // .then(data => {
       //   setFastaData({ ...fastaData, mouse: data.fasta });
       //   setCellData({ ...cellData, mouse: data.cell });
+      // setSearchTags({
+      //   ...searchTags,
+      //   mouse: site.getSearchTags(data.fasta, data.cellData)
+      // });
       // })
       .catch(() => setLoading(""));
   }, []);
 
-  const fetchGene = gene => {
+  const fetchGene = gene => {//debugger;
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], gene);
     const geneOnCell = site.getGeneOnCell(cellData[type], gene);
 
@@ -52,13 +63,10 @@ const Sites = () => {
       {/* <SEO title="Sites" /> */}
       <Row>
         <SiteSearchBar
-          // searchGene={gene}
+          searchTags={searchTags[type]}
           searchType={type}
-          selectType={type => setType(type)}
-          onSubmit={gene => {
-            // setGene(gene);
-            fetchGene(gene);
-          }}
+          onSelectType={type => setType(type)}
+          onSubmit={fetchGene}
         />
       </Row>
       <Row>
