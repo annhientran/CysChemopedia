@@ -154,7 +154,7 @@ export const getHeatmapOptions = (
   };
 };
 
-export const getBarChartOptions = (site, compounds) => {
+export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   return {
     chart: {
       type: "bar",
@@ -163,10 +163,10 @@ export const getBarChartOptions = (site, compounds) => {
       // redrawOnParentResize: true,
       events: {
         mounted: function (chartContext, config) {
-          // setBarChartLabelImage();
+          setXAxisLabelImages();
         },
         updated: function (chartContext, config) {
-          // setBarChartLabelImage();
+          setXAxisLabelImages();
         }
       }
     },

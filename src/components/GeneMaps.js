@@ -1,5 +1,8 @@
 import _ from "lodash";
 import React, { Component } from "react";
+import $ from "jquery";
+import tippy from "tippy.js";
+// import 'tippy.js/dist/tippy.css'; // optional for styling
 import {
   Col,
   Row,
@@ -52,7 +55,11 @@ class GeneMaps extends Component {
           this.onCysClick
         ),
         barChartSeries: [{ name: "R-values", data: [] }],
-        barChartOptions: chart.getBarChartOptions("none selected", compounds)
+        barChartOptions: chart.getBarChartOptions(
+          "none selected",
+          compounds,
+          this.tooltipBarChartLabel
+        )
       });
     }
   }
@@ -68,12 +75,37 @@ class GeneMaps extends Component {
 
     this.setState({
       barChartSeries: [{ name: "R-values", data: siteR_Values }],
-      barChartOptions: chart.getBarChartOptions(proteinName, compoundLabels),
+      barChartOptions: chart.getBarChartOptions(
+        proteinName,
+        compoundLabels,
+        this.tooltipBarChartLabel
+      ),
       sortedBarChartSeries: [{ name: "R-values", data: sortedR_Values }],
       sortedBarChartOptions: chart.getBarChartOptions(
         proteinName,
-        sortedCompoundLabels
+        sortedCompoundLabels,
+        this.tooltipBarChartLabel
       )
+    });
+  };
+
+  tooltipBarChartLabel = () => {
+    $(function () {
+      $(".barchart-xlabel").each(function () {
+        let currId = $(this).attr("id");
+        let compound = $("#" + currId + " > title").text();
+        // debugger;
+        tippy(`#${currId}`, {
+          content:
+            "<img src='data/images/" +
+            compound +
+            ".jpg' alt='compound_" +
+            compound +
+            "_image' width='150' height='150'>",
+          allowHTML: true,
+          placement: "bottom-end"
+        });
+      });
     });
   };
 
