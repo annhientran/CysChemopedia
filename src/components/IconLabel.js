@@ -4,20 +4,17 @@ import PropTypes from "prop-types";
 const IconLabel = ({ awesomeIcon, iconText = "", label, iconFirst }) => {
   const iconPadding = iconFirst ? { paddingRight: 10 } : { paddingLeft: 10 };
   const renderIcon = () => {
-    if (iconText)
-      return (
-        <>
-          <span
-            className="sidenav-mini-icon"
-            aria-hidden="true"
-            style={iconPadding}
-          >
-            {iconText}
-          </span>
-        </>
-      );
-
-    return (
+    return iconText ? (
+      <>
+        <span
+          className="sidenav-mini-icon"
+          aria-hidden="true"
+          style={iconPadding}
+        >
+          {iconText}
+        </span>
+      </>
+    ) : (
       <i
         className={`fas fa-${awesomeIcon}`}
         aria-hidden="true"
@@ -26,16 +23,12 @@ const IconLabel = ({ awesomeIcon, iconText = "", label, iconFirst }) => {
     );
   };
 
-  if (iconFirst) {
-    return (
-      <span>
-        {renderIcon()}
-        {label}
-      </span>
-    );
-  }
-
-  return (
+  return iconFirst ? (
+    <span>
+      {renderIcon()}
+      {label}
+    </span>
+  ) : (
     <span>
       {label}
       {renderIcon()}

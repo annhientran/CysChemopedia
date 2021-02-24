@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 // import { Lines } from "react-preloaders";
@@ -19,7 +20,7 @@ const Sites = () => {
   const [searchTags, setSearchTags] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
   const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
-  const [searchCompound, setSearchCompound] = useState([]);
+  const [searchCompound, setSearchCompound] = useState("");
 
   useEffect(() => {
     setLoading("Loading");
@@ -62,7 +63,12 @@ const Sites = () => {
   };
 
   useEffect(() => {
-    if (compoundLabels && cellData && !compoundData[type]) {
+    if (
+      !_.isEmpty(compoundLabels[type]) &&
+      !_.isEmpty(cellData[type]) &&
+      _.isEmpty(compoundData[type])
+    ) {
+      setSearchCompound(compoundLabels[type][0]);
       setCompoundData({
         ...compoundData[type],
         [type]: site.fetchHockeyStickData(compoundLabels[type], cellData[type])

@@ -137,7 +137,7 @@ class GeneMaps extends Component {
       <>
         <Col className="d-flex justify-content-center align-items-center">
           <div className="card card-frame">
-            {!this.state.heatmapSeries || !this.state.barChartOptions ? (
+            {!this.state.heatmapSeries || !this.state.heatmapOptions ? (
               <div className="card-body heatmapContent">
                 <InlinePreloader />
               </div>

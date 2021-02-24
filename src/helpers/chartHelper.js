@@ -279,19 +279,16 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   };
 };
 
-export function getHockeyStickOptions(seriesData) {
+export function getHockeyStickOptions() {
   return {
-    series: [seriesData],
     chart: {
-      height: 350,
-      type: "scatter",
       zoom: {
         enabled: true,
         type: "xy"
       },
-      animations: {
-        enabled: false
-      }
+      // animations: {
+      //   enabled: false
+      // }
       //       events: {
       //         // mounted: function (chartContext, config) {},
       //         legendClick: function (chartContext, seriesIndex, config) {

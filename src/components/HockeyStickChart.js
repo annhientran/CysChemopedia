@@ -1,20 +1,14 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import {
-  Col,
-  Row,
-  Form,
-  ToggleButtonGroup,
-  ToggleButton
-} from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Tabs, { TabPane } from "rc-tabs";
 import TabContent from "rc-tabs/lib/TabContent";
 import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 import Chart from "react-apexcharts";
+import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
-import { parseGeneData } from "helpers/siteHelper";
 import * as chart from "helpers/chartHelper";
-import "styles/sites.css";
+import "rc-tabs/assets/index.css";
 
 class HockeyStickChart extends Component {
   constructor(props) {
@@ -22,110 +16,93 @@ class HockeyStickChart extends Component {
 
     this.state = {
       hockeyStickSeries: null,
-      hockeyStickOptions: null
+      hockeyStickOptions: chart.getHockeyStickOptions(),
+      activeTab: "0"
     };
   }
 
   componentDidUpdate(prevProps) {
     const { compoundData, compound } = this.props;
 
-    if (
-      !_.isEqual(prevProps.compoundData, compoundData) &&
-      !_.isEmpty(gene.fasta) &&
-      !_.isEmpty(gene.cell)
-    ) {
+    if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
       this.setState({
-        hockeyStickSeries: this.props.compound,
-        hockeyStickOptions: chart.getHeatmapOptions(
-          gene.fasta,
-          cysCellData,
-          cellLineList,
-          rVals,
-          compounds,
-          this.onCysClick
-        ),
-        barChartSeries: [{ name: "R-values", data: [] }],
-        barChartOptions: chart.getBarChartOptions(
-          "none selected",
-          compounds,
-          this.tooltipBarChartLabel
-        )
+        hockeyStickSeries: _.find(compoundData, ["name", compound])
       });
+      debugger;
     }
   }
 
-  onCysClick = (proteinName, siteR_Values, compoundLabels) => {
-    const labeledRvals = siteR_Values.map((e, i) => ({
-      R_Value: e,
-      label: compoundLabels[i]
-    }));
-    const sorted = _.sortBy(labeledRvals, e => e.R_Value);
-    const sortedR_Values = _.map(sorted, "R_Value");
-    const sortedCompoundLabels = _.map(sorted, "label");
-
-    this.setState({
-      barChartSeries: [{ name: "R-values", data: siteR_Values }],
-      barChartOptions: chart.getBarChartOptions(
-        proteinName,
-        compoundLabels,
-        this.tooltipBarChartLabel
-      ),
-      sortedBarChartSeries: [{ name: "R-values", data: sortedR_Values }],
-      sortedBarChartOptions: chart.getBarChartOptions(
-        proteinName,
-        sortedCompoundLabels,
-        this.tooltipBarChartLabel
-      )
-    });
+  saveBar = bar => {
+    this.bar = bar;
   };
 
-  renderSortButtons = option => {
-    const { barChartSeries, barChartOptions } = this.state;
-    const isDisabled =
-      !barChartSeries || !barChartOptions || _.isEmpty(barChartSeries[0].data);
+  onTabChange = key => {
+    this.setState({ hockeyStickSeries: null, activeTab: key });
+    this.props.setCompound(this.props.compoundData[key].name);
+  };
 
-    return (
-      <ToggleButton
-        key={`barChart-${option.label}`}
-        value={option.value}
-        disabled={isDisabled}
-      >
-        {option.label}
-      </ToggleButton>
+  renderTabContent = () => {
+    debugger;
+    return !this.state.hockeyStickSeries ? (
+      <div className="card-body hockeyStickContent">
+        <InlinePreloader />
+      </div>
+    ) : (
+      <Chart
+        options={this.state.hockeyStickOptions}
+        series={this.state.hockeyStickSeries}
+        type="scatter"
+        height="350"
+        // width="600"
+      />
     );
   };
 
+  renderTabPane = () => {
+    return this.props.compoundData.map((compound, i) => {
+      return (
+        <TabPane placeholder={`loading ${i}`} tab={compound.name} key={i}>
+          {this.state.activeTab !== i ? null : this.renderTabContent()}
+        </TabPane>
+      );
+    });
+  };
+
   render() {
+    debugger;
     return (
       <>
         <Col className="d-flex justify-content-center align-items-center">
-          <div className="card card-frame">
-            {/* {!this.state.hockeyStickSeries || !this.state.hockeyStickOptions ? (
-              <div className="card-body heatmapContent">
+          <div
+            className="card card-frame"
+            style={{ height: "500px", width: "1200px" }}
+          >
+            {_.isEmpty(this.props.compoundData) || !this.props.compound ? (
+              <div className="card-body hockeyStickContent">
                 <InlinePreloader />
               </div>
             ) : (
               <div className="card-body">
                 <Tabs
-                  activeKey={this.state.activeKey}
-                  // className={cls}
-                  // style={style}
+                  activeKey={this.state.activeTab}
+                  style={{ height: 400 }}
                   tabBarPosition="left"
                   renderTabBar={() => (
                     <ScrollableInkTabBar
                       ref={this.saveBar}
-                      onTabClick={this.onTabClick}
-                      {...iconProps}
+                      onTabClick={this.onTabChange}
+                      nextIcon={<IconLabel awesomeIcon="caret-down" />}
+                      prevIcon={<IconLabel awesomeIcon="caret-up" />}
                     />
                   )}
-                  renderTabContent={() => <TabContent style={contentStyle} />}
-                  onChange={this.onChange2}
+                  renderTabContent={() => (
+                    <TabContent style={{ height: 400 }} />
+                  )}
                 >
-                  {ends}
+                  {this.renderTabPane()}
                 </Tabs>
-                
               </div>
-            )} */}
+            )}
           </div>
         </Col>
       </>
