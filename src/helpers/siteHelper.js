@@ -43,6 +43,40 @@ export function fetchCompoundList() {
   });
 }
 
+export function fetchHockeyStickData(compoundLabels, cellData) {
+  if (!compoundLabels) return null;
+  // debugger;
+  // return
+  const ret = compoundLabels.map(label => {
+    const sortedData = _.sortBy(cellData, [
+      function (site) {
+        return site[label];
+      }
+    ]);
+
+    let filteredData = {};
+    sortedData.forEach((site, i) => {
+      let compoundVal = parseFloat(site[label]).toFixed(2);
+
+      if (filteredData[compoundVal]) {
+        filteredData[compoundVal].name += `, ${site.gene_symbol}`;
+      } else {
+        filteredData[compoundVal] = { index: i, name: site.gene_symbol };
+      }
+    });
+
+    let seriesData = _.map(filteredData, (value, key) => [
+      value.index,
+      parseFloat(key),
+      value.name
+    ]);
+
+    return { name: label, data: seriesData };
+  });
+
+  return ret;
+}
+
 export function getGeneOnFasta(fastaData, gene) {
   if (!gene || _.isEmpty(fastaData)) return null;
 
@@ -56,7 +90,8 @@ export function getGeneOnFasta(fastaData, gene) {
   return proteinOnFasta[0];
 }
 
-export function getGeneOnCell(cellData, gene) {//debugger;
+export function getGeneOnCell(cellData, gene) {
+  //debugger;
   if (!gene || _.isEmpty(cellData)) return null;
 
   const proteinOnCelltbl = cellData.filter(

@@ -105,6 +105,10 @@ class GeneMaps extends Component {
           allowHTML: true,
           placement: "bottom-end"
         });
+
+        $("#" + currId).click(() => {
+          this.props.setHockeyStickCompound(compound);
+        });
       });
     });
   };
@@ -130,7 +134,7 @@ class GeneMaps extends Component {
 
   render() {
     return (
-      <Row>
+      <>
         <Col className="d-flex justify-content-center align-items-center">
           <div className="card card-frame">
             {!this.state.heatmapSeries || !this.state.barChartOptions ? (
@@ -211,7 +215,7 @@ class GeneMaps extends Component {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </>
     );
   }
 }

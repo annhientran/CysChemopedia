@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+const engagedValue = 1.5;
+
 export const barChartSortOptions = [
   { label: "R-value", value: 1 },
   { label: "Compound", value: 2 }
@@ -277,9 +279,9 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   };
 };
 
-export function getHockeyStickOptions(type, rvalsByGene) {
+export function getHockeyStickOptions(seriesData) {
   return {
-    series: [rvalsByGene],
+    series: [seriesData],
     chart: {
       height: 350,
       type: "scatter",
@@ -329,7 +331,7 @@ export function getHockeyStickOptions(type, rvalsByGene) {
     fill: {
       colors: [
         function ({ value, seriesIndex, w }) {
-          if (value >= 2) {
+          if (value >= engagedValue) {
             return "#FF7B7B";
           } else {
             return "#909FF1";
@@ -340,13 +342,34 @@ export function getHockeyStickOptions(type, rvalsByGene) {
     markers: {
       strokeColors: [
         function ({ value, seriesIndex, w }) {
-          if (value >= 2) {
+          if (value >= engagedValue) {
             return "#e60000";
           } else {
             return "#4961e9";
           }
         }
       ] //'#7789ee',
+    },
+    tooltip: {
+      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+        if (series[seriesIndex][dataPointIndex])
+          return (
+            '<div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">' +
+            // {/* <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> */}
+            '<div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">' +
+            '<div class="apexcharts-tooltip-y-group">' +
+            '<span class="apexcharts-tooltip-text-value">' +
+            w.globals.initialSeries[seriesIndex].name +
+            ": </span>" +
+            '<span class="apexcharts-tooltip-text-value">' +
+            w.globals.labels[dataPointIndex] +
+            "</span>" +
+            "</div>" +
+            "</div>" +
+            "</div>"
+          );
+        return null;
+      }
     },
     xaxis: {
       tickAmount: 5,
