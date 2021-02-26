@@ -111,6 +111,7 @@ const Sites = () => {
           cellData={cellData[type]}
           colsInDownloadCSV={[
             "site",
+            "cysteine",
             "uniprot_accession",
             "gene_symbol",
             "prot_description",

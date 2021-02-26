@@ -13,12 +13,12 @@ class GeneAutocomplete extends Component {
     }
   }
 
-  renderOptions = options => {debugger;
+  renderOptions = options => {
     if (!options || !options.length) return [];
 
     return options.map(type => {
       const { accession, label, value } = type;
-      const params = { key: label, accession: accession, value: value };
+      const params = { label: label, accession: accession, value: value };
 
       return <Option {...params}>{label}</Option>;
     });
@@ -45,7 +45,7 @@ class GeneAutocomplete extends Component {
   };
 
   onKeyDown = e => {
-    if (e.keyCode === 13) this.props.onsubmit(this.state.value);
+    if (e.keyCode === 13) this.onSubmitHandler(this.state.value);
   };
 
   // pre-populate options by default
@@ -78,16 +78,18 @@ class GeneAutocomplete extends Component {
     return (
       <Select
         value={this.state.value}
+        // defaultValue="gene"
         // onChange={this.onChangeHandler}
         onSelect={this.onSubmitHandler}
         onSearch={this.onChangeHandler}
         onInputKeyDown={this.onKeyDown}
-        filterOption={this.customFilterOption}
-        filterSort={this.sorterByPos}
+        // filterOption={this.customFilterOption}
+        // filterSort={this.sorterByPos}
         onFocus={() => this.onFieldFocus(this.state.value)}
         onBlur={() => this.setState({ openBox: false })}
         open={this.state.openBox}
-        optionLabelProp="children"
+        optionFilterProp="label"
+        // optionLabelProp="children"
         placeholder={this.props.placeholderText}
         notFoundContent="No results found"
         // filterOption={true}
@@ -95,7 +97,9 @@ class GeneAutocomplete extends Component {
         // optionFilterProp="value"
         dropdownMenuStyle={{ maxHeight: 200, overflowX: "hidden" }}
         combobox
-        backfill
+        backfill={true}
+        showSearch
+        showArrow
         allowClear
         // {...this.props.customOptions}
       >

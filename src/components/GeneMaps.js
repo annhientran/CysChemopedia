@@ -73,7 +73,7 @@ class GeneMaps extends Component {
     const sorted = _.sortBy(filtered, e => e.R_Value);
     const sortedR_Values = _.map(sorted, "R_Value");
     const sortedCompoundLabels = _.map(sorted, "label");
-    debugger;
+
     this.setState({
       barChartSeries: [{ name: "R-values", data: _.map(filtered, "R_Value") }],
       barChartOptions: chart.getBarChartOptions(
@@ -128,6 +128,7 @@ class GeneMaps extends Component {
         key={`barChart-${option.label}`}
         value={option.value}
         disabled={isDisabled}
+        variant="outline-secondary"
       >
         {option.label}
       </ToggleButton>
@@ -135,19 +136,34 @@ class GeneMaps extends Component {
   };
 
   render() {
+    const {
+      barChartSeries,
+      barChartOptions,
+      sortedBarChartSeries,
+      sortedBarChartOptions,
+      rvalsSorted,
+      heatmapSeries,
+      heatmapOptions
+    } = this.state;
+
+    const barChartWidth =
+      barChartSeries && barChartSeries[0].data.length > 0
+        ? barChartSeries[0].data.length * 42
+        : "600";
+
     return (
       <>
         <Col className="d-flex justify-content-center align-items-center">
           <div className="card card-frame">
-            {!this.state.heatmapSeries || !this.state.heatmapOptions ? (
+            {!heatmapSeries || !heatmapOptions ? (
               <div className="card-body heatmapContent">
                 <InlinePreloader />
               </div>
             ) : (
               <div className="card-body">
                 <Chart
-                  options={this.state.heatmapOptions}
-                  series={this.state.heatmapSeries}
+                  options={heatmapOptions}
+                  series={heatmapSeries}
                   type="heatmap"
                   height="900"
                   width="600"
@@ -168,29 +184,29 @@ class GeneMaps extends Component {
           </Row>
           <Row>
             <Col className="d-flex flex-column space card card-frame barChart">
-              {!this.state.barChartSeries || !this.state.barChartOptions ? (
-                <div className="card-body barChartContent">
+              {!barChartSeries || !barChartOptions ? (
+                <div className="card-body barChartFrame">
                   &nbsp;
                   <InlinePreloader />
                 </div>
               ) : (
                 <div className="card-body">
                   <Row>
-                    <Chart
-                      options={
-                        this.state.rvalsSorted
-                          ? this.state.sortedBarChartOptions
-                          : this.state.barChartOptions
-                      }
-                      series={
-                        this.state.rvalsSorted
-                          ? this.state.sortedBarChartSeries
-                          : this.state.barChartSeries
-                      }
-                      type="bar"
-                      height="350"
-                      width="600"
-                    />
+                    <div className="barChartFrame">
+                      <Chart
+                        options={
+                          rvalsSorted ? sortedBarChartOptions : barChartOptions
+                        }
+                        series={
+                          this.state.rvalsSorted
+                            ? sortedBarChartSeries
+                            : barChartSeries
+                        }
+                        type="bar"
+                        height="350"
+                        width={barChartWidth}
+                      />
+                    </div>
                   </Row>
                   <Form.Group controlId="barChartSortRow">
                     <Form.Row>

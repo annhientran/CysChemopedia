@@ -200,7 +200,7 @@
 }
 
 .geneInfoContent {
-  height: 250px;
+  /* height: 250px; */
   width: 600px;
 }
 
@@ -243,9 +243,12 @@
   transition: background 600ms ease, color 600ms ease;
 } */
 
-.barChartContent {
-  height: 450px;
-  width: 700px;
+.barChartFrame {
+  min-width: 600px;
+  max-width: 600px;
+  height: 380px;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 input[type="radio"].toggle {

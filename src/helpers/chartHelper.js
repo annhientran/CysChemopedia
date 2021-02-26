@@ -26,7 +26,7 @@ export const getHeatmapOptions = (
         type: "xy"
       },
       animations: {
-        enabled: true
+        enabled: false
       },
       // background: "#C9C4BD",
       events: {
@@ -163,7 +163,6 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   return {
     chart: {
       type: "bar",
-      height: 350,
       // redrawOnWindowResize: true,
       // redrawOnParentResize: true,
       events: {
@@ -238,7 +237,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
     annotations: {
       yaxis: [
         {
-          y: 2,
+          y: 1.5,
           strokeDashArray: 1,
           borderColor: "#ff0000",
           label: {
@@ -247,7 +246,9 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
               color: "#ff0000"
               // background: "#ff0000"
             },
-            text: "Hit Compound"
+            text: "Hit Compound",
+            position: "left",
+            offsetX: 70
           }
         }
       ]
@@ -342,7 +343,7 @@ export function getHockeyStickOptions() {
     },
     tooltip: {
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        if (series[seriesIndex][dataPointIndex]) {
+        if (series[seriesIndex][dataPointIndex] >= engagedValue) {
           const pointData =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
           const geneList = formatGeneString(pointData[2], 10);
@@ -354,8 +355,12 @@ export function getHockeyStickOptions() {
               <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> 
               <div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
                 <div class="apexcharts-tooltip-y-group">
-                  <span class="apexcharts-tooltip-text-value">Cys number:&nbsp;</span>
+                  <span class="apexcharts-tooltip-text-value">Cys order:&nbsp;</span>
                   <span class="apexcharts-tooltip-text-label">${pointData[0]}</span>
+                </div>
+                <div class="apexcharts-tooltip-y-group">
+                  <span class="apexcharts-tooltip-text-value">Cys number:&nbsp;</span>
+                  <span class="apexcharts-tooltip-text-label">${pointData[3]}</span>
                 </div>
                 <div class="apexcharts-tooltip-z-group">
                   <span class="apexcharts-tooltip-text-value">R-value:&nbsp;</span>
@@ -374,7 +379,7 @@ export function getHockeyStickOptions() {
     },
     xaxis: {
       title: {
-        text: "Cys Number",
+        text: "Cys Order",
         style: {
           // cssClass: "apexcharts-yaxis-label",
           fontSize: "15px",

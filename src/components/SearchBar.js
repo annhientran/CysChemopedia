@@ -1,9 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup
-} from "react-bootstrap";
+import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 // import IconLabel from "components/IconLabel";
 import GeneAutocomplete from "components/GeneAutocomplete";
 import { typeOptions } from "helpers/siteHelper";
@@ -11,7 +8,10 @@ import { typeOptions } from "helpers/siteHelper";
 const SearchBar = ({ searchTags, searchType, onSelectType, onSubmit }) => {
   const onFieldSubmit = enteredGene => {
     const existingModel = _.find(searchTags, gene => {
-      return gene.accession === enteredGene || gene.value === enteredGene;
+      return (
+        gene.accession.toUpperCase() === enteredGene.toUpperCase() ||
+        gene.value.toUpperCase() === enteredGene.toUpperCase()
+      );
     });
 
     if (existingModel) onSubmit(enteredGene);

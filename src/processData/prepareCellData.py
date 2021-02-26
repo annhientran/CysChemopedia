@@ -2,9 +2,9 @@ import PySimpleGUI as sg
 import csv
 from datetime import datetime
 
-humanCell = 'src/data/realdata/HumanCellData'
-mouseCell = 'src/data/realdata/MouseCellData'
-compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\realdata\\initial\\Compounds.csv'
+humanCell = 'src/data/mockdata/HumanCellData'
+mouseCell = 'src/data/mockdata/MouseCellData'
+compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\mockdata\\Compounds.csv'
 engagedVal = 2
 mappedVal = 1
 

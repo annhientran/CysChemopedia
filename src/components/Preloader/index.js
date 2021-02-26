@@ -6,7 +6,7 @@ const Preloader = ({ show }) => {
   if (!show) return null;
 
   return (
-    <div id="fullpage-loader" className="fpl-loader">
+    <div id="fullpage-loader" className="fpl-loader curtain">
       <div id="fullpage-loader__spinner" className="fpl-spinner" />
       <div id="fullpage-loader__label">
         {show}

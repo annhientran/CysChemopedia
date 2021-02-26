@@ -120,3 +120,32 @@
   animation: dots 1s linear infinite;
 }
 /*** End dots animation ***/
+
+#fullpage-loader.fpl-loader {
+  color: #d7ca9e;
+}
+
+#fullpage-loader__spinner.fpl-spinner {
+  border-color: #5c6670;
+  border-top-color: var(--primary);
+}
+
+.Loaderlink .spinning.glyphicon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 1s infinite linear;
+}
+#fullpage-loader.fpl-loader {
+  color: #d7ca9e;
+}
+
+#fullpage-loader__spinner.fpl-spinner {
+  border-color: #5c6670;
+  border-top-color: #78cdd1;
+}
+
+.Loaderlink .spinning.glyphicon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 1s infinite linear;
+}

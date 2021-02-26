@@ -52,13 +52,6 @@ class HockeyStickChart extends Component {
     }
   }
 
-  // downloadCSV = () => {
-  //   const { cellData, colsInDownloadCSV, compound } = this.props;
-  //   if (!cellData) return Promise.reject();
-
-  //   const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
-  // };
-
   saveBar = bar => {
     this.bar = bar;
   };
@@ -79,7 +72,7 @@ class HockeyStickChart extends Component {
           options={this.state.hockeyStickOptions}
           series={this.state.hockeyStickSeries}
           type="scatter"
-          height="450"
+          height="480"
           // width="600"
         />
         <CSVLink
@@ -90,7 +83,7 @@ class HockeyStickChart extends Component {
           target="_blank"
         >
           <IconLabel
-            awesomeIcon="sync"
+            awesomeIcon="download"//"sync"
             label={`Download ${this.props.compound} CSV`}
           />
         </CSVLink>

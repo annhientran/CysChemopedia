@@ -70,14 +70,19 @@ export function fetchHockeyStickData(compoundLabels, cellData) {
       if (filteredData[compoundVal]) {
         filteredData[compoundVal].name += `, ${site.gene_symbol}`;
       } else {
-        filteredData[compoundVal] = { index: i, name: site.gene_symbol };
+        filteredData[compoundVal] = {
+          index: i,
+          name: site.gene_symbol,
+          cysnumber: site.cysteine
+        };
       }
     });
 
     let seriesData = _.map(filteredData, (value, key) => [
       value.index,
       parseFloat(key),
-      value.name
+      value.name,
+      value.cysnumber
     ]);
 
     return { name: label, data: seriesData };
@@ -211,7 +216,7 @@ export function getSearchTags(fastaData, cellData) {
   const allTags = fastaTags.concat(cellTags).filter(tag => {
     return tag.accession !== "" && tag.value !== "";
   });
-debugger;
+
   return _.uniqBy(allTags, "label");
 }
 
