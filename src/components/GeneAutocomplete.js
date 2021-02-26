@@ -13,7 +13,7 @@ class GeneAutocomplete extends Component {
     }
   }
 
-  renderOptions = options => {
+  renderOptions = options => {debugger;
     if (!options || !options.length) return [];
 
     return options.map(type => {

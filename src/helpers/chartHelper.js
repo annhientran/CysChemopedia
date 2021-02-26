@@ -33,9 +33,12 @@ export const getHeatmapOptions = (
         click: function (event) {
           if (!cysCellData || !cellLines) return;
 
-          let el = event.target;
+          const el = event.target;
           const i = el.getAttribute("i");
           const j = el.getAttribute("j");
+
+          if (!i || !j) return;
+
           const selectedCysteine = cysCellData[i].name;
           const selectedCellLine = cellLines[j];
           let selectedProtein = _.find(
@@ -286,38 +289,28 @@ export function getHockeyStickOptions() {
         enabled: true,
         type: "xy"
       },
-      // animations: {
-      //   enabled: false
-      // }
-      //       events: {
-      //         // mounted: function (chartContext, config) {},
-      //         legendClick: function (chartContext, seriesIndex, config) {
-      //           if (!allCellData[type]) return null;
-      // debugger;
-      //           let allSeries = config.config.series;
-
-      //           if (_.isEmpty(allSeries[seriesIndex].data)) {
-      //             const label = allSeries[seriesIndex].name;
-      //             const data = _.sortBy(allCellData[type], [
-      //               function (site) {
-      //                 return site[label];
-      //               }
-      //             ]);
-      //             const seriesData = data.map((curr, i) => {
-      //               return [i, curr[label]];
-      //             });
-
-      //             allSeries[seriesIndex].data = seriesData;
-      //             chartContext.updateSeries(allSeries);
-      //           }
-      //           debugger;
-      //           // allSeries.forEach((s, i) => {
-      //           //   if (i === seriesIndex) chartContext.showSeries(s.name);
-      //           //   else chartContext.hideSeries(s.name);
-      //           // });
-      //           // debugger;
-      //         }
-      //       }
+      toolbar: {
+        tools:{ 
+          download: false
+        }
+      },
+      animations: {
+        enabled: true,
+        easing: "easeinout",
+        speed: 800
+      }
+    },
+    title: {
+      text: "Hockey Stick Chart",
+      align: "left",
+      margin: 10,
+      offsetX: 0,
+      offsetY: 0,
+      floating: false,
+      style: {
+        fontSize: "16px",
+        color: "#263238"
+      }
     },
     dataLabels: {
       enabled: false
@@ -349,35 +342,64 @@ export function getHockeyStickOptions() {
     },
     tooltip: {
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        if (series[seriesIndex][dataPointIndex])
-          return (
-            '<div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">' +
-            // {/* <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> */}
-            '<div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">' +
-            '<div class="apexcharts-tooltip-y-group">' +
-            '<span class="apexcharts-tooltip-text-value">' +
-            w.globals.initialSeries[seriesIndex].name +
-            ": </span>" +
-            '<span class="apexcharts-tooltip-text-value">' +
-            w.globals.labels[dataPointIndex] +
-            "</span>" +
-            "</div>" +
-            "</div>" +
-            "</div>"
-          );
+        if (series[seriesIndex][dataPointIndex]) {
+          const pointData =
+            w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+          const geneList = formatGeneString(pointData[2], 10);
+
+          return `<div class="apexcharts-tooltip-title" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+              ${w.globals.initialSeries[seriesIndex].name}
+            </div>
+            <div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;"> 
+              <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> 
+              <div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+                <div class="apexcharts-tooltip-y-group">
+                  <span class="apexcharts-tooltip-text-value">Cys number:&nbsp;</span>
+                  <span class="apexcharts-tooltip-text-label">${pointData[0]}</span>
+                </div>
+                <div class="apexcharts-tooltip-z-group">
+                  <span class="apexcharts-tooltip-text-value">R-value:&nbsp;</span>
+                  <span class="apexcharts-tooltip-text-label">${pointData[1]}</span>
+                </div>
+                <div class="apexcharts-tooltip-y-group">
+                  <span class="apexcharts-tooltip-text-value">Genes:&nbsp;</span>
+                  <span class="apexcharts-tooltip-text-label">${geneList}</span>
+                </div>
+              </div>
+            </div>`;
+        }
+
         return null;
       }
     },
     xaxis: {
+      title: {
+        text: "Cys Number",
+        style: {
+          // cssClass: "apexcharts-yaxis-label",
+          fontSize: "15px",
+          fontFamily: "Helvetica",
+          fontWeight: 600
+        }
+      },
       tickAmount: 5,
       min: 0,
       max: 25000,
       forceNiceScale: true
     },
     yaxis: {
-      tickAmount: 7,
+      title: {
+        text: "R-Values",
+        style: {
+          // cssClass: "apexcharts-yaxis-label",
+          fontSize: "15px",
+          fontFamily: "Helvetica",
+          fontWeight: 600
+        }
+      },
+      tickAmount: 8,
       min: 0,
-      max: 8,
+      max: 9,
       forceNiceScale: true,
       labels: {
         formatter: function (val) {
@@ -387,3 +409,15 @@ export function getHockeyStickOptions() {
     }
   };
 }
+
+const formatGeneString = (str, genePerLine) => {
+  return str
+    .split(",")
+    .reduce((accumulator, currentValue, currentIndex, array) => {
+      return currentIndex === 0
+        ? accumulator + currentValue
+        : (currentIndex + 1) % genePerLine === 1
+        ? accumulator + ",<br />" + currentValue
+        : accumulator + ", " + currentValue;
+    }, "");
+};

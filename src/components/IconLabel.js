@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const IconLabel = ({ awesomeIcon, iconText = "", label, iconFirst }) => {
+const IconLabel = ({ awesomeIcon, iconText, label, classStyle, iconFirst }) => {
   const iconPadding = iconFirst ? { paddingRight: 10 } : { paddingLeft: 10 };
   const renderIcon = () => {
     return iconText ? (
       <>
         <span
-          className="sidenav-mini-icon"
+          className={`sidenav-mini-icon ${classStyle}`}
           aria-hidden="true"
           style={iconPadding}
         >
@@ -16,7 +16,7 @@ const IconLabel = ({ awesomeIcon, iconText = "", label, iconFirst }) => {
       </>
     ) : (
       <i
-        className={`fas fa-${awesomeIcon}`}
+        className={`fas fa-${awesomeIcon} ${classStyle}`}
         aria-hidden="true"
         style={iconPadding}
       />
@@ -44,6 +44,7 @@ IconLabel.propTypes = {
     PropTypes.object,
     PropTypes.func
   ]),
+  classStyle: PropTypes.string,
   iconFirst: PropTypes.bool
 };
 
@@ -51,6 +52,7 @@ IconLabel.defaultProps = {
   iconText: "",
   awesomeIcon: "",
   label: "",
+  classStyle:"",
   iconFirst: true
 };
 

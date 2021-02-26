@@ -1063,7 +1063,7 @@
     "core-js-pure" "^3.0.0"
     "regenerator-runtime" "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.4.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.4.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   "integrity" "sha512-8+3UMPBrjFa/6TtKi/7sehPKqfAm4g6K+YQjyyFOLUTxzOngcRZTlAVY8sc2CORJYqdHQY8gRPHmn+qo15rCBw=="
   "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.12.13.tgz"
   "version" "7.12.13"
@@ -3277,7 +3277,7 @@
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
 
-"classnames@^2.2.1", "classnames@^2.2.6", "classnames@2.x":
+"classnames@^2.2.6", "classnames@2.x":
   "integrity" "sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q=="
   "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.2.6.tgz"
   "version" "2.2.6"
@@ -5733,6 +5733,11 @@
     "duplexer" "^0.1.1"
     "pify" "^4.0.1"
 
+"hammerjs@^2.0.8":
+  "integrity" "sha1-BO93hiz/K7edMPdpIJWTAiK/YPE="
+  "resolved" "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
+  "version" "2.0.8"
+
 "handle-thing@^2.0.0":
   "integrity" "sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg=="
   "resolved" "https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz"
@@ -5862,7 +5867,7 @@
   "resolved" "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz"
   "version" "2.5.5"
 
-"hoist-non-react-statics@^3.1.0", "hoist-non-react-statics@^3.3.2":
+"hoist-non-react-statics@^3.1.0":
   "integrity" "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw=="
   "resolved" "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
   "version" "3.3.2"
@@ -7677,14 +7682,6 @@
     "react-lifecycles-compat" "^3.0.4"
     "shallowequal" "^1.0.2"
 
-"mini-store@^3.0.1":
-  "integrity" "sha512-YzffKHbYsMQGUWQRKdsearR79QsMzzJcDDmZKlJBqt5JNkqpyJHYlK6gP61O36X+sLf76sO9G6mhKBe83gIZIQ=="
-  "resolved" "https://registry.npmjs.org/mini-store/-/mini-store-3.0.6.tgz"
-  "version" "3.0.6"
-  dependencies:
-    "hoist-non-react-statics" "^3.3.2"
-    "shallowequal" "^1.0.2"
-
 "minimalistic-assert@^1.0.0", "minimalistic-assert@^1.0.1":
   "integrity" "sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A=="
   "resolved" "https://registry.npmjs.org/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz"
@@ -9320,7 +9317,7 @@
     "react-is" "^16.3.2"
     "warning" "^4.0.0"
 
-"prop-types@^15.5.10", "prop-types@^15.5.7", "prop-types@^15.5.8", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@15.x":
+"prop-types@^15.5.10", "prop-types@^15.5.7", "prop-types@^15.5.8", "prop-types@^15.5.9", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@15.x":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -9489,17 +9486,6 @@
     "prop-types" "^15.5.8"
     "rc-util" "^4.0.4"
 
-"rc-align@^4.0.0":
-  "integrity" "sha512-myAM2R4qoB6LqBul0leaqY8gFaiECDJ3MtQDmzDo9xM9NRT/04TvWOYd2YHU9zvGzqk9QXF6S9/MifzSKDZeMw=="
-  "resolved" "https://registry.npmjs.org/rc-align/-/rc-align-4.0.9.tgz"
-  "version" "4.0.9"
-  dependencies:
-    "@babel/runtime" "^7.10.1"
-    "classnames" "2.x"
-    "dom-align" "^1.7.0"
-    "rc-util" "^5.3.0"
-    "resize-observer-polyfill" "^1.5.1"
-
 "rc-animate@^2.10.1", "rc-animate@2.x":
   "integrity" "sha512-1NyuCGFJG/0Y+9RKh5y/i/AalUCA51opyyS/jO2seELpgymZm2u9QV3xwODwEuzkmeQ1BDPxMLmYLcTJedPlkQ=="
   "resolved" "https://registry.npmjs.org/rc-animate/-/rc-animate-2.11.1.tgz"
@@ -9513,14 +9499,14 @@
     "rc-util" "^4.15.3"
     "react-lifecycles-compat" "^3.0.4"
 
-"rc-dropdown@^3.1.3":
-  "integrity" "sha512-j1HSw+/QqlhxyTEF6BArVZnTmezw2LnSmRk6I9W7BCqNCKaRwleRmMMs1PHbuaG8dKHVqP6e21RQ7vPBLVnnNw=="
-  "resolved" "https://registry.npmjs.org/rc-dropdown/-/rc-dropdown-3.2.0.tgz"
-  "version" "3.2.0"
+"rc-hammerjs@~0.6.0":
+  "integrity" "sha512-Vgh9qIudyN5CHRop4M+v+xUniQBFWXKrsJxQRVtJOi2xgRrCeI52/bkpaL5HWwUhqTK9Ayq0n7lYTItT6ld5rg=="
+  "resolved" "https://registry.npmjs.org/rc-hammerjs/-/rc-hammerjs-0.6.10.tgz"
+  "version" "0.6.10"
   dependencies:
-    "@babel/runtime" "^7.10.1"
-    "classnames" "^2.2.6"
-    "rc-trigger" "^5.0.4"
+    "babel-runtime" "6.x"
+    "hammerjs" "^2.0.8"
+    "prop-types" "^15.5.9"
 
 "rc-menu@^7.3.0":
   "integrity" "sha512-4YJXJgrpUGEA1rMftXN7bDhrV5rPB8oBJoHqT+GVXtIWCanfQxEnM3fmhHQhatL59JoAFMZhJaNzhJIk4FUWCQ=="
@@ -9536,39 +9522,6 @@
     "rc-util" "^4.13.0"
     "resize-observer-polyfill" "^1.5.0"
     "shallowequal" "^1.1.0"
-
-"rc-menu@^8.6.1":
-  "integrity" "sha512-RVkd8XChwSmVOdNULbqLNnABthRZWnhqct1Q74onEXTClsXvsLADMhlIJtw/umglVSECM+14TJdIli9rl2Bzlw=="
-  "resolved" "https://registry.npmjs.org/rc-menu/-/rc-menu-8.10.6.tgz"
-  "version" "8.10.6"
-  dependencies:
-    "@babel/runtime" "^7.10.1"
-    "classnames" "2.x"
-    "mini-store" "^3.0.1"
-    "rc-motion" "^2.0.1"
-    "rc-trigger" "^5.1.2"
-    "rc-util" "^5.7.0"
-    "resize-observer-polyfill" "^1.5.0"
-    "shallowequal" "^1.1.0"
-
-"rc-motion@^2.0.0", "rc-motion@^2.0.1":
-  "integrity" "sha512-TWLvymfMu8SngPx5MDH8dQ0D2RYbluNTfam4hY/dNNx9RQ3WtGuZ/GXHi2ymLMzH+UNd6EEFYkOuR5JTTtm8Xg=="
-  "resolved" "https://registry.npmjs.org/rc-motion/-/rc-motion-2.4.1.tgz"
-  "version" "2.4.1"
-  dependencies:
-    "@babel/runtime" "^7.11.1"
-    "classnames" "^2.2.1"
-    "rc-util" "^5.2.1"
-
-"rc-resize-observer@^1.0.0":
-  "integrity" "sha512-RgKGukg1mlzyGdvzF7o/LGFC8AeoMH9aGzXTUdp6m+OApvmRdUuOscq/Y2O45cJA+rXt1ApWlpFoOIioXL3AGg=="
-  "resolved" "https://registry.npmjs.org/rc-resize-observer/-/rc-resize-observer-1.0.0.tgz"
-  "version" "1.0.0"
-  dependencies:
-    "@babel/runtime" "^7.10.1"
-    "classnames" "^2.2.1"
-    "rc-util" "^5.0.0"
-    "resize-observer-polyfill" "^1.5.1"
 
 "rc-select@^8.4.4":
   "integrity" "sha512-HkKl8g2MOTtH/GzFPNBw3vdAZmGLyFf1WPI9QJJ8EVxiXwts5lmoOHhz/TmBVZuJA2eRGSfohOIzmwRDY8xH/g=="
@@ -9588,17 +9541,20 @@
     "react-lifecycles-compat" "^3.0.2"
     "warning" "^4.0.2"
 
-"rc-tabs@^11.7.3":
-  "integrity" "sha512-5nd2NVss9TprPRV9r8N05SjQyAE7zDrLejxFLcbJ+BdLxSwnGnk3ws/Iq0smqKZUnPQC0XEvnpF3+zlllUUT2w=="
-  "resolved" "https://registry.npmjs.org/rc-tabs/-/rc-tabs-11.7.3.tgz"
-  "version" "11.7.3"
+"rc-tabs@^10.0.0":
+  "integrity" "sha512-kpYho3S8GqHVKuFvsYyShN4GSM+f3RMfgwxmR4lpXA79lzPmIlaLamCGtTnMAOXOVTS3JEltWQCWC8LYY4ITIg=="
+  "resolved" "https://registry.npmjs.org/rc-tabs/-/rc-tabs-10.0.0.tgz"
+  "version" "10.0.0"
   dependencies:
-    "@babel/runtime" "^7.11.2"
+    "babel-runtime" "6.x"
     "classnames" "2.x"
-    "rc-dropdown" "^3.1.3"
-    "rc-menu" "^8.6.1"
-    "rc-resize-observer" "^1.0.0"
-    "rc-util" "^5.5.0"
+    "lodash" "^4.17.5"
+    "prop-types" "15.x"
+    "raf" "^3.4.1"
+    "rc-hammerjs" "~0.6.0"
+    "rc-util" "^4.0.4"
+    "resize-observer-polyfill" "^1.5.1"
+    "warning" "^4.0.3"
 
 "rc-trigger@^2.3.0", "rc-trigger@^2.5.4":
   "integrity" "sha512-m6Cts9hLeZWsTvWnuMm7oElhf+03GOjOLfTuU0QmdB9ZrW7jR2IpI5rpNM7i9MvAAlMAmTx5Zr7g3uu/aMvZAw=="
@@ -9613,28 +9569,6 @@
     "rc-util" "^4.4.0"
     "react-lifecycles-compat" "^3.0.4"
 
-"rc-trigger@^5.0.4":
-  "integrity" "sha512-6Fokao07HUbqKIDkDRFEM0AGZvsvK0Fbp8A/KFgl1ngaqfO1nY037cISCG1Jm5fxImVsXp9awdkP7Vu5cxjjog=="
-  "resolved" "https://registry.npmjs.org/rc-trigger/-/rc-trigger-5.2.3.tgz"
-  "version" "5.2.3"
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "classnames" "^2.2.6"
-    "rc-align" "^4.0.0"
-    "rc-motion" "^2.0.0"
-    "rc-util" "^5.5.0"
-
-"rc-trigger@^5.1.2":
-  "integrity" "sha512-6Fokao07HUbqKIDkDRFEM0AGZvsvK0Fbp8A/KFgl1ngaqfO1nY037cISCG1Jm5fxImVsXp9awdkP7Vu5cxjjog=="
-  "resolved" "https://registry.npmjs.org/rc-trigger/-/rc-trigger-5.2.3.tgz"
-  "version" "5.2.3"
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "classnames" "^2.2.6"
-    "rc-align" "^4.0.0"
-    "rc-motion" "^2.0.0"
-    "rc-util" "^5.5.0"
-
 "rc-util@^4.0.4", "rc-util@^4.13.0", "rc-util@^4.15.3", "rc-util@^4.4.0":
   "integrity" "sha512-Z+vlkSQVc1l8O2UjR3WQ+XdWlhj5q9BMQNLk2iOBch75CqPfrJyGtcWMcnhRlNuDu0Ndtt4kLVO8JI8BrABobg=="
   "resolved" "https://registry.npmjs.org/rc-util/-/rc-util-4.21.1.tgz"
@@ -9644,33 +9578,6 @@
     "prop-types" "^15.5.10"
     "react-is" "^16.12.0"
     "react-lifecycles-compat" "^3.0.4"
-    "shallowequal" "^1.1.0"
-
-"rc-util@^5.0.0":
-  "integrity" "sha512-kXV/QjL+azh3AxMk68gm8+nltVoL6bjeJJULAZLRCLus2Fhvo/aaMZokxYov/E0dbfjo31I78pF4yVljqQB7bA=="
-  "resolved" "https://registry.npmjs.org/rc-util/-/rc-util-5.8.1.tgz"
-  "version" "5.8.1"
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "react-is" "^16.12.0"
-    "shallowequal" "^1.1.0"
-
-"rc-util@^5.2.1":
-  "integrity" "sha512-kXV/QjL+azh3AxMk68gm8+nltVoL6bjeJJULAZLRCLus2Fhvo/aaMZokxYov/E0dbfjo31I78pF4yVljqQB7bA=="
-  "resolved" "https://registry.npmjs.org/rc-util/-/rc-util-5.8.1.tgz"
-  "version" "5.8.1"
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "react-is" "^16.12.0"
-    "shallowequal" "^1.1.0"
-
-"rc-util@^5.3.0", "rc-util@^5.5.0", "rc-util@^5.7.0":
-  "integrity" "sha512-kXV/QjL+azh3AxMk68gm8+nltVoL6bjeJJULAZLRCLus2Fhvo/aaMZokxYov/E0dbfjo31I78pF4yVljqQB7bA=="
-  "resolved" "https://registry.npmjs.org/rc-util/-/rc-util-5.8.1.tgz"
-  "version" "5.8.1"
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "react-is" "^16.12.0"
     "shallowequal" "^1.1.0"
 
 "react-apexcharts@^1.3.7":
@@ -9716,6 +9623,11 @@
     "uncontrollable" "^7.0.0"
     "warning" "^4.0.3"
 
+"react-csv@^2.0.3":
+  "integrity" "sha512-exyAdFLAxtuM4wNwLYrlKyPYLiJ7e0mv9tqPAd3kq+k1CiJFtznevR3yP0icv5q/y200w+lzNgi7TQn1Wrhu0w=="
+  "resolved" "https://registry.npmjs.org/react-csv/-/react-csv-2.0.3.tgz"
+  "version" "2.0.3"
+
 "react-d3@^0.4.0":
   "integrity" "sha1-3s7c7ZZ/SM2JzNeftAjUfw8qy+I="
   "resolved" "https://registry.npmjs.org/react-d3/-/react-d3-0.4.0.tgz"
@@ -9754,7 +9666,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^17.0.1", "react-dom@>=16.9.0":
+"react-dom@^17.0.1":
   "integrity" "sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.1.tgz"
   "version" "17.0.1"
@@ -9907,7 +9819,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^17.0.1", "react@>=16.9.0", "react@>0.12.0":
+"react@^17.0.1", "react@>0.12.0":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

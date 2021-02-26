@@ -34,12 +34,12 @@ const SearchBar = ({ searchTags, searchType, onSelectType, onSubmit }) => {
     <div
       id="searchBarSelect"
       className="mb-3 mt-3 d-flex justify-content-center"
-      width="100%"
+      width="70%"
     >
       <ToggleButtonGroup
         type="radio"
         name="type"
-        onChange={e => onSelectType(e.target.value)}
+        onChange={value => onSelectType(value)}
         value={searchType}
       >
         {typeOptions.map(option => renderTypeButtons(option))}

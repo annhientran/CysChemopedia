@@ -23,36 +23,44 @@ const Sites = () => {
   const [searchCompound, setSearchCompound] = useState("");
 
   useEffect(() => {
-    setLoading("Loading");
-    site
-      .fetchCompoundList()
-      .then(setCompoundLabels)
-      .then(() => site.parseData("human"))
-      .then(data => {
-        setFastaData({ ...fastaData, human: data.fasta });
-        setCellData({ ...cellData, human: data.cell });
-        setSearchGene({
-          fasta: site.getGeneOnFasta(data.fasta, defaultGene),
-          cell: site.getGeneOnCell(data.cell, defaultGene)
-        });
+    if (_.isEmpty(compoundLabels[type]))
+      site.fetchCompoundList().then(setCompoundLabels);
 
-        setSearchTags({
-          ...searchTags,
-          human: site.getSearchTags(data.fasta, data.cell)
-        });
-      })
-      .then(() => setLoading(""))
-      // .then(() => site.parseData("mouse"))
-      // .then(data => {
-      //   setFastaData({ ...fastaData, mouse: data.fasta });
-      //   setCellData({ ...cellData, mouse: data.cell });
-      // setSearchTags({
-      //   ...searchTags,
-      //   mouse: site.getSearchTags(data.fasta, data.cellData)
-      // });
-      // })
-      .catch(() => setLoading(""));
-  }, []);
+    if (
+      _.isEmpty(fastaData[type]) &&
+      _.isEmpty(cellData[type]) &&
+      _.isEmpty(searchTags[type])
+    ) {
+      setLoading("Loading");
+      site
+        .parseData(type)
+        .then(data => {
+          setFastaData({ ...fastaData, [type]: data.fasta });
+          setCellData({ ...cellData, [type]: data.cell });
+          setSearchGene({
+            fasta: site.getGeneOnFasta(data.fasta, defaultGene),
+            cell: site.getGeneOnCell(data.cell, defaultGene)
+          });
+
+          setSearchTags({
+            ...searchTags,
+            [type]: site.getSearchTags(data.fasta, data.cell)
+          });
+        })
+        .then(() => setLoading(""))
+        // .then(() => site.parseData("mouse"))
+        // .then(data => {debugger;
+        //   setFastaData({ ...fastaData, mouse: data.fasta });
+        //   setCellData({ ...cellData, mouse: data.cell });
+        //   setSearchTags({
+        //     ...searchTags,
+        //     mouse: site.getSearchTags(data.fasta, data.cellData)
+        //   });
+        // })
+        // // })
+        .catch(() => setLoading(""));
+    }
+  }, [type, compoundLabels, fastaData, cellData, searchTags]);
 
   const fetchGene = gene => {
     //debugger;
@@ -74,7 +82,7 @@ const Sites = () => {
         [type]: site.fetchHockeyStickData(compoundLabels[type], cellData[type])
       });
     }
-  }, [cellData, compoundLabels, compoundData, type]);
+  }, [cellData, compoundLabels, searchCompound, compoundData, type]);
 
   return (
     <>
@@ -100,6 +108,16 @@ const Sites = () => {
           compound={searchCompound}
           setCompound={setSearchCompound}
           compoundData={compoundData[type]}
+          cellData={cellData[type]}
+          colsInDownloadCSV={[
+            "site",
+            "uniprot_accession",
+            "gene_symbol",
+            "prot_description",
+            "organism",
+            "cell_line",
+            "engaged"
+          ]}
         />
       </Row>
       {/* <Lines

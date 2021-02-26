@@ -2,9 +2,9 @@ import PySimpleGUI as sg
 import csv
 from datetime import datetime
 
-humanFasta = 'assets/data/HumanCellData'
-mouseFasta = 'assets/data/MouseCellData'
-compoundList = 'assets/data/CompoundName.csv'
+humanCell = 'src/data/realdata/HumanCellData'
+mouseCell = 'src/data/realdata/MouseCellData'
+compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\realdata\\initial\\Compounds.csv'
 engagedVal = 2
 mappedVal = 1
 
@@ -19,7 +19,7 @@ def getSiteCys(site):
 
 def checkEngaged(site, compoundPos):
     for pos in compoundPos:
-        if (float(site[pos]) >= 2):
+        if (site[pos] != 'NA' and float(site[pos]) >= 1.5):
             return engagedVal
 
     return mappedVal
@@ -73,10 +73,10 @@ def addToDatabase(filename, isHuman):
 
     if (isHuman):
         compoundNames = getCompoundNames("human")
-        dest = humanFasta
+        dest = humanCell
     else:
         compoundNames = getCompoundNames("mouse")
-        dest = mouseFasta
+        dest = mouseCell
 
     # reading current Human Cell file
     with open(dest, 'r') as csvfile:
@@ -125,10 +125,10 @@ def createNewDatabase(filename, isHuman):
 
     if (isHuman):
         compoundNames = getCompoundNames("human")
-        dest = humanFasta
+        dest = humanCell
     else:
         compoundNames = getCompoundNames("mouse")
-        dest = mouseFasta
+        dest = mouseCell
 
     # reading csv file
     with open(filename, 'r') as csvfile:
@@ -165,7 +165,7 @@ def createNewDatabase(filename, isHuman):
         # get total number of rows
         print("Total no. of rows in : %d" % (csvreader.line_num - 1))
 
-    file = humanFasta if (isHuman) else mouseFasta
+    file = humanCell if (isHuman) else mouseCell
     writeToFile(file, 'w+', fields, rows)
 
 

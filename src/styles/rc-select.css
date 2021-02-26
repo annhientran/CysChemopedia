@@ -25,6 +25,7 @@
   vertical-align: middle;
   color: #666;
   line-height: 28px;
+  width: 100%;
 }
 .rc-select ul,
 .rc-select li {

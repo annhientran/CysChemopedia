@@ -7,30 +7,57 @@ import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 import Chart from "react-apexcharts";
 import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
-import * as chart from "helpers/chartHelper";
+// import DownloadButton from "components/DownloadButton/index";
+import { getHockeyStickCSV } from "helpers/siteHelper";
+import { getHockeyStickOptions } from "helpers/chartHelper";
+import { CSVLink } from "react-csv";
 import "rc-tabs/assets/index.css";
 
 class HockeyStickChart extends Component {
   constructor(props) {
     super(props);
+    // const { compoundData, compound } = this.props;
+    // const initialSeries =
+    //   compound && _.isEmpty(compoundData)
+    //     ? _.find(this.props.compoundData, ["name", this.props.compound])
+    //     : null;
 
     this.state = {
       hockeyStickSeries: null,
-      hockeyStickOptions: chart.getHockeyStickOptions(),
-      activeTab: "0"
+      hockeyStickOptions: getHockeyStickOptions(),
+      activeTab: "0",
+      csvData: null
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { compoundData, compound } = this.props;
+    const { cellData, colsInDownloadCSV, compoundData, compound } = this.props;
 
     if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
+      const seriesIndex = _.findIndex(compoundData, ["name", compound]);
+      const foundSeries = seriesIndex >= 0 ? [compoundData[seriesIndex]] : null;
       this.setState({
-        hockeyStickSeries: _.find(compoundData, ["name", compound])
+        hockeyStickSeries: foundSeries,
+        activeTab: seriesIndex >= 0 ? String(seriesIndex) : 0
       });
-      debugger;
+    }
+
+    if (
+      prevProps.compound !== compound &&
+      !_.isEmpty(cellData) &&
+      !_.isEmpty(compoundData)
+    ) {
+      const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
+      this.setState({ csvData: csv });
     }
   }
+
+  // downloadCSV = () => {
+  //   const { cellData, colsInDownloadCSV, compound } = this.props;
+  //   if (!cellData) return Promise.reject();
+
+  //   const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
+  // };
 
   saveBar = bar => {
     this.bar = bar;
@@ -42,40 +69,54 @@ class HockeyStickChart extends Component {
   };
 
   renderTabContent = () => {
-    debugger;
     return !this.state.hockeyStickSeries ? (
       <div className="card-body hockeyStickContent">
         <InlinePreloader />
       </div>
     ) : (
-      <Chart
-        options={this.state.hockeyStickOptions}
-        series={this.state.hockeyStickSeries}
-        type="scatter"
-        height="350"
-        // width="600"
-      />
+      <>
+        <Chart
+          options={this.state.hockeyStickOptions}
+          series={this.state.hockeyStickSeries}
+          type="scatter"
+          height="450"
+          // width="600"
+        />
+        <CSVLink
+          data={this.state.csvData}
+          filename={`${this.props.compound}.csv`}
+          className="btn btn-primary"
+          style={{ float: "right" }}
+          target="_blank"
+        >
+          <IconLabel
+            awesomeIcon="sync"
+            label={`Download ${this.props.compound} CSV`}
+          />
+        </CSVLink>
+      </>
     );
   };
 
   renderTabPane = () => {
     return this.props.compoundData.map((compound, i) => {
       return (
-        <TabPane placeholder={`loading ${i}`} tab={compound.name} key={i}>
-          {this.state.activeTab !== i ? null : this.renderTabContent()}
+        <TabPane tab={compound.name} key={i}>
+          {parseInt(this.state.activeTab) !== i
+            ? null
+            : this.renderTabContent()}
         </TabPane>
       );
     });
   };
 
   render() {
-    debugger;
     return (
       <>
         <Col className="d-flex justify-content-center align-items-center">
           <div
             className="card card-frame"
-            style={{ height: "500px", width: "1200px" }}
+            style={{ height: "600px", width: "1200px" }}
           >
             {_.isEmpty(this.props.compoundData) || !this.props.compound ? (
               <div className="card-body hockeyStickContent">
@@ -85,8 +126,9 @@ class HockeyStickChart extends Component {
               <div className="card-body">
                 <Tabs
                   activeKey={this.state.activeTab}
-                  style={{ height: 400 }}
+                  style={{ height: 550 }}
                   tabBarPosition="left"
+                  animated={false}
                   renderTabBar={() => (
                     <ScrollableInkTabBar
                       ref={this.saveBar}
@@ -96,7 +138,7 @@ class HockeyStickChart extends Component {
                     />
                   )}
                   renderTabContent={() => (
-                    <TabContent style={{ height: 400 }} />
+                    <TabContent style={{ height: 550 }} />
                   )}
                 >
                   {this.renderTabPane()}

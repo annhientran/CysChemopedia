@@ -6,6 +6,12 @@ import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
 import CellMouseCSV from "data/mockdata/MouseCellData.csv";
 import CompoundsCSV from "data/mockdata/Compounds.csv";
 
+// import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
+// import CellHumanCSV from "data/realdata/HumanCellData.csv";
+// import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
+// import CellMouseCSV from "data/realdata/MouseCellData.csv";
+// import CompoundsCSV from "data/realdata/Compounds.csv";
+
 export const typeOptions = [
   { label: "HUMAN", value: "human" },
   { label: "MOUSE", value: "mouse" }
@@ -22,9 +28,12 @@ const cellPath = {
 
 export function parseData(type) {
   return Promise.all([csv(fastaPath[type]), csv(cellPath[type])]).then(data => {
-    const reviewed = _.filter(data[0], ["Status", "reviewed"]);
-    const _fasta = _.sortBy(reviewed, ["Entry", "Gene names (primary)"]);
-    const _cell = _.sortBy(data[1], ["uniprot_accession", "gene_symbol"]);
+    const reviewedFasta = _.filter(data[0], ["Status", "reviewed"]);
+    const _fasta = _.sortBy(reviewedFasta, ["Entry", "Gene names (primary)"]);
+    const filteredCell = data[1].map(site =>
+      _.omitBy(site, prop => prop === "NA")
+    );
+    const _cell = _.sortBy(filteredCell, ["uniprot_accession", "gene_symbol"]);
 
     return { fasta: _fasta, cell: _cell };
   });
@@ -202,6 +211,14 @@ export function getSearchTags(fastaData, cellData) {
   const allTags = fastaTags.concat(cellTags).filter(tag => {
     return tag.accession !== "" && tag.value !== "";
   });
-
+debugger;
   return _.uniqBy(allTags, "label");
+}
+
+export function getHockeyStickCSV(cellData, infoCols, compound) {
+  infoCols.push(compound);
+
+  return cellData.map(site => {
+    return _.pick(site, infoCols);
+  });
 }

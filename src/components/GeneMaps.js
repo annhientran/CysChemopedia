@@ -69,12 +69,13 @@ class GeneMaps extends Component {
       R_Value: e,
       label: compoundLabels[i]
     }));
-    const sorted = _.sortBy(labeledRvals, e => e.R_Value);
+    const filtered = labeledRvals.filter(e => e.R_Value);
+    const sorted = _.sortBy(filtered, e => e.R_Value);
     const sortedR_Values = _.map(sorted, "R_Value");
     const sortedCompoundLabels = _.map(sorted, "label");
-
+    debugger;
     this.setState({
-      barChartSeries: [{ name: "R-values", data: siteR_Values }],
+      barChartSeries: [{ name: "R-values", data: _.map(filtered, "R_Value") }],
       barChartOptions: chart.getBarChartOptions(
         proteinName,
         compoundLabels,
@@ -90,6 +91,7 @@ class GeneMaps extends Component {
   };
 
   tooltipBarChartLabel = () => {
+    const { setHockeyStickCompound } = this.props;
     $(function () {
       $(".barchart-xlabel").each(function () {
         let currId = $(this).attr("id");
@@ -97,7 +99,7 @@ class GeneMaps extends Component {
         // debugger;
         tippy(`#${currId}`, {
           content:
-            "<img src='data/images/" +
+            "<img src='/images/" +
             compound +
             ".jpg' alt='compound_" +
             compound +
@@ -107,7 +109,7 @@ class GeneMaps extends Component {
         });
 
         $("#" + currId).click(() => {
-          this.props.setHockeyStickCompound(compound);
+          setHockeyStickCompound(compound);
         });
       });
     });
