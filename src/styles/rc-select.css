@@ -65,7 +65,9 @@
   padding: 1px;
   border: 1px solid #000;
 }
-.rc-select-single:not(.rc-select-customize-input) .rc-select-selector .rc-select-selection-search-input {
+.rc-select-single:not(.rc-select-customize-input)
+  .rc-select-selector
+  .rc-select-selection-search-input {
   border: none;
   outline: none;
   background: #fff;
@@ -139,7 +141,7 @@
   top: 0;
 }
 .rc-select-show-arrow .rc-select-arrow-icon::after {
-  content: '';
+  content: "";
   border: 5px solid transparent;
   width: 0;
   height: 0;
@@ -370,6 +372,7 @@
   border: 1px solid #d9d9d9;
   width: 100%;
   height: 100%;
+  padding: 5px 0px;
 }
 .rc-select-selection__placeholder {
   position: absolute;
@@ -385,15 +388,15 @@
   font-style: normal;
 }
 .rc-select-focused .rc-select-selection {
-  border-color: #23c0fa;
-  box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
+  border-color: var(--primary);
+  box-shadow: 0 0 1px var(--primary);
 }
 .rc-select-enabled .rc-select-selection:hover {
-  border-color: #23c0fa;
-  box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
+  border-color: var(--primary);
+  box-shadow: 0 0 1px var(--primary);
 }
 .rc-select-enabled .rc-select-selection:active {
-  border-color: #2db7f5;
+  border-color: var(--primary);
 }
 .rc-select-selection--single {
   /* height: 28px; */

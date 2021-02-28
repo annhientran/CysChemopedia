@@ -83,7 +83,7 @@ class HockeyStickChart extends Component {
           target="_blank"
         >
           <IconLabel
-            awesomeIcon="download"//"sync"
+            awesomeIcon="download" //"sync"
             label={`Download ${this.props.compound} CSV`}
           />
         </CSVLink>
@@ -131,7 +131,11 @@ class HockeyStickChart extends Component {
                     />
                   )}
                   renderTabContent={() => (
-                    <TabContent style={{ height: 550 }} />
+                    <TabContent
+                      style={{ height: 550 }}
+                      animated={false}
+                      animatedWithMargin={false}
+                    />
                   )}
                 >
                   {this.renderTabPane()}

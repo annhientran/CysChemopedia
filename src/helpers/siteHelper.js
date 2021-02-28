@@ -198,18 +198,20 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
 }
 
 export function getSearchTags(fastaData, cellData) {
-  const fastaTags = fastaData.map(protein => {
+const fastaTags = fastaData.map(protein => {
     return {
       accession: protein.Entry,
-      value: protein["Gene names (primary)"],
-      label: `Uniprot Accession: ${protein.Entry} — Gene: ${protein["Gene names (primary)"]}`
+      geneSym: protein["Gene names (primary)"],
+      // label: `Uniprot Accession: ${protein.Entry} — Gene: ${protein["Gene names (primary)"]}`
+      label: `${protein.Entry} — ${protein["Gene names (primary)"]}`
     };
   });
   const cellTags = cellData.map(site => {
     return {
       accession: site.uniprot_accession,
-      value: site.gene_symbol,
-      label: `Uniprot Accession: ${site.uniprot_accession} — Gene: ${site.gene_symbol}`
+      geneSym: site.gene_symbol,
+      // label: `Uniprot Accession: ${site.uniprot_accession} — Gene: ${site.gene_symbol}`
+      label: `${site.uniprot_accession} — ${site.gene_symbol}`
     };
   });
   // temp solution to deal with empty value data

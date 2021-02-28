@@ -63,7 +63,7 @@ const Sites = () => {
   }, [type, compoundLabels, fastaData, cellData, searchTags]);
 
   const fetchGene = gene => {
-    //debugger;
+    // debugger;
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], gene);
     const geneOnCell = site.getGeneOnCell(cellData[type], gene);
 

@@ -13,9 +13,9 @@ const GeneInfo = ({ geneData }) => {
       <Col>
         <h3 className="mb-0 text-center">Protein Information</h3>
         <br />
-        <p>Accession: {entry}</p>
-        <p>Gene: {gene}</p>
-        <p>Protein: {protein}</p>
+        <p><b>Accession:</b> {entry}</p>
+        <p><b>Gene:</b> {gene}</p>
+        <p><b>Protein:</b> {protein}</p>
       </Col>
     </Row>
   );

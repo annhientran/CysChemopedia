@@ -9,12 +9,12 @@ const SearchBar = ({ searchTags, searchType, onSelectType, onSubmit }) => {
   const onFieldSubmit = enteredGene => {
     const existingModel = _.find(searchTags, gene => {
       return (
-        gene.accession.toUpperCase() === enteredGene.toUpperCase() ||
-        gene.value.toUpperCase() === enteredGene.toUpperCase()
+        enteredGene.toUpperCase().indexOf(gene.accession.toUpperCase()) >= 0 &&
+        enteredGene.toUpperCase().indexOf(gene.geneSym.toUpperCase()) >= 0
       );
     });
 
-    if (existingModel) onSubmit(enteredGene);
+    if (existingModel) onSubmit(existingModel.geneSym);
   };
 
   const renderTypeButtons = option => {

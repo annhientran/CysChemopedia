@@ -17,10 +17,10 @@ class GeneAutocomplete extends Component {
     if (!options || !options.length) return [];
 
     return options.map(type => {
-      const { accession, label, value } = type;
-      const params = { label: label, accession: accession, value: value };
+      const { accession, label, geneSym } = type;
+      const params = { value: label, accession: accession, geneSym: geneSym };
 
-      return <Option {...params}>{label}</Option>;
+      return <Option key={label} {...params}>{`Uniprot Accession: ${accession} — Gene: ${geneSym}`}</Option>;
     });
   };
 
@@ -88,13 +88,13 @@ class GeneAutocomplete extends Component {
         onFocus={() => this.onFieldFocus(this.state.value)}
         onBlur={() => this.setState({ openBox: false })}
         open={this.state.openBox}
-        optionFilterProp="label"
+        // optionFilterProp="label"
         // optionLabelProp="children"
         placeholder={this.props.placeholderText}
         notFoundContent="No results found"
-        // filterOption={true}
+        filterOption={true}
         // optionLabelProp="label"
-        // optionFilterProp="value"
+        optionFilterProp="value"
         dropdownMenuStyle={{ maxHeight: 200, overflowX: "hidden" }}
         combobox
         backfill={true}

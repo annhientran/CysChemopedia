@@ -141,7 +141,7 @@
 
 #fullpage-loader__spinner.fpl-spinner {
   border-color: #5c6670;
-  border-top-color: #78cdd1;
+  border-top-color: var(--primary);
 }
 
 .Loaderlink .spinning.glyphicon {
