@@ -2,8 +2,8 @@ import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 // import { Lines } from "react-preloaders";
-import Preloader from "components/Preloader/index";
 // import SEO from "components/seo";
+import toastNoti from "cogo-toast";
 import SiteSearchBar from "components/SearchBar";
 import GeneMaps from "components/GeneMaps";
 import HockeyStickChart from "components/HockeyStickChart";
@@ -11,8 +11,7 @@ import * as site from "helpers/siteHelper";
 
 const defaultGene = "Q15910";
 
-const Sites = () => {
-  const [loading, setLoading] = useState(null);
+const Sites = ({ preloader = null, setPreloader }) => {
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
@@ -31,36 +30,58 @@ const Sites = () => {
       _.isEmpty(cellData[type]) &&
       _.isEmpty(searchTags[type])
     ) {
-      setLoading("Loading");
+      setPreloader("Parsing human data");
       site
-        .parseData(type)
+        .parseData("human")
         .then(data => {
-          setFastaData({ ...fastaData, [type]: data.fasta });
-          setCellData({ ...cellData, [type]: data.cell });
-          setSearchGene({
+          setFastaData(prevFasta => ({ ...prevFasta, human: data.fasta }));
+          setCellData(prevCell => ({ ...prevCell, human: data.cell }));
+          setSearchGene(prevTags => ({
             fasta: site.getGeneOnFasta(data.fasta, defaultGene),
             cell: site.getGeneOnCell(data.cell, defaultGene)
-          });
+          }));
 
-          setSearchTags({
-            ...searchTags,
-            [type]: site.getSearchTags(data.fasta, data.cell)
-          });
+          setSearchTags(prevTags => ({
+            ...prevTags,
+            human: site.getSearchTags(data.fasta, data.cell)
+          }));
         })
-        .then(() => setLoading(""))
-        // .then(() => site.parseData("mouse"))
-        // .then(data => {debugger;
-        //   setFastaData({ ...fastaData, mouse: data.fasta });
-        //   setCellData({ ...cellData, mouse: data.cell });
-        //   setSearchTags({
-        //     ...searchTags,
-        //     mouse: site.getSearchTags(data.fasta, data.cellData)
-        //   });
+        // .then(() => setPreloader(""))
+        .then(() => setPreloader("Parsing mouse data"))
+        // .then(() =>
+        //   toastNoti.loading("Parsing mouse data", {
+        //     hideAfter: 5,
+        //     position: "bottom-left"
+        //   })
+        // )
+        .then(() => site.parseData("mouse"))
+        .then(data => {
+          setFastaData(prevFasta => ({ ...prevFasta, mouse: data.fasta }));
+          setCellData(prevCell => ({ ...prevCell, mouse: data.cell }));
+          setSearchTags(prevTags => ({
+            ...prevTags,
+            mouse: site.getSearchTags(data.fasta, data.cell)
+          }));
+        })
+        // .then(() =>
+        //   toastNoti.success("Mouse data is loaded", {
+        //     hideAfter: 3,
+        //     position: "bottom-left"
+        //   })
+        // )
+        // .catch(() => {
+        //   toastNoti.error(
+        //     "Oops!!! Something's wrong. This is a job for super Z and Nhien-man.",
+        //     {
+        //       hideAfter: 5,
+        //       position: "bottom-left"
+        //     }
+        //   );
         // })
-        // // })
-        .catch(() => setLoading(""));
+        .then(() => setPreloader(""))
+        .catch(() => setPreloader(""));
     }
-  }, [type, compoundLabels, fastaData, cellData, searchTags]);
+  }, [type, compoundLabels, fastaData, cellData, searchTags, setPreloader]);
 
   const fetchGene = gene => {
     // debugger;
@@ -86,13 +107,16 @@ const Sites = () => {
 
   return (
     <>
-      <Preloader show={loading} />
       {/* <SEO title="Sites" /> */}
       <Row>
         <SiteSearchBar
           searchTags={searchTags[type]}
           searchType={type}
-          onSelectType={type => setType(type)}
+          onSelectType={type => {
+            //debugger;
+            // setPreloader("Loading");
+            setType(type);
+          }}
           onSubmit={fetchGene}
         />
       </Row>
@@ -109,6 +133,9 @@ const Sites = () => {
           setCompound={setSearchCompound}
           compoundData={compoundData[type]}
           cellData={cellData[type]}
+          // fullpageLoader={preloader}
+          // setFullpageLoader={setPreloader}
+          // searchType={type}
           colsInDownloadCSV={[
             "site",
             "cysteine",
@@ -121,12 +148,6 @@ const Sites = () => {
           ]}
         />
       </Row>
-      {/* <Lines
-        color="#5e72e4"
-        background="blur"
-        customLoading={loading}
-        time={0}
-      /> */}
     </>
   );
 };

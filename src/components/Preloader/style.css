@@ -6,30 +6,30 @@
   inside your project stylesheets (e.g. `App.css` file).
 */
 
-#fullpage-loader {
+#fullPagePreloader {
   position: fixed;
   left: 50%;
   top: 50%;
-  z-index: 1;
-  /* color: #d7ca9e; */
+  z-index: 1000;
+  color: #5c6670;
 }
 
 /* low resolution, 480px and below */
 @media only screen and (max-width: 480px) {
-  #fullpage-loader__spinner {
+  #fullPagePreloader-circle {
     margin: -38px 0 0 -38px;
-    border: 10px solid #5c6670;
+    border: 10px solid var(--gray);
     border-radius: 50%;
     border-top: 10px solid var(--primary);
-    width: 75px;
-    height: 75px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    width: 65px;
+    height: 65px;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
   }
 
-  #fullpage-loader__label {
-    margin: 25px 0 0 -35px;
-    width: 100px;
+  #fullPagePreloader-label {
+    margin: 25px 0 0 -100px;
+    /* width: 100px; */
     height: 30px;
     font-size: 16px;
     font-weight: bold;
@@ -38,20 +38,20 @@
 
 /* medium resolution, 481px to 1023px */
 @media only screen and (min-width: 481px) {
-  #fullpage-loader__spinner {
+  #fullPagePreloader-circle {
     margin: -75px 0 0 -75px;
-    border: 14px solid #5c6670;
+    border: 8px solid var(--gray);
     border-radius: 50%;
-    border-top: 14px solid var(--primary);
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    border-top: 8px solid var(--primary);
+    width: 80px;
+    height: 80px;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
   }
 
-  #fullpage-loader__label {
-    margin: 35px 0 0 -55px;
-    width: 100px;
+  #fullPagePreloader-label {
+    margin: 35px 0 0 -110px;
+    /* width: 100px; */
     height: 30px;
     font-size: 20px;
     font-weight: bold;
@@ -60,22 +60,22 @@
 
 /* high resolution, 1024px and higher */
 @media only screen and (min-width: 1024px) {
-  #fullpage-loader__spinner {
+  #fullPagePreloader-circle {
     margin: -75px 0 0 -75px;
-    border: 20px solid #5c6670;
+    border: 5px solid var(--gray);
     border-radius: 50%;
-    border-top: 20px solid var(--primary);
-    width: 170px;
-    height: 170px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    border-top: 5px solid var(--red);
+    width: 100px;
+    height: 100px;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
   }
 
-  #fullpage-loader__label {
-    margin: 35px 0 0 -50px;
-    width: 100px;
+  #fullPagePreloader-label {
+    margin: 35px 0 0 -110px;
+    /* width: 100px; */
     height: 30px;
-    font-size: 28px;
+    font-size: 18px;
     font-weight: bold;
   }
 }
@@ -101,51 +101,33 @@
 /* Animation for loading dots */
 @keyframes dots {
   0% {
-    content: '';
+    content: "";
   }
   25% {
-    content: '.';
+    content: ".";
   }
   50% {
-    content: '..';
+    content: "..";
   }
   75% {
-    content: '...';
+    content: "...";
   }
 }
 
 .dots::after {
-  content: '';
+  content: "";
   -webkit-animation: dots 1s linear infinite;
   animation: dots 1s linear infinite;
 }
 /*** End dots animation ***/
 
-#fullpage-loader.fpl-loader {
-  color: #d7ca9e;
-}
-
-#fullpage-loader__spinner.fpl-spinner {
-  border-color: #5c6670;
-  border-top-color: var(--primary);
-}
-
 .Loaderlink .spinning.glyphicon {
   margin-right: 7px;
   top: 2px;
   animation: spin 1s infinite linear;
 }
-#fullpage-loader.fpl-loader {
-  color: #d7ca9e;
-}
 
-#fullpage-loader__spinner.fpl-spinner {
-  border-color: #5c6670;
-  border-top-color: var(--primary);
-}
-
-.Loaderlink .spinning.glyphicon {
-  margin-right: 7px;
-  top: 2px;
-  animation: spin 1s infinite linear;
+.blinder {
+  opacity: 0.1;
+  pointer-events: none;
 }

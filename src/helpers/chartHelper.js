@@ -291,14 +291,14 @@ export function getHockeyStickOptions() {
         type: "xy"
       },
       toolbar: {
-        tools:{ 
+        tools: {
           download: false
         }
       },
       animations: {
-        enabled: true,
-        easing: "easeinout",
-        speed: 800
+        enabled: false
+        //   easing: "easeinout",
+        //   speed: 800
       }
     },
     title: {
@@ -346,7 +346,7 @@ export function getHockeyStickOptions() {
         if (series[seriesIndex][dataPointIndex] >= engagedValue) {
           const pointData =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
-          const geneList = formatGeneString(pointData[2], 10);
+          const geneList = formatGeneString(pointData[2], 5);
 
           return `<div class="apexcharts-tooltip-title" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
               ${w.globals.initialSeries[seriesIndex].name}
@@ -416,6 +416,8 @@ export function getHockeyStickOptions() {
 }
 
 const formatGeneString = (str, genePerLine) => {
+  if (!str) return null;
+
   return str
     .split(",")
     .reduce((accumulator, currentValue, currentIndex, array) => {

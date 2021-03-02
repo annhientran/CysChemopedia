@@ -1,7 +1,7 @@
 /* * {
   box-sizing: border-box;
 } */
-.rc-select {
+/* .rc-select {
   display: inline-block;
   position: relative;
   box-sizing: border-box;
@@ -154,7 +154,7 @@
 } */
 .rc-select-dropdown {
   border: 1px solid var(--primary);
-  min-height: 100px;
+  /* min-height: 100px; */
   position: absolute;
   background: #fff;
 }
@@ -323,7 +323,8 @@
 .rc-select-arrow {
   height: 26px;
   position: absolute;
-  top: 1px;
+  top: 5px;
+  bottom: 5px;
   right: 1px;
   width: 20px;
   outline: none;
@@ -383,6 +384,7 @@
   font-weight: bold;
   position: absolute;
   line-height: 28px;
+  font-size: 28px;
 }
 .rc-select-selection__clear-icon {
   font-style: normal;
@@ -423,7 +425,8 @@
   height: 100%;
 }
 .rc-select-selection--single .rc-select-selection__clear {
-  top: 0;
+  top: 5px;
+  bottom: 5px;
   right: 20px;
 }
 .rc-select-disabled {

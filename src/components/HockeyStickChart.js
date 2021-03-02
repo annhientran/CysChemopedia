@@ -31,7 +31,16 @@ class HockeyStickChart extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { cellData, colsInDownloadCSV, compoundData, compound } = this.props;
+    const {
+      cellData,
+      colsInDownloadCSV,
+      compoundData,
+      compound,
+      // fullpageLoader,
+      // setFullpageLoader,
+      // searchType
+    } = this.props;
+    // debugger;
 
     if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
       const seriesIndex = _.findIndex(compoundData, ["name", compound]);
@@ -49,6 +58,7 @@ class HockeyStickChart extends Component {
     ) {
       const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
       this.setState({ csvData: csv });
+      // if (fullpageLoader.includes("Loading")) setFullpageLoader("");
     }
   }
 

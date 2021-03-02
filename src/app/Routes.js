@@ -8,17 +8,17 @@ import Help from "containers/Help";
 import ExternalRef from "containers/Help";
 import NotFound from "containers/NotFound";
 
-const Routes = () => (
+const Routes = props => (
   <Switch>
     {/* nav bar routes */}
     <Route exact path="/">
       <Home />
     </Route>
     <Route path="/sites">
-      <Sites />
+      <Sites {...props}/>
     </Route>
     <Route path="/upload">
-      <Upload />
+      <Upload {...props}/>
     </Route>
     <Route path="/help">
       <Help />

@@ -1,11 +1,17 @@
+import React, { useState } from "react";
 import Header from "containers/HeaderMenu/Header";
 import Footer from "containers/Footer";
 import Routes from "app/Routes";
+import Preloader from "components/Preloader/index";
 import "styles/App.css";
 
-function App() {
+const App = () => {
+  const [loading, setLoading] = useState(null);
+
   return (
-    <>
+    <div className="app-body-cover">
+      <Preloader content={loading} />
+      <div className={loading ? "app-body-cover blinder" : "app-body-cover"}>
       <Header />
       <div
         style={{
@@ -15,11 +21,12 @@ function App() {
         }}
         // className="d-flex justify-content-center align-items-center"
       >
-        <Routes />
+        <Routes preloader={loading} setPreloader={setLoading} />
       </div>
       <Footer />
-    </>
+      </div>
+    </div>
   );
-}
+};
 
 export default App;

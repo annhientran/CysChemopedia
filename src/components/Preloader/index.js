@@ -1,27 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./style.css";
+import "styles/App.css";
 
-const Preloader = ({ show }) => {
-  if (!show) return null;
+const Preloader = ({ content }) => {
+  if (!content) return null;
 
   return (
-    <div id="fullpage-loader" className="fpl-loader curtain">
-      <div id="fullpage-loader__spinner" className="fpl-spinner" />
-      <div id="fullpage-loader__label">
-        {show}
-        <span className="dots" />
+    <>
+      <div id="fullPagePreloader" className="fullPageLoader">
+        <div id="fullPagePreloader-circle" className="circleSpinner" />
+        <div id="fullPagePreloader-label">
+          {content}
+          <span className="dots" />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 Preloader.propTypes = {
-  show: PropTypes.string
+  content: PropTypes.string
 };
 
 Preloader.defaultProps = {
-  show: ""
+  content: ""
 };
 
 Preloader.displayName = "Preloader";

@@ -40,3 +40,47 @@
     transform: rotate(360deg);
   }
 }
+
+.app-body-cover {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  z-index: 5;
+}
+
+.app-content {
+  background-color: #f6f6f6;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  width: 100%;
+}
+
+.app-header,
+.app-footer {
+  display: block;
+  flex: none;
+}
+
+.app-content__container {
+  padding: 20px;
+}
+
+.app-content__container-center {
+  display: flex;
+  flex: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-content__aligner {
+  display: block;
+  flex: none;
+  min-height: 24em;
+}
+
+.center-row {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
