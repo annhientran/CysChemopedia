@@ -221,7 +221,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       max: 3
     },
     noData: {
-      text: "R values don't exist",
+      text: "No R values",
       align: "center",
       verticalAlign: "middle",
       offsetX: 0,
@@ -259,27 +259,27 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
           return val;
         }
       }
-    },
-    title: {
-      text: "Site Stoichiometry",
-      align: "center",
-      margin: 10,
-      offsetX: 0,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: "16px",
-        color: "#263238"
-      }
-    },
-    subtitle: {
-      text: `Site: ${site}`,
-      align: "center",
-      style: {
-        fontSize: "16px",
-        color: "#263238"
-      }
-    }
+    } //,
+    // title: {
+    //   text: "Site Stoichiometry",
+    //   align: "center",
+    //   margin: 10,
+    //   offsetX: 0,
+    //   offsetY: 0,
+    //   floating: false,
+    //   style: {
+    //     fontSize: "16px",
+    //     color: "#263238"
+    //   }
+    // },
+    // subtitle: {
+    //   text: `Site: ${site}`,
+    //   align: "center",
+    //   style: {
+    //     fontSize: "16px",
+    //     color: "#263238"
+    //   }
+    // }
   };
 };
 
@@ -339,7 +339,7 @@ export function getHockeyStickOptions() {
             return "#4961e9";
           }
         }
-      ] //'#7789ee',
+      ]
     },
     tooltip: {
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {

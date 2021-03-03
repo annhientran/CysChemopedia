@@ -1,21 +1,26 @@
 import _ from "lodash";
 import { csv } from "d3";
-import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
-import CellHumanCSV from "data/mockdata/HumanCellData.csv";
-import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
-import CellMouseCSV from "data/mockdata/MouseCellData.csv";
-import CompoundsCSV from "data/mockdata/Compounds.csv";
 
+// ------------------ mockdata-------------------------
 // import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
-// import CellHumanCSV from "data/realdata/HumanCellData.csv";
+// import CellHumanCSV from "data/mockdata/HumanCellData.csv";
 // import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
-// import CellMouseCSV from "data/realdata/MouseCellData.csv";
-// import CompoundsCSV from "data/realdata/Compounds.csv";
+// import CellMouseCSV from "data/mockdata/MouseCellData.csv";
+// import CompoundsCSV from "data/mockdata/Compounds.csv";
+
+// ------------------ real data-------------------------
+import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
+import CellHumanCSV from "data/realdata/HumanCellData.csv";
+import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
+import CellMouseCSV from "data/realdata/MouseCellData.csv";
+import CompoundsCSV from "data/realdata/Compounds.csv";
 
 export const typeOptions = [
   { label: "HUMAN", value: "human" },
   { label: "MOUSE", value: "mouse" }
 ];
+
+export const hockeyStick1stTabText= "Choose a Compound";
 
 const fastaPath = {
   human: FastaHumanCSV,
@@ -54,10 +59,10 @@ export function fetchCompoundList() {
 
 export function fetchHockeyStickData(compoundLabels, cellData) {
   if (!compoundLabels) return null;
-  // debugger;
-  // return
-  const ret = compoundLabels.map(label => {
-    const sortedData = _.sortBy(cellData, [
+
+  let data = compoundLabels.map(label => {
+    const NaNfiltered = _.reject(cellData, [[label], ""]);
+    const sortedData = _.sortBy(NaNfiltered, [
       function (site) {
         return site[label];
       }
@@ -65,11 +70,16 @@ export function fetchHockeyStickData(compoundLabels, cellData) {
 
     let filteredData = {};
     sortedData.forEach((site, i) => {
-      let compoundVal = parseFloat(site[label]).toFixed(2);
+      const compoundVal = site[label]
+        ? parseFloat(site[label]).toFixed(2)
+        : null;
 
-      if (filteredData[compoundVal]) {
+      if (compoundVal && filteredData[compoundVal]) {
         filteredData[compoundVal].name += `, ${site.gene_symbol}`;
-      } else {
+
+        if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
+          filteredData[compoundVal].cysnumber += `, ${site.cysteine}`;
+      } else if (compoundVal && !filteredData[compoundVal]) {
         filteredData[compoundVal] = {
           index: i,
           name: site.gene_symbol,
@@ -88,7 +98,9 @@ export function fetchHockeyStickData(compoundLabels, cellData) {
     return { name: label, data: seriesData };
   });
 
-  return ret;
+  data.unshift({ name: hockeyStick1stTabText, data: [[0, 0.23, "KDM5A", "709"]] });
+
+  return data;
 }
 
 export function getGeneOnFasta(fastaData, gene) {
@@ -198,7 +210,7 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
 }
 
 export function getSearchTags(fastaData, cellData) {
-const fastaTags = fastaData.map(protein => {
+  const fastaTags = fastaData.map(protein => {
     return {
       accession: protein.Entry,
       geneSym: protein["Gene names (primary)"],

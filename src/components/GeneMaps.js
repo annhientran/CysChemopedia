@@ -26,7 +26,8 @@ class GeneMaps extends Component {
       heatmapOptions: null,
       barChartSeries: null,
       barChartOptions: null,
-      rvalsSorted: false
+      rvalsSorted: false,
+      cysNumber: "none selected"
     };
   }
 
@@ -64,7 +65,7 @@ class GeneMaps extends Component {
     }
   }
 
-  onCysClick = (proteinName, siteR_Values, compoundLabels) => {
+  onCysClick = (cysNumber, siteR_Values, compoundLabels) => {
     const labeledRvals = siteR_Values.map((e, i) => ({
       R_Value: e,
       label: compoundLabels[i]
@@ -75,15 +76,16 @@ class GeneMaps extends Component {
     const sortedCompoundLabels = _.map(sorted, "label");
 
     this.setState({
+      cysNumber: cysNumber,
       barChartSeries: [{ name: "R-values", data: _.map(filtered, "R_Value") }],
       barChartOptions: chart.getBarChartOptions(
-        proteinName,
-        compoundLabels,
+        cysNumber,
+        _.map(filtered, "label"),
         this.tooltipBarChartLabel
       ),
       sortedBarChartSeries: [{ name: "R-values", data: sortedR_Values }],
       sortedBarChartOptions: chart.getBarChartOptions(
-        proteinName,
+        cysNumber,
         sortedCompoundLabels,
         this.tooltipBarChartLabel
       )
@@ -192,6 +194,15 @@ class GeneMaps extends Component {
               ) : (
                 <div className="card-body">
                   <Row>
+                    <div
+                      style={{
+                        textAlign: "center",
+                        fontFamily: "Helvetica"
+                      }}
+                    >
+                      <h2>Site Stoichiometry</h2>
+                      <h3>Site: {this.state.cysNumber}</h3>
+                    </div>
                     <div className="barChartFrame">
                       <Chart
                         options={

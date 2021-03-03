@@ -22134,11 +22134,11 @@ button.section-darker:focus {
   left: 10rem;
 }
 
-.center {
+/* .center {
   left: 50%;
 
   transform: translateX(-50%);
-}
+} */
 
 [class*="shadow"] {
   transition: all 0.15s ease;

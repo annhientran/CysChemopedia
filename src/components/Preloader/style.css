@@ -67,8 +67,8 @@
     border-top: 5px solid var(--red);
     width: 100px;
     height: 100px;
-    animation: spin 1s ease-in-out infinite;
-    -webkit-animation: spin 1s ease-in-out infinite;
+    animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
   }
 
   #fullPagePreloader-label {

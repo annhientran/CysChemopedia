@@ -31,11 +31,16 @@
   margin: auto; 
 }*/
 
+.center-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 #searchBarSelect {
-  padding: 0 34px;
   padding-bottom: 0;
-  width: 100%
+  width: 100%;
+  max-width: 850px;
 }
 /*
 #searchBarSelect::after {
@@ -249,7 +254,7 @@
 .barChartFrame {
   min-width: 600px;
   max-width: 600px;
-  height: 380px;
+  max-height: 500px;
   overflow-y: hidden;
   overflow-x: auto;
 }

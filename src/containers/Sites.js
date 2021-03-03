@@ -8,10 +8,11 @@ import SiteSearchBar from "components/SearchBar";
 import GeneMaps from "components/GeneMaps";
 import HockeyStickChart from "components/HockeyStickChart";
 import * as site from "helpers/siteHelper";
+import "styles/sites.css";
 
 const defaultGene = "Q15910";
 
-const Sites = ({ preloader = null, setPreloader }) => {
+const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
@@ -22,39 +23,58 @@ const Sites = ({ preloader = null, setPreloader }) => {
   const [searchCompound, setSearchCompound] = useState("");
 
   useEffect(() => {
-    if (_.isEmpty(compoundLabels[type]))
-      site.fetchCompoundList().then(setCompoundLabels);
+    site.fetchCompoundList().then(setCompoundLabels);
+  }, []);
 
-    if (
-      _.isEmpty(fastaData[type]) &&
-      _.isEmpty(cellData[type]) &&
-      _.isEmpty(searchTags[type])
-    ) {
+  useEffect(() => {
+    if (!_.isEmpty(compoundLabels)) {
       setPreloader("Parsing human data");
       site
         .parseData("human")
         .then(data => {
           setFastaData(prevFasta => ({ ...prevFasta, human: data.fasta }));
           setCellData(prevCell => ({ ...prevCell, human: data.cell }));
-          setSearchGene(prevTags => ({
+          setSearchGene({
             fasta: site.getGeneOnFasta(data.fasta, defaultGene),
             cell: site.getGeneOnCell(data.cell, defaultGene)
-          }));
+          });
 
           setSearchTags(prevTags => ({
             ...prevTags,
             human: site.getSearchTags(data.fasta, data.cell)
           }));
+          // debugger;
+          const hsData = site.fetchHockeyStickData(
+            compoundLabels.human,
+            data.cell
+          );
+
+          setSearchCompound(hsData[0].name);
+          // setSearchCompound(compoundLabels.human[0]);
+          setCompoundData(prevCompoundData => ({
+            ...prevCompoundData,
+            human: hsData
+          }));
+          // // setCompoundData({
+          // //   ...compoundData,
+          // //   human: hsData
+          // // });
         })
-        // .then(() => setPreloader(""))
-        .then(() => setPreloader("Parsing mouse data"))
-        // .then(() =>
-        //   toastNoti.loading("Parsing mouse data", {
-        //     hideAfter: 5,
-        //     position: "bottom-left"
-        //   })
-        // )
-        .then(() => site.parseData("mouse"))
+        .then(() => setPreloader(""))
+        .catch(() => setPreloader(""));
+    }
+  }, [compoundLabels, setPreloader]);
+
+  useEffect(() => {
+    // switch to use toast noti for loading mouse data
+    if (preloader === "") {
+      const { hide } = toastNoti.loading("Parsing mouse data", {
+        hideAfter: 0,
+        position: "top-center"
+      });
+
+      site
+        .parseData("mouse")
         .then(data => {
           setFastaData(prevFasta => ({ ...prevFasta, mouse: data.fasta }));
           setCellData(prevCell => ({ ...prevCell, mouse: data.cell }));
@@ -62,33 +82,61 @@ const Sites = ({ preloader = null, setPreloader }) => {
             ...prevTags,
             mouse: site.getSearchTags(data.fasta, data.cell)
           }));
+
+          const hsData = site.fetchHockeyStickData(
+            compoundLabels.mouse,
+            data.cell
+          );
+
+          setCompoundData(prevCompoundData => ({
+            ...prevCompoundData,
+            mouse: hsData
+          }));
         })
-        // .then(() =>
-        //   toastNoti.success("Mouse data is loaded", {
-        //     hideAfter: 3,
-        //     position: "bottom-left"
-        //   })
-        // )
-        // .catch(() => {
-        //   toastNoti.error(
-        //     "Oops!!! Something's wrong. This is a job for super Z and Nhien-man.",
-        //     {
-        //       hideAfter: 5,
-        //       position: "bottom-left"
-        //     }
-        //   );
-        // })
-        .then(() => setPreloader(""))
-        .catch(() => setPreloader(""));
+        .then(() => {
+          hide();
+          toastNoti.success("Mouse data is loaded", {
+            hideAfter: 3,
+            position: "top-center"
+          });
+          // }
+        })
+        .catch(() => {
+          hide();
+          toastNoti.error(
+            "Oops!!! Something's wrong. This is a job for super Z and Nhien-man.",
+            {
+              hideAfter: 5,
+              position: "top-center"
+            }
+          );
+          // }
+        });
     }
-  }, [type, compoundLabels, fastaData, cellData, searchTags, setPreloader]);
+  }, [preloader, compoundLabels]);
 
   const fetchGene = gene => {
     // debugger;
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], gene);
     const geneOnCell = site.getGeneOnCell(cellData[type], gene);
 
-    setSearchGene({ fasta: geneOnFasta, cell: geneOnCell });
+    if (!geneOnCell)
+      toastNoti.error(
+        "The uniprot accession or gene symbol does not exist on cell data.",
+        {
+          hideAfter: 5,
+          position: "top-center"
+        }
+      );
+    else if (!geneOnFasta)
+      toastNoti.warn(
+        "The uniprot accession or gene symbol has no mapped values",
+        {
+          hideAfter: 5,
+          position: "top-center"
+        }
+      );
+    else setSearchGene({ fasta: geneOnFasta, cell: geneOnCell });
   };
 
   useEffect(() => {
@@ -97,10 +145,14 @@ const Sites = ({ preloader = null, setPreloader }) => {
       !_.isEmpty(cellData[type]) &&
       _.isEmpty(compoundData[type])
     ) {
-      setSearchCompound(compoundLabels[type][0]);
+      const data = site.fetchHockeyStickData(
+        compoundLabels[type],
+        cellData[type]
+      );
+      setSearchCompound(data[0].name);
       setCompoundData({
         ...compoundData[type],
-        [type]: site.fetchHockeyStickData(compoundLabels[type], cellData[type])
+        [type]: data
       });
     }
   }, [cellData, compoundLabels, searchCompound, compoundData, type]);
@@ -108,7 +160,10 @@ const Sites = ({ preloader = null, setPreloader }) => {
   return (
     <>
       {/* <SEO title="Sites" /> */}
-      <Row>
+      <Row
+        className="center-block"
+        // style={{ justifyContent: "center" }}
+      >
         <SiteSearchBar
           searchTags={searchTags[type]}
           searchType={type}
@@ -133,8 +188,6 @@ const Sites = ({ preloader = null, setPreloader }) => {
           setCompound={setSearchCompound}
           compoundData={compoundData[type]}
           cellData={cellData[type]}
-          // fullpageLoader={preloader}
-          // setFullpageLoader={setPreloader}
           // searchType={type}
           colsInDownloadCSV={[
             "site",

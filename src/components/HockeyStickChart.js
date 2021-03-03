@@ -7,8 +7,7 @@ import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 import Chart from "react-apexcharts";
 import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
-// import DownloadButton from "components/DownloadButton/index";
-import { getHockeyStickCSV } from "helpers/siteHelper";
+import { hockeyStick1stTabText, getHockeyStickCSV } from "helpers/siteHelper";
 import { getHockeyStickOptions } from "helpers/chartHelper";
 import { CSVLink } from "react-csv";
 import "rc-tabs/assets/index.css";
@@ -31,34 +30,25 @@ class HockeyStickChart extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      cellData,
-      colsInDownloadCSV,
-      compoundData,
-      compound,
-      // fullpageLoader,
-      // setFullpageLoader,
-      // searchType
-    } = this.props;
-    // debugger;
+    const { cellData, colsInDownloadCSV, compoundData, compound } = this.props;
 
     if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
       const seriesIndex = _.findIndex(compoundData, ["name", compound]);
       const foundSeries = seriesIndex >= 0 ? [compoundData[seriesIndex]] : null;
       this.setState({
         hockeyStickSeries: foundSeries,
-        activeTab: seriesIndex >= 0 ? String(seriesIndex) : 0
+        activeTab: String(seriesIndex) //seriesIndex >= 0 ? String(seriesIndex) : 0
       });
     }
 
     if (
       prevProps.compound !== compound &&
       !_.isEmpty(cellData) &&
-      !_.isEmpty(compoundData)
+      !_.isEmpty(compoundData) &&
+      compound !== hockeyStick1stTabText
     ) {
       const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
       this.setState({ csvData: csv });
-      // if (fullpageLoader.includes("Loading")) setFullpageLoader("");
     }
   }
 
@@ -72,9 +62,9 @@ class HockeyStickChart extends Component {
   };
 
   renderTabContent = () => {
-    return !this.state.hockeyStickSeries ? (
+    return !_.isNull(this.state.hockeyStickSeries) ? (
       <div className="card-body hockeyStickContent">
-        <InlinePreloader />
+        {/* <InlinePreloader /> */}
       </div>
     ) : (
       <>
@@ -85,18 +75,20 @@ class HockeyStickChart extends Component {
           height="480"
           // width="600"
         />
-        <CSVLink
-          data={this.state.csvData}
-          filename={`${this.props.compound}.csv`}
-          className="btn btn-primary"
-          style={{ float: "right" }}
-          target="_blank"
-        >
-          <IconLabel
-            awesomeIcon="download" //"sync"
-            label={`Download ${this.props.compound} CSV`}
-          />
-        </CSVLink>
+        {this.state.hockeyStickSeries ? (
+          <CSVLink
+            data={this.state.csvData}
+            filename={`${this.props.compound}.csv`}
+            className="btn btn-primary"
+            style={{ float: "right" }}
+            target="_blank"
+          >
+            <IconLabel
+              awesomeIcon="download" //"sync"
+              label={`Download ${this.props.compound} CSV`}
+            />
+          </CSVLink>
+        ) : null}
       </>
     );
   };
