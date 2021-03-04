@@ -98,17 +98,6 @@ class GeneMaps extends Component {
       $(".barchart-xlabel").each(function () {
         let currId = $(this).attr("id");
         let compound = $("#" + currId + " > title").text();
-        // debugger;
-        tippy(`#${currId}`, {
-          content:
-            "<img src='/images/" +
-            compound +
-            ".jpg' alt='compound_" +
-            compound +
-            "_image' width='150' height='150'>",
-          allowHTML: true,
-          placement: "bottom-end"
-        });
 
         $("#" + currId).click(() => {
           setHockeyStickCompound(compound);
@@ -176,9 +165,11 @@ class GeneMaps extends Component {
         </Col>
         <Col className="d-flex flex-column justify-content-center align-items-center">
           <Row className="d-flex align-content-center">
-            <div className="card card-header border-0 bg-secondary geneInfoContent">
+            <div className="card border-0 geneInfoContent">
               {!this.props.gene.fasta ? (
-                <InlinePreloader />
+                <div className="card-header">
+                  <InlinePreloader />
+                </div>
               ) : (
                 <GeneInfo geneData={this.props.gene.fasta} />
               )}
@@ -194,30 +185,34 @@ class GeneMaps extends Component {
               ) : (
                 <div className="card-body">
                   <Row>
-                    <div
-                      style={{
-                        textAlign: "center",
-                        fontFamily: "Helvetica"
-                      }}
-                    >
-                      <h2>Site Stoichiometry</h2>
-                      <h3>Site: {this.state.cysNumber}</h3>
-                    </div>
-                    <div className="barChartFrame">
-                      <Chart
-                        options={
-                          rvalsSorted ? sortedBarChartOptions : barChartOptions
-                        }
-                        series={
-                          this.state.rvalsSorted
-                            ? sortedBarChartSeries
-                            : barChartSeries
-                        }
-                        type="bar"
-                        height="350"
-                        width={barChartWidth}
-                      />
-                    </div>
+                    <Col>
+                      <div
+                        style={{
+                          textAlign: "center",
+                          fontFamily: "Helvetica"
+                        }}
+                      >
+                        <h2>Site Stoichiometry</h2>
+                        <h3>Site: {this.state.cysNumber}</h3>
+                      </div>
+                      <div className="barChartFrame">
+                        <Chart
+                          options={
+                            rvalsSorted
+                              ? sortedBarChartOptions
+                              : barChartOptions
+                          }
+                          series={
+                            this.state.rvalsSorted
+                              ? sortedBarChartSeries
+                              : barChartSeries
+                          }
+                          type="bar"
+                          height="350"
+                          width={barChartWidth}
+                        />
+                      </div>
+                    </Col>
                   </Row>
                   <Form.Group controlId="barChartSortRow">
                     <Form.Row>

@@ -9,15 +9,26 @@ const GeneInfo = ({ geneData }) => {
   const protein = geneData["Protein names"];
 
   return (
-    <Row className="align-items-center">
-      <Col>
-        <h3 className="mb-0 text-center">Protein Information</h3>
-        <br />
-        <p><b>Accession:</b> {entry}</p>
-        <p><b>Gene:</b> {gene}</p>
-        <p><b>Protein:</b> {protein}</p>
-      </Col>
-    </Row>
+    <>
+      <Row className="align-items-center bg-secondary card-header">
+        <Col>
+          <h3 className="mb-0 text-center">Protein Information</h3>
+        </Col>
+      </Row>
+      <Row className="align-items-center card-header">
+        <Col>
+          <p>
+            <b>Accession:</b> {entry}
+          </p>
+          <p>
+            <b>Gene:</b> {gene}
+          </p>
+          <p>
+            <b>Protein:</b> {protein}
+          </p>
+        </Col>
+      </Row>
+    </>
   );
 };
 

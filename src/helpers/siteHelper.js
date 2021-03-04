@@ -20,7 +20,7 @@ export const typeOptions = [
   { label: "MOUSE", value: "mouse" }
 ];
 
-export const hockeyStick1stTabText= "Choose a Compound";
+export const hockeyStick1stTabText = "Select Compound";
 
 const fastaPath = {
   human: FastaHumanCSV,
@@ -74,7 +74,7 @@ export function fetchHockeyStickData(compoundLabels, cellData) {
         ? parseFloat(site[label]).toFixed(2)
         : null;
 
-      if (compoundVal && filteredData[compoundVal]) {
+      if (compoundVal && filteredData[compoundVal] && site.engaged >= 2) {
         filteredData[compoundVal].name += `, ${site.gene_symbol}`;
 
         if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
@@ -98,7 +98,10 @@ export function fetchHockeyStickData(compoundLabels, cellData) {
     return { name: label, data: seriesData };
   });
 
-  data.unshift({ name: hockeyStick1stTabText, data: [[0, 0.23, "KDM5A", "709"]] });
+  data.unshift({
+    name: hockeyStick1stTabText,
+    data: [[0, 0, "", ""]]
+  });
 
   return data;
 }
@@ -234,7 +237,9 @@ export function getSearchTags(fastaData, cellData) {
   return _.uniqBy(allTags, "label");
 }
 
-export function getHockeyStickCSV(cellData, infoCols, compound) {
+export function getHockeyStickCSV(activeTab, cellData, infoCols, compound) {
+  if (activeTab === 0) return [];
+
   infoCols.push(compound);
 
   return cellData.map(site => {

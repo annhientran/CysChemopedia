@@ -7,8 +7,9 @@ import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 import Chart from "react-apexcharts";
 import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
-import { hockeyStick1stTabText, getHockeyStickCSV } from "helpers/siteHelper";
+import { getHockeyStickCSV } from "helpers/siteHelper";
 import { getHockeyStickOptions } from "helpers/chartHelper";
+import CompoundImgTooltip from "components/CompoundImgTooltip";
 import { CSVLink } from "react-csv";
 import "rc-tabs/assets/index.css";
 
@@ -25,7 +26,7 @@ class HockeyStickChart extends Component {
       hockeyStickSeries: null,
       hockeyStickOptions: getHockeyStickOptions(),
       activeTab: "0",
-      csvData: null
+      csvData: []
     };
   }
 
@@ -44,10 +45,14 @@ class HockeyStickChart extends Component {
     if (
       prevProps.compound !== compound &&
       !_.isEmpty(cellData) &&
-      !_.isEmpty(compoundData) &&
-      compound !== hockeyStick1stTabText
+      !_.isEmpty(compoundData)
     ) {
-      const csv = getHockeyStickCSV(cellData, colsInDownloadCSV, compound);
+      const csv = getHockeyStickCSV(
+        this.state.activeTab,
+        cellData,
+        colsInDownloadCSV,
+        compound
+      );
       this.setState({ csvData: csv });
     }
   }
@@ -62,32 +67,46 @@ class HockeyStickChart extends Component {
   };
 
   renderTabContent = () => {
-    return !_.isNull(this.state.hockeyStickSeries) ? (
+    const {
+      activeTab,
+      hockeyStickSeries,
+      hockeyStickOptions,
+      csvData
+    } = this.state;
+
+    return _.isNull(hockeyStickSeries) ? (
       <div className="card-body hockeyStickContent">
         {/* <InlinePreloader /> */}
       </div>
     ) : (
       <>
         <Chart
-          options={this.state.hockeyStickOptions}
-          series={this.state.hockeyStickSeries}
+          options={hockeyStickOptions}
+          series={hockeyStickSeries}
           type="scatter"
           height="480"
-          // width="600"
+          width="950"
         />
-        {this.state.hockeyStickSeries ? (
-          <CSVLink
-            data={this.state.csvData}
-            filename={`${this.props.compound}.csv`}
-            className="btn btn-primary"
-            style={{ float: "right" }}
-            target="_blank"
-          >
-            <IconLabel
-              awesomeIcon="download" //"sync"
-              label={`Download ${this.props.compound} CSV`}
+        {hockeyStickSeries && parseInt(activeTab) !== 0 ? (
+          <div style={{float:"right"}}>
+            <CompoundImgTooltip
+              compound={this.props.compound}
+              placement="left"
+              width="150"
+              height="150"
             />
-          </CSVLink>
+            <CSVLink
+              data={csvData}
+              filename={`${this.props.compound}.csv`}
+              className="btn btn-primary"
+              target="_blank"
+            >
+              <IconLabel
+                awesomeIcon="download" //"sync"
+                label={`Download ${this.props.compound} CSV`}
+              />
+            </CSVLink>
+          </div>
         ) : null}
       </>
     );
@@ -96,7 +115,7 @@ class HockeyStickChart extends Component {
   renderTabPane = () => {
     return this.props.compoundData.map((compound, i) => {
       return (
-        <TabPane tab={compound.name} key={i}>
+        <TabPane tab={compound.name} key={i} style={{ minHeight: 540 }}>
           {parseInt(this.state.activeTab) !== i
             ? null
             : this.renderTabContent()}

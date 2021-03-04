@@ -186,6 +186,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
     },
     xaxis: {
       categories: compounds,
+      hideOverlappingLabels: true,
       title: {
         text: "Compounds",
         style: {
