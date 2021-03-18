@@ -2,11 +2,19 @@ import PySimpleGUI as sg
 import csv
 from datetime import datetime
 
-humanCell = 'src/data/mockdata/HumanCellData'
-mouseCell = 'src/data/mockdata/MouseCellData'
-compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\mockdata\\Compounds.csv'
+humanCell = 'src/data/realdata/HumanCellData'
+mouseCell = 'src/data/realdata/MouseCellData'
+compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\realdata\\Compounds.csv'
 engagedVal = 2
 mappedVal = 1
+
+"""
+    Return the uniprot accession with isoform 
+    extracted from site column
+"""
+def getEntry(site):
+    com = site.split("|")
+    return com[1]
 
 
 def getSiteCys(site):
@@ -137,6 +145,9 @@ def createNewDatabase(filename, isHuman):
 
         # extracting field names through first row
         fields = next(csvreader)
+
+        # one client provided file had protein id instead of uniprot accession 
+        # so need to produce uniprot accession col
         # pid = fields.index('protein_id')
         # fields.insert(pid, 'uniprot_accession')
         # for row in csvreader:
@@ -149,17 +160,24 @@ def createNewDatabase(filename, isHuman):
         for name in compoundNames:
             compoundPos.append(fields.index(name))
 
-        siteColPos = fields.index('site')
+        siteColPos= fields.index('site')
+        
+        # creating CYSTEINE column header next to SITE column
         fields.insert(siteColPos + 1, 'cysteine')
-        engagedColPos = fields.index('cell_line') + 1
-        fields.insert(engagedColPos, 'engaged')
+
+        # creating ENTRY (canonical & isoform) column header next to UNIPROT_ACCESSION column
+        fields.insert(fields.index('uniprot_accession') + 1, 'entry')
+        
+        # creating ENGAGE column header next to CELL_LINE column
+        fields.insert(fields.index('cell_line') + 1, 'engaged')
 
         # extracting each data row one by one
         # get Sequence C Positions from each Cysteine and add to row
         for row in csvreader:
             isEngaged = checkEngaged(row, compoundPos)
+            row.insert(fields.index('cell_line') + 1, isEngaged)
             row.insert(siteColPos + 1, getSiteCys(row[siteColPos]))
-            row.insert(engagedColPos, isEngaged)
+            row.insert(fields.index('uniprot_accession') + 1, getEntry(row[siteColPos]))
             rows.append(row)
 
         # get total number of rows

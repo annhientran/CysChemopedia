@@ -1,3 +1,8 @@
+"""
+    This file is to prep Fasta csv files to 
+    generate a new one with added processed data columns
+"""
+
 import PySimpleGUI as sg
 import csv
 from datetime import datetime
