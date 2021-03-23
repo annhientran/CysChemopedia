@@ -9,9 +9,9 @@ import { csv } from "d3";
 // import CompoundsCSV from "data/mockdata/Compounds.csv";
 
 // ------------------ real data-------------------------
-import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
+import FastaHumanCSV from "data/realdata/HumanFasta.csv";
 import CellHumanCSV from "data/realdata/HumanCellData.csv";
-import FastaMouseCSV from "data/mockdata/MouseFasta.csv";
+import FastaMouseCSV from "data/realdata/MouseFasta.csv";
 import CellMouseCSV from "data/realdata/MouseCellData.csv";
 import CompoundsCSV from "data/realdata/Compounds.csv";
 
