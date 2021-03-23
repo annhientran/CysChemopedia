@@ -33,14 +33,11 @@ const cellPath = {
 
 export function parseData(type) {
   return Promise.all([csv(fastaPath[type]), csv(cellPath[type])]).then(data => {
-    const reviewedFasta = _.filter(data[0], ["Status", "reviewed"]);
-    const _fasta = _.sortBy(reviewedFasta, ["Entry", "Gene names (primary)"]);
-    const filteredCell = data[1].map(site =>
-      _.omitBy(site, prop => prop === "NA")
-    );
-    const _cell = _.sortBy(filteredCell, ["uniprot_accession", "gene_symbol"]);
-
-    return { fasta: _fasta, cell: _cell };
+    const [_fasta, _cell] = data;
+    return {
+      fasta: _.sortBy(_fasta, ["Entry", "Gene names (primary)"]),
+      cell: _.sortBy(_cell, ["entry", "gene_symbol"])
+    };
   });
 }
 
@@ -110,8 +107,7 @@ export function getGeneOnFasta(fastaData, gene) {
   if (!gene || _.isEmpty(fastaData)) return null;
 
   const proteinOnFasta = fastaData.filter(
-    b =>
-      _.includes(b.Entry, gene) || _.includes(b["Gene names (primary)"], gene)
+    b => b.Entry === gene || b["Gene names (primary)"] === gene
   );
 
   if (_.isEmpty(proteinOnFasta)) return null;
@@ -120,26 +116,16 @@ export function getGeneOnFasta(fastaData, gene) {
 }
 
 export function getGeneOnCell(cellData, gene) {
-  //debugger;
   if (!gene || _.isEmpty(cellData)) return null;
 
   const proteinOnCelltbl = cellData.filter(
-    b => b.uniprot_accession === gene || b.gene_symbol === gene
+    b => b.entry === gene || b.gene_symbol === gene
   );
 
   if (_.isEmpty(proteinOnCelltbl)) return null;
 
   return proteinOnCelltbl;
 }
-
-// function padCysCellArr(cysArr, cellLineList) {
-//   _.forEach(cellLineList, cellLine => {
-//     if (_.isEmpty(_.filter(cysArr, ["x", cellLine])))
-//       cysArr.push({ x: cellLine, y: 0 });
-//   });
-
-//   return _.sortBy(cysArr, ["x"]);
-// }
 
 function setHeatMapBase(cysArr, cellLineList) {
   let ret = [];
@@ -215,7 +201,7 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
 export function getSearchTags(fastaData, cellData) {
   const fastaTags = fastaData.map(protein => {
     return {
-      accession: protein.Entry,
+      entry: protein.Entry,
       geneSym: protein["Gene names (primary)"],
       // label: `Uniprot Accession: ${protein.Entry} — Gene: ${protein["Gene names (primary)"]}`
       label: `${protein.Entry} — ${protein["Gene names (primary)"]}`
@@ -223,10 +209,10 @@ export function getSearchTags(fastaData, cellData) {
   });
   const cellTags = cellData.map(site => {
     return {
-      accession: site.uniprot_accession,
+      entry: site.entry,
       geneSym: site.gene_symbol,
       // label: `Uniprot Accession: ${site.uniprot_accession} — Gene: ${site.gene_symbol}`
-      label: `${site.uniprot_accession} — ${site.gene_symbol}`
+      label: `${site.entry} — ${site.gene_symbol}`
     };
   });
   // temp solution to deal with empty value data

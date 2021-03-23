@@ -104,10 +104,9 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
     }
   }, [preloader, compoundLabels]);
 
-  const fetchGene = gene => {
-    // debugger;
-    const geneOnFasta = site.getGeneOnFasta(fastaData[type], gene);
-    const geneOnCell = site.getGeneOnCell(cellData[type], gene);
+  const fetchGeneByEntry = entry => {
+    const geneOnFasta = site.getGeneOnFasta(fastaData[type], entry);
+    const geneOnCell = site.getGeneOnCell(cellData[type], entry);
 
     if (!geneOnCell)
       toastNoti.error(
@@ -142,7 +141,7 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
             setSearchCompound(site.hockeyStick1stTabText);
             setType(type);
           }}
-          onSubmit={fetchGene}
+          onSubmit={fetchGeneByEntry}
         />
       </Row>
       <Row>

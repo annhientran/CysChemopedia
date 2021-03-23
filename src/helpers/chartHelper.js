@@ -16,7 +16,7 @@ export const getHeatmapOptions = (
   onCysClick
 ) => {
   const chartTitle = proteinOnFasta
-    ? `Cys-Oxidation Stoichiometry: ${proteinOnFasta["Entry"]} - Gene: ${proteinOnFasta["Gene names (primary)"]}`
+    ? `Cys-Oxidation Stoichiometry: ${proteinOnFasta["Entry"]} — Gene: ${proteinOnFasta["Gene names (primary)"]}`
     : "";
   return {
     chart: {

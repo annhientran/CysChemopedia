@@ -17,28 +17,28 @@ class GeneAutocomplete extends Component {
     if (!options || !options.length) return [];
 
     return options.map(type => {
-      const { accession, label, geneSym } = type;
-      const params = { value: label, accession: accession, geneSym: geneSym };
+      const { entry, label, geneSym } = type;
+      const params = { value: label, entry: entry, geneSym: geneSym };
 
-      return <Option key={label} {...params}>{`Uniprot Accession: ${accession} — Gene: ${geneSym}`}</Option>;
+      return <Option key={label} {...params}>{`Uniprot Accession: ${entry} — Gene: ${geneSym}`}</Option>;
     });
   };
 
   customFilterOption = (inputValue, option) => {
-    const { accession, value } = option.props;
+    const { entry, value } = option.props;
 
-    return accession.includes(inputValue) || value.includes(inputValue);
+    return entry.includes(inputValue) || value.includes(inputValue);
   };
 
   sorterByPos = (optA, optB) => {
     const { value } = this.state;
     const posOptA =
-      optA.accession.indexOf(value) >= 0
-        ? optA.accession.indexOf(value)
+      optA.entry.indexOf(value) >= 0
+        ? optA.entry.indexOf(value)
         : optA.value.indexOf(value);
     const posOptB =
-      optB.accession.indexOf(value) >= 0
-        ? optB.accession.indexOf(value)
+      optB.entry.indexOf(value) >= 0
+        ? optB.entry.indexOf(value)
         : optB.value.indexOf(value);
 
     return posOptA > posOptB ? 1 : posOptA === posOptB ? 0 : -1;
