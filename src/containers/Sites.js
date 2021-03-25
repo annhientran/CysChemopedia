@@ -143,7 +143,7 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           colsInDownloadCSV={[
             "site",
             "cysteine",
-            "uniprot_accession",
+            "entry",
             "gene_symbol",
             "prot_description",
             "cell_line",

@@ -229,9 +229,11 @@ export function getSearchTags(fastaData, cellData) {
 export function getHockeyStickCSV(activeTab, cellData, infoCols, compound) {
   if (parseInt(activeTab) === 0) return [];
 
+  const NaNfiltered = _.reject(cellData, [[compound], ""]);
+
   infoCols.push(compound);
 
-  return cellData.map(site => {
+  return NaNfiltered.map(site => {
     return _.pick(site, infoCols);
   });
 }
