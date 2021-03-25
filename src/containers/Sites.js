@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 // import SEO from "components/seo";
@@ -15,48 +14,38 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
-  const [compoundData, setCompoundData] = useState({ human: [], mouse: [] });
+  // const [compoundData, setCompoundData] = useState({ human: {}, mouse: {} });
   const [searchTags, setSearchTags] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
   const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
   const [searchCompound, setSearchCompound] = useState("");
 
   useEffect(() => {
-    site.fetchCompoundList().then(setCompoundLabels);
-  }, []);
+    setPreloader("Parsing human data");
 
-  useEffect(() => {
-    if (!_.isEmpty(compoundLabels)) {
-      setPreloader("Parsing human data");
-      site
-        .parseData("human")
-        .then(data => {
-          setFastaData(prevFasta => ({ ...prevFasta, human: data.fasta }));
-          setCellData(prevCell => ({ ...prevCell, human: data.cell }));
-          setSearchGene({
-            fasta: site.getGeneOnFasta(data.fasta, defaultGene),
-            cell: site.getGeneOnCell(data.cell, defaultGene)
-          });
+    site
+      .fetchCompoundList()
+      .then(setCompoundLabels)
+      .then(() => site.parseData("human"))
+      .then(data => {
+        setFastaData(prevFasta => ({ ...prevFasta, human: data.fasta }));
+        setCellData(prevCell => ({ ...prevCell, human: data.cell }));
 
-          setSearchTags(prevTags => ({
-            ...prevTags,
-            human: site.getSearchTags(data.fasta, data.cell)
-          }));
+        setSearchGene({
+          fasta: site.getGeneOnFasta(data.fasta, defaultGene),
+          cell: site.getGeneOnCell(data.cell, defaultGene)
+        });
 
-          setCompoundData(prevCompoundData => ({
-            ...prevCompoundData,
-            human: site.fetchHockeyStickData(compoundLabels.human, data.cell)
-          }));
-        })
-        .then(() => setPreloader(""))
-        .catch(() => setPreloader(""));
-    }
-  }, [compoundLabels, setPreloader]);
+        setSearchTags(prevTags => ({
+          ...prevTags,
+          human: site.getSearchTags(data.fasta, data.cell)
+        }));
 
-  useEffect(() => {
-    if (!_.isEmpty(compoundData.human))
-      setSearchCompound(compoundData.human[0].name);
-  }, [compoundData.human]);
+        setSearchCompound(site.hockeyStick1stTabText);
+      })
+      .then(() => setPreloader(""))
+      .catch(() => setPreloader(""));
+  }, [setPreloader]);
 
   useEffect(() => {
     // switch to use toast noti for loading mouse data
@@ -75,11 +64,6 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           setSearchTags(prevTags => ({
             ...prevTags,
             mouse: site.getSearchTags(data.fasta, data.cell)
-          }));
-
-          setCompoundData(prevCompoundData => ({
-            ...prevCompoundData,
-            mouse: site.fetchHockeyStickData(compoundLabels.mouse, data.cell)
           }));
         })
         .then(() => {
@@ -102,7 +86,14 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           // }
         });
     }
-  }, [preloader, compoundLabels]);
+  }, [preloader]);
+
+  // const fetchHockeyStickCompound = label => {
+  //   setCompoundData(prevCompoundData => ({
+  //     ...prevCompoundData,
+  //     [type]: site.fetchHockeyStickData(label, cellData[type])
+  //   }));
+  // };
 
   const fetchGeneByEntry = entry => {
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], entry);
@@ -155,16 +146,15 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
         <HockeyStickChart
           compound={searchCompound}
           setCompound={setSearchCompound}
-          compoundData={compoundData[type]}
+          compoundData={compoundLabels[type]}
           cellData={cellData[type]}
-          // searchType={type}
+          searchType={type}
           colsInDownloadCSV={[
             "site",
             "cysteine",
             "uniprot_accession",
             "gene_symbol",
             "prot_description",
-            "organism",
             "cell_line",
             "engaged"
           ]}

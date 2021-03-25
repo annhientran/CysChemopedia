@@ -35,7 +35,8 @@ class GeneMaps extends Component {
     if (
       !_.isEqual(prevProps.gene, gene) &&
       !_.isEmpty(gene.fasta) &&
-      !_.isEmpty(gene.cell)
+      !_.isEmpty(gene.cell) && 
+      !_.isEmpty(compounds)
     ) {
       const { cysCellData, cellLineList, rVals } = parseGeneData(
         gene.fasta,
@@ -56,7 +57,7 @@ class GeneMaps extends Component {
         barChartSeries: [{ name: "R-values", data: [] }],
         barChartOptions: chart.getBarChartOptions(
           "none selected",
-          compounds,
+          _.map(compounds, "name"),
           this.tooltipBarChartLabel
         )
       });
@@ -66,7 +67,7 @@ class GeneMaps extends Component {
   onCysClick = (cysNumber, siteR_Values, compoundLabels) => {
     const labeledRvals = siteR_Values.map((e, i) => ({
       R_Value: e,
-      label: compoundLabels[i]
+      label: compoundLabels[i].name
     }));
     const filtered = labeledRvals.filter(e => e.R_Value);
     const sorted = _.sortBy(filtered, e => e.R_Value);

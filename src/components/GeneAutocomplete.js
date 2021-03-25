@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import Select, { Option } from "rc-select";
-// import { makeEvent } from "libs/form";
 import "styles/rc-select.css";
 
 class GeneAutocomplete extends Component {

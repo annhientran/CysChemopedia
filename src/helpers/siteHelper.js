@@ -48,59 +48,64 @@ export function fetchCompoundList() {
       mouse: []
     };
 
-    data.forEach(compound => compoundLabels[compound.type].push(compound.name));
+    data.forEach(compound =>
+      compoundLabels[compound.type].push({
+        name: compound.name,
+        order: parseInt(compound.order)
+      })
+    );
+
+    _.keys(compoundLabels).forEach(
+      type =>
+        (compoundLabels[type] = _.sortBy(compoundLabels[type], [
+          "order",
+          "name"
+        ]))
+    );
 
     return compoundLabels;
   });
 }
 
-export function fetchHockeyStickData(compoundLabels, cellData) {
-  if (!compoundLabels) return null;
+export function fetchHockeyStickData(label, cellData) {
+  if (!label) return null;
 
-  let data = compoundLabels.map(label => {
-    const NaNfiltered = _.reject(cellData, [[label], ""]);
-    const sortedData = _.sortBy(NaNfiltered, [
-      function (site) {
-        return site[label];
-      }
-    ]);
+  if (label === hockeyStick1stTabText)
+    return { name: hockeyStick1stTabText, data: [[0, 0, "", ""]] };
 
-    let filteredData = {};
-    sortedData.forEach((site, i) => {
-      const compoundVal = site[label]
-        ? parseFloat(site[label]).toFixed(2)
-        : null;
+  const NaNfiltered = _.reject(cellData, [[label], ""]);
+  const sortedData = _.sortBy(NaNfiltered, [
+    function (site) {
+      return site[label];
+    }
+  ]);
 
-      if (compoundVal && filteredData[compoundVal] && site.engaged >= 2) {
-        filteredData[compoundVal].name += `, ${site.gene_symbol}`;
+  let filteredData = {};
+  sortedData.forEach((site, i) => {
+    const compoundVal = site[label] ? parseFloat(site[label]).toFixed(2) : null;
 
-        if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
-          filteredData[compoundVal].cysnumber += `, ${site.cysteine}`;
-      } else if (compoundVal && !filteredData[compoundVal]) {
-        filteredData[compoundVal] = {
-          index: i,
-          name: site.gene_symbol,
-          cysnumber: site.cysteine
-        };
-      }
-    });
+    if (compoundVal && filteredData[compoundVal] && site.engaged >= 2) {
+      filteredData[compoundVal].name += `, ${site.gene_symbol}`;
 
-    let seriesData = _.map(filteredData, (value, key) => [
-      value.index,
-      parseFloat(key),
-      value.name,
-      value.cysnumber
-    ]);
-
-    return { name: label, data: seriesData };
+      if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
+        filteredData[compoundVal].cysnumber += `, ${site.cysteine}`;
+    } else if (compoundVal && !filteredData[compoundVal]) {
+      filteredData[compoundVal] = {
+        index: i,
+        name: site.gene_symbol,
+        cysnumber: site.cysteine
+      };
+    }
   });
 
-  data.unshift({
-    name: hockeyStick1stTabText,
-    data: [[0, 0, "", ""]]
-  });
+  let seriesData = _.map(filteredData, (value, key) => [
+    value.index,
+    parseFloat(key),
+    value.name,
+    value.cysnumber
+  ]);
 
-  return data;
+  return { name: label, data: seriesData };
 }
 
 export function getGeneOnFasta(fastaData, gene) {
@@ -184,7 +189,7 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
       cysCellData[existedCysPos].data[cellLinePos].y = parseInt(site.engaged);
 
       const val = compounds.map(label => {
-        return site[label];
+        return site[label.name];
       });
 
       rVals.push({
@@ -224,11 +229,12 @@ export function getSearchTags(fastaData, cellData) {
 }
 
 export function getHockeyStickCSV(activeTab, cellData, infoCols, compound) {
-  if (activeTab === 0) return [];
+  if (parseInt(activeTab) === 0) return [];
 
   infoCols.push(compound);
 
-  return cellData.map(site => {
+  const ret =  cellData.map(site => {
     return _.pick(site, infoCols);
   });
+  return ret;
 }

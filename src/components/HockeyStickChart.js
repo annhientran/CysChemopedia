@@ -4,23 +4,22 @@ import { Col } from "react-bootstrap";
 import Tabs, { TabPane } from "rc-tabs";
 import TabContent from "rc-tabs/lib/TabContent";
 import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
+import { CSVLink } from "react-csv";
 import Chart from "react-apexcharts";
 import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
-import { getHockeyStickCSV } from "helpers/siteHelper";
-import { getHockeyStickOptions } from "helpers/chartHelper";
 import CompoundImgTooltip from "components/CompoundImgTooltip";
-import { CSVLink } from "react-csv";
+import {
+  getHockeyStickCSV,
+  fetchHockeyStickData,
+  hockeyStick1stTabText
+} from "helpers/siteHelper";
+import { getHockeyStickOptions } from "helpers/chartHelper";
 import "rc-tabs/assets/index.css";
 
 class HockeyStickChart extends Component {
   constructor(props) {
     super(props);
-    // const { compoundData, compound } = this.props;
-    // const initialSeries =
-    //   compound && _.isEmpty(compoundData)
-    //     ? _.find(this.props.compoundData, ["name", this.props.compound])
-    //     : null;
 
     this.state = {
       hockeyStickSeries: null,
@@ -35,10 +34,11 @@ class HockeyStickChart extends Component {
 
     if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
       const seriesIndex = _.findIndex(compoundData, ["name", compound]);
-      const foundSeries = seriesIndex >= 0 ? [compoundData[seriesIndex]] : null;
+      const series = fetchHockeyStickData(compound, this.props.cellData);
+
       this.setState({
-        hockeyStickSeries: foundSeries,
-        activeTab: String(seriesIndex) //seriesIndex >= 0 ? String(seriesIndex) : 0
+        hockeyStickSeries: [series],
+        activeTab: String(seriesIndex + 1)
       });
     }
 
@@ -57,13 +57,29 @@ class HockeyStickChart extends Component {
     }
   }
 
+  fetchCompound = label => {
+    this.setState({
+      hockeyStickSeries: fetchHockeyStickData(label, this.props.cellData)
+    });
+  };
+
   saveBar = bar => {
     this.bar = bar;
   };
 
   onTabChange = key => {
-    this.setState({ hockeyStickSeries: null, activeTab: key });
-    this.props.setCompound(this.props.compoundData[key].name);
+    this.setState(
+      {
+        hockeyStickSeries: null,
+        activeTab: key
+      },
+      () => {
+        const keyInt = parseInt(key);
+
+        if (keyInt === 0) this.props.setCompound(hockeyStick1stTabText);
+        else this.props.setCompound(this.props.compoundData[keyInt - 1].name);
+      }
+    );
   };
 
   renderTabContent = () => {
@@ -73,10 +89,11 @@ class HockeyStickChart extends Component {
       hockeyStickOptions,
       csvData
     } = this.state;
+    const { compound } = this.props;
 
     return _.isNull(hockeyStickSeries) ? (
       <div className="card-body hockeyStickContent">
-        {/* <InlinePreloader /> */}
+        <InlinePreloader />
       </div>
     ) : (
       <>
@@ -88,9 +105,9 @@ class HockeyStickChart extends Component {
           width="950"
         />
         {hockeyStickSeries && parseInt(activeTab) !== 0 ? (
-          <div style={{float:"right"}}>
+          <div style={{ float: "right" }}>
             <CompoundImgTooltip
-              compound={this.props.compound}
+              compound={compound}
               placement="left"
               width="150"
               height="150"
@@ -102,7 +119,7 @@ class HockeyStickChart extends Component {
               target="_blank"
             >
               <IconLabel
-                awesomeIcon="download" //"sync"
+                awesomeIcon="download"
                 label={`Download ${this.props.compound} CSV`}
               />
             </CSVLink>
@@ -115,8 +132,8 @@ class HockeyStickChart extends Component {
   renderTabPane = () => {
     return this.props.compoundData.map((compound, i) => {
       return (
-        <TabPane tab={compound.name} key={i} style={{ minHeight: 540 }}>
-          {parseInt(this.state.activeTab) !== i
+        <TabPane tab={compound.name} key={i + 1} style={{ minHeight: 540 }}>
+          {parseInt(this.state.activeTab) !== i + 1
             ? null
             : this.renderTabContent()}
         </TabPane>
@@ -159,6 +176,15 @@ class HockeyStickChart extends Component {
                     />
                   )}
                 >
+                  <TabPane
+                    tab={hockeyStick1stTabText}
+                    key={0}
+                    style={{ minHeight: 540 }}
+                  >
+                    {parseInt(this.state.activeTab) !== 0
+                      ? null
+                      : this.renderTabContent()}
+                  </TabPane>
                   {this.renderTabPane()}
                 </Tabs>
               </div>
