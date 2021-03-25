@@ -208,7 +208,6 @@ export function getSearchTags(fastaData, cellData) {
     return {
       entry: protein.Entry,
       geneSym: protein["Gene names (primary)"],
-      // label: `Uniprot Accession: ${protein.Entry} — Gene: ${protein["Gene names (primary)"]}`
       label: `${protein.Entry} — ${protein["Gene names (primary)"]}`
     };
   });
@@ -216,13 +215,12 @@ export function getSearchTags(fastaData, cellData) {
     return {
       entry: site.entry,
       geneSym: site.gene_symbol,
-      // label: `Uniprot Accession: ${site.uniprot_accession} — Gene: ${site.gene_symbol}`
       label: `${site.entry} — ${site.gene_symbol}`
     };
   });
   // temp solution to deal with empty value data
   const allTags = fastaTags.concat(cellTags).filter(tag => {
-    return tag.accession !== "" && tag.value !== "";
+    return tag.entry !== "" && tag.gene_symbol !== "";
   });
 
   return _.uniqBy(allTags, "label");
@@ -233,8 +231,7 @@ export function getHockeyStickCSV(activeTab, cellData, infoCols, compound) {
 
   infoCols.push(compound);
 
-  const ret =  cellData.map(site => {
+  return cellData.map(site => {
     return _.pick(site, infoCols);
   });
-  return ret;
 }

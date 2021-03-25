@@ -14,7 +14,6 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [compoundLabels, setCompoundLabels] = useState({});
   const [fastaData, setFastaData] = useState({ human: [], mouse: [] });
   const [cellData, setCellData] = useState({ human: [], mouse: [] });
-  // const [compoundData, setCompoundData] = useState({ human: {}, mouse: {} });
   const [searchTags, setSearchTags] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
   const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
@@ -88,13 +87,6 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
     }
   }, [preloader]);
 
-  // const fetchHockeyStickCompound = label => {
-  //   setCompoundData(prevCompoundData => ({
-  //     ...prevCompoundData,
-  //     [type]: site.fetchHockeyStickData(label, cellData[type])
-  //   }));
-  // };
-
   const fetchGeneByEntry = entry => {
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], entry);
     const geneOnCell = site.getGeneOnCell(cellData[type], entry);
@@ -123,7 +115,6 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
       {/* <SEO title="Sites" /> */}
       <Row
         className="center-block"
-        // style={{ justifyContent: "center" }}
       >
         <SiteSearchBar
           searchTags={searchTags[type]}

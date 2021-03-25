@@ -20,7 +20,6 @@ export const getHeatmapOptions = (
     : "";
   return {
     chart: {
-      // type: "heatmap",
       zoom: {
         enabled: true,
         type: "xy"
@@ -28,7 +27,6 @@ export const getHeatmapOptions = (
       animations: {
         enabled: false
       },
-      // background: "#C9C4BD",
       events: {
         click: function (event) {
           if (!cysCellData || !cellLines) return;
@@ -71,8 +69,6 @@ export const getHeatmapOptions = (
     },
     plotOptions: {
       heatmap: {
-        // shadeIntensity: false,
-        // radius: 0,
         useFillColorAsStroke: true,
         colorScale: {
           ranges: [
@@ -112,27 +108,6 @@ export const getHeatmapOptions = (
         }
       }
     },
-    // tooltip: {
-    //   custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-    //     if (series[seriesIndex][dataPointIndex])
-    //       return (
-    //         '<div class="apexcharts-tooltip-series-group apexcharts-active" style="order: 1; display: flex;">' +
-    //         // {/* <span class="apexcharts-tooltip-marker" style="background-color: rgb(144, 159, 241); display: none;"></span> */}
-    //         '<div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">' +
-    //         '<div class="apexcharts-tooltip-y-group">' +
-    //         '<span class="apexcharts-tooltip-text-value">' +
-    //         w.globals.initialSeries[seriesIndex].name +
-    //         ": </span>" +
-    //         '<span class="apexcharts-tooltip-text-value">' +
-    //         w.globals.labels[dataPointIndex] +
-    //         "</span>" +
-    //         "</div>" +
-    //         "</div>" +
-    //         "</div>"
-    //       );
-    //     return null;
-    //   }
-    // },
     dataLabels: {
       enabled: false
     },
@@ -151,11 +126,6 @@ export const getHeatmapOptions = (
         color: "#263238"
       }
     }
-    // yaxis: {
-    //   formatter: value => {
-    //     return value;
-    //   }
-    // }
   };
 };
 
@@ -163,8 +133,6 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   return {
     chart: {
       type: "bar",
-      // redrawOnWindowResize: true,
-      // redrawOnParentResize: true,
       events: {
         mounted: function (chartContext, config) {
           setXAxisLabelImages();
@@ -190,7 +158,6 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       title: {
         text: "Compounds",
         style: {
-          // cssClass: "apexcharts-yaxis-label",
           fontSize: "15px",
           fontFamily: "Source Sans Pro",
           fontWeight: 900
@@ -198,16 +165,14 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       },
       labels: {
         style: {
-          cssClass: "barchart-xlabel" //'apexcharts-xaxis-label'
+          cssClass: "barchart-xlabel"
         }
       }
     },
     yaxis: {
       title: {
         text: "R-values",
-        // offsetX: 5,
         style: {
-          // cssClass: "apexcharts-yaxis-label",
           fontSize: "15px",
           fontFamily: "Source Sans Pro",
           fontWeight: 900
@@ -231,8 +196,6 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
         color: "black",
         fontSize: "20px",
         fontFamily: "Source Sans Pro"
-        // borderColor: 'red',
-        // cssClass: "blur"
       }
     },
     annotations: {
@@ -245,7 +208,6 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
             borderColor: "#ff0000",
             style: {
               color: "#ff0000"
-              // background: "#ff0000"
             },
             text: "Hit Compound",
             position: "left",
@@ -260,27 +222,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
           return val;
         }
       }
-    } //,
-    // title: {
-    //   text: "Site Stoichiometry",
-    //   align: "center",
-    //   margin: 10,
-    //   offsetX: 0,
-    //   offsetY: 0,
-    //   floating: false,
-    //   style: {
-    //     fontSize: "16px",
-    //     color: "#263238"
-    //   }
-    // },
-    // subtitle: {
-    //   text: `Site: ${site}`,
-    //   align: "center",
-    //   style: {
-    //     fontSize: "16px",
-    //     color: "#263238"
-    //   }
-    // }
+    }
   };
 };
 
@@ -298,8 +240,6 @@ export function getHockeyStickOptions() {
       },
       animations: {
         enabled: false
-        //   easing: "easeinout",
-        //   speed: 800
       }
     },
     title: {
@@ -382,7 +322,6 @@ export function getHockeyStickOptions() {
       title: {
         text: "Cys Order",
         style: {
-          // cssClass: "apexcharts-yaxis-label",
           fontSize: "15px",
           fontFamily: "Helvetica",
           fontWeight: 600
@@ -397,7 +336,6 @@ export function getHockeyStickOptions() {
       title: {
         text: "R-Values",
         style: {
-          // cssClass: "apexcharts-yaxis-label",
           fontSize: "15px",
           fontFamily: "Helvetica",
           fontWeight: 600

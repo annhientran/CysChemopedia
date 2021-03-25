@@ -77,22 +77,15 @@ class GeneAutocomplete extends Component {
     return (
       <Select
         value={this.state.value}
-        // defaultValue="gene"
-        // onChange={this.onChangeHandler}
         onSelect={this.onSubmitHandler}
         onSearch={this.onChangeHandler}
         onInputKeyDown={this.onKeyDown}
-        // filterOption={this.customFilterOption}
-        // filterSort={this.sorterByPos}
         onFocus={() => this.onFieldFocus(this.state.value)}
         onBlur={() => this.setState({ openBox: false })}
         open={this.state.openBox}
-        // optionFilterProp="label"
-        // optionLabelProp="children"
         placeholder={this.props.placeholderText}
         notFoundContent="No results found"
         filterOption={true}
-        // optionLabelProp="label"
         optionFilterProp="value"
         dropdownMenuStyle={{ maxHeight: 200, overflowX: "hidden" }}
         combobox
@@ -100,7 +93,6 @@ class GeneAutocomplete extends Component {
         showSearch
         showArrow
         allowClear
-        // {...this.props.customOptions}
       >
         {this.state.optionsList}
       </Select>
