@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/.pnp
+.pnp.js
 
 # testing
 /coverage
@@ -19,7 +21,14 @@
 .env.development.local
 .env.test.local
 .env.production.local
+src/processData/.venv
+.venv
 
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# files
+assets/data/**
+src/data/realdata/**
