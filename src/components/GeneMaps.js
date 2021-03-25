@@ -35,7 +35,7 @@ class GeneMaps extends Component {
     if (
       !_.isEqual(prevProps.gene, gene) &&
       !_.isEmpty(gene.fasta) &&
-      !_.isEmpty(gene.cell) && 
+      !_.isEmpty(gene.cell) &&
       !_.isEmpty(compounds)
     ) {
       const { cysCellData, cellLineList, rVals } = parseGeneData(
@@ -202,9 +202,7 @@ class GeneMaps extends Component {
                               : barChartOptions
                           }
                           series={
-                            this.state.rvalsSorted
-                              ? sortedBarChartSeries
-                              : barChartSeries
+                            rvalsSorted ? sortedBarChartSeries : barChartSeries
                           }
                           type="bar"
                           height="350"

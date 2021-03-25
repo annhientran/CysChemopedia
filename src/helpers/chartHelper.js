@@ -3,8 +3,8 @@ import _ from "lodash";
 const engagedValue = 1.5;
 
 export const barChartSortOptions = [
-  { label: "R-value", value: 1 },
-  { label: "Compound", value: 2 }
+  { label: "Compound", value: 1 },
+  { label: "R-value", value: 2 }
 ];
 
 export const getHeatmapOptions = (
