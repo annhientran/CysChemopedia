@@ -112,17 +112,19 @@ class HockeyStickChart extends Component {
               width="150"
               height="150"
             />
-            <CSVLink
-              data={csvData}
-              filename={`${this.props.compound}.csv`}
-              className="btn btn-primary"
-              target="_blank"
-            >
-              <IconLabel
-                awesomeIcon="download"
-                label={`Download ${this.props.compound} CSV`}
-              />
-            </CSVLink>
+            {csvData && !_.isEmpty(csvData) && (
+              <CSVLink
+                data={csvData}
+                filename={`${this.props.compound}.csv`}
+                className="btn btn-primary"
+                target="_blank"
+              >
+                <IconLabel
+                  awesomeIcon="download"
+                  label={`Download ${this.props.compound} CSV`}
+                />
+              </CSVLink>
+            )}
           </div>
         ) : null}
       </>

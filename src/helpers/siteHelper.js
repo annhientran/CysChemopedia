@@ -70,10 +70,17 @@ export function fetchCompoundList() {
 export function fetchHockeyStickData(label, cellData) {
   if (!label) return null;
 
-  if (label === hockeyStick1stTabText)
-    return { name: hockeyStick1stTabText, data: [[0, 0, "", ""]] };
+  const defaultForEmpty = {
+    name: hockeyStick1stTabText,
+    data: [[0, 0, "", ""]]
+  };
+
+  if (label === hockeyStick1stTabText) return defaultForEmpty;
 
   const NaNfiltered = _.reject(cellData, [[label], ""]);
+
+  if (_.isEmpty(NaNfiltered)) return defaultForEmpty;
+
   const sortedData = _.sortBy(NaNfiltered, [
     function (site) {
       return site[label];
