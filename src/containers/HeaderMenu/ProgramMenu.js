@@ -15,6 +15,7 @@ const ProgramMenu = () => {
             />
           }
           key={navItem.id}
+          alignRight
         >
           {navItem.content.map((el, i) => {
             return (
