@@ -127,7 +127,12 @@
   animation: spin 1s infinite linear;
 }
 
-.blinder {
+.blinds {
   opacity: 0.1;
+  pointer-events: none;
+}
+
+.half-blinds {
+  opacity: 0.5;
   pointer-events: none;
 }

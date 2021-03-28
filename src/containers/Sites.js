@@ -20,7 +20,7 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [searchCompound, setSearchCompound] = useState("");
 
   useEffect(() => {
-    setPreloader("Parsing human data");
+    setPreloader({ text: "Parsing human data", cssClass: "blinds" });
 
     site
       .fetchCompoundList()
@@ -30,6 +30,7 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
         setFastaData(prevFasta => ({ ...prevFasta, human: data.fasta }));
         setCellData(prevCell => ({ ...prevCell, human: data.cell }));
 
+        // set initial gene on heatmap and barchart to defaultGene
         setSearchGene({
           fasta: site.getGeneOnFasta(data.fasta, defaultGene),
           cell: site.getGeneOnCell(data.cell, defaultGene)
@@ -40,52 +41,25 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           human: site.getSearchTags(data.fasta, data.cell)
         }));
 
+        // set initial tab on hockey stick chart
         setSearchCompound(site.hockeyStick1stTabText);
       })
-      .then(() => setPreloader(""))
-      .catch(() => setPreloader(""));
+      .then(() =>
+        setPreloader({ text: "Parsing mouse data", cssClass: "half-blinds" })
+      )
+      .then(() => site.parseData("mouse"))
+      .then(data => {
+        setFastaData(prevFasta => ({ ...prevFasta, mouse: data.fasta }));
+        setCellData(prevCell => ({ ...prevCell, mouse: data.cell }));
+
+        setSearchTags(prevTags => ({
+          ...prevTags,
+          mouse: site.getSearchTags(data.fasta, data.cell)
+        }));
+      })
+      .then(() => setPreloader(null))
+      .catch(() => setPreloader(null));
   }, [setPreloader]);
-
-  useEffect(() => {
-    // switch to use toast noti for loading mouse data
-    if (preloader === "") {
-      const { hide } = toastNoti.loading("Parsing mouse data", {
-        hideAfter: 0,
-        position: "top-center"
-      });
-
-      site
-        .parseData("mouse")
-        .then(data => {
-          setFastaData(prevFasta => ({ ...prevFasta, mouse: data.fasta }));
-          setCellData(prevCell => ({ ...prevCell, mouse: data.cell }));
-
-          setSearchTags(prevTags => ({
-            ...prevTags,
-            mouse: site.getSearchTags(data.fasta, data.cell)
-          }));
-        })
-        .then(() => {
-          hide();
-          toastNoti.success("Mouse data is loaded", {
-            hideAfter: 3,
-            position: "top-center"
-          });
-          // }
-        })
-        .catch(() => {
-          hide();
-          toastNoti.error(
-            "Oops!!! Something's wrong. This is a job for super Z and Nhien-man.",
-            {
-              hideAfter: 5,
-              position: "top-center"
-            }
-          );
-          // }
-        });
-    }
-  }, [preloader]);
 
   const fetchGeneByEntry = entry => {
     const geneOnFasta = site.getGeneOnFasta(fastaData[type], entry);
@@ -113,9 +87,7 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
   return (
     <>
       {/* <SEO title="Sites" /> */}
-      <Row
-        className="center-block"
-      >
+      <Row className="center-block">
         <SiteSearchBar
           searchTags={searchTags[type]}
           searchType={type}

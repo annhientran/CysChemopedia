@@ -4,14 +4,14 @@ import "./style.css";
 import "styles/App.css";
 
 const Preloader = ({ content }) => {
-  if (!content) return null;
+  if (!content || !content.text) return null;
 
   return (
     <>
       <div id="fullPagePreloader" className="fullPageLoader">
         <div id="fullPagePreloader-circle" className="circleSpinner" />
         <div id="fullPagePreloader-label">
-          {content}
+          {content.text}
           <span className="dots" />
         </div>
       </div>
@@ -20,11 +20,11 @@ const Preloader = ({ content }) => {
 };
 
 Preloader.propTypes = {
-  content: PropTypes.string
+  content: PropTypes.object
 };
 
 Preloader.defaultProps = {
-  content: ""
+  content: null
 };
 
 Preloader.displayName = "Preloader";
