@@ -1,6 +1,10 @@
 import _ from "lodash";
 
 const engagedValue = 1.5;
+const isEngaged = 1;
+const isMapped = 0;
+
+export const isUnmapped = 2;
 
 export const barChartSortOptions = [
   { label: "Compound", value: 1 },
@@ -73,20 +77,20 @@ export const getHeatmapOptions = (
         colorScale: {
           ranges: [
             {
-              from: -30,
-              to: 0.5,
+              from: isUnmapped,
+              to: isUnmapped,
               name: "Unmapped Cysteine",
               color: "#D9D9D9" //"#d3d3d3"
             },
             {
-              from: 0.5,
-              to: 1.5,
+              from: isMapped,
+              to: isMapped,
               name: "Mapped Cysteine",
               color: "#909FF1" //"#203ee3"
             },
             {
-              from: 1.5,
-              to: 2.5,
+              from: isEngaged,
+              to: isEngaged,
               name: "Engaged Cysteine",
               color: "#FF7B7B" //"#FF0000"
             }
@@ -101,10 +105,9 @@ export const getHeatmapOptions = (
           value,
           { series, seriesIndex, dataPointIndex, w }
         ) {
-          if (value === 2) return "Engaged";
-          else if (value === 1) return "Mapped";
-          else if (value === 0) return "Unmaped";
-          else return null;
+          if (value === isEngaged) return "Engaged";
+          else if (value === isMapped) return "Mapped";
+          else return "Unmaped";
         }
       }
     },

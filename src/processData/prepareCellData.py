@@ -5,8 +5,9 @@ from datetime import datetime
 humanCell = 'src/data/realdata/HumanCellData'
 mouseCell = 'src/data/realdata/MouseCellData'
 compoundList = 'D:\\HurdIT\\CysChemopedia\\src\\data\\realdata\\Compounds.csv'
-engagedVal = 2
-mappedVal = 1
+engagedVal = 1.5
+isEngaged = 1
+isMapped = 0
 
 """
     Return the uniprot accession with isoform 
@@ -27,10 +28,10 @@ def getSiteCys(site):
 
 def checkEngaged(site, compoundPos):
     for pos in compoundPos:
-        if (site[pos] != 'NA' and float(site[pos]) >= 1.5):
-            return engagedVal
+        if (site[pos] != 'NA' and float(site[pos]) >= engagedVal):
+            return isEngaged
 
-    return mappedVal
+    return isMapped
 
 
 def getCompoundNames(type):
@@ -175,9 +176,10 @@ def createNewDatabase(filename, isHuman):
         # get Sequence C Positions from each Cysteine and add to row
         for row in csvreader:
             isEngaged = checkEngaged(row, compoundPos)
-            row.insert(fields.index('cell_line') + 1, isEngaged)
             row.insert(siteColPos + 1, getSiteCys(row[siteColPos]))
             row.insert(fields.index('uniprot_accession') + 1, getEntry(row[siteColPos]))
+
+            row.insert(fields.index('cell_line') + 1, isEngaged)
             rows.append(row)
 
         # get total number of rows

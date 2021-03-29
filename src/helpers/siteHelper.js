@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { csv } from "d3";
-
+import { isUnmapped } from "helpers/chartHelper";
 // ------------------ mockdata-------------------------
 // import FastaHumanCSV from "data/mockdata/HumanFasta.csv";
 // import CellHumanCSV from "data/mockdata/HumanCellData.csv";
@@ -91,7 +91,7 @@ export function fetchHockeyStickData(label, cellData) {
   sortedData.forEach((site, i) => {
     const compoundVal = site[label] ? parseFloat(site[label]).toFixed(2) : null;
 
-    if (compoundVal && filteredData[compoundVal] && site.engaged >= 2) {
+    if (compoundVal && filteredData[compoundVal] && site.engaged === 1) {
       filteredData[compoundVal].name += `, ${site.gene_symbol}`;
 
       if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
@@ -149,7 +149,7 @@ function setHeatMapBase(cysArr, cellLineList) {
     cysteineName = `C${parseInt(cys)}`;
 
     cellLineList.forEach(cellLine => {
-      cysData.push({ x: cellLine, y: 0 });
+      cysData.push({ x: cellLine, y: isUnmapped });
     });
 
     ret.push({

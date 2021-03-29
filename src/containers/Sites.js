@@ -118,6 +118,8 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
             "entry",
             "gene_symbol",
             "prot_description",
+            "motif",
+            "sequence",
             "cell_line",
             "engaged"
           ]}
