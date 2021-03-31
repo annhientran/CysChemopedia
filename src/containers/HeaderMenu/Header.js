@@ -17,7 +17,7 @@ const Header = () => {
       bsPrefix="navbar"
       className="justify-content-between navbar-horizontal navbar-expand-lg navbar-dark bg-primary p-0"
     >
-      <Navbar.Brand href="/"><Logo cssClass="button-right-offset navbar-brand navbar-brand-img" /></Navbar.Brand>
+      <Logo cssClass="button-right-offset navbar-brand navbar-brand-img" />
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
         bsPrefix="navbar-toggler"

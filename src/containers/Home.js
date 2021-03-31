@@ -5,7 +5,7 @@ import LogoImage from "containers/HeaderMenu/Logo";
 // import SEO from "../components/seo";
 
 const Home = () => (
-  <>
+  <React.StrictMode>
     {/* <SEO title="Home" /> */}
     <Row className="ml-5">
       <Col className="mt-5">
@@ -89,7 +89,7 @@ const Home = () => (
     </div>
     <Link to="/page-2/">Go to page 2</Link> <br />
     <Link to="/using-typescript/">Go to "Using TypeScript"</Link> */}
-  </>
+  </React.StrictMode>
 );
 
 export default Home;

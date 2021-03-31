@@ -19,14 +19,12 @@ const ProgramMenu = () => {
         >
           {navItem.content.map((el, i) => {
             return (
-              <NavDropdown.Item to={el.url} key={`${i}-${el.id}`}>
-                <Nav.Link eventKey={el.id}>
+              <NavDropdown.Item href={el.url} key={`${i}-${el.id}`}>
                   <IconLabel
                     awesomeIcon={el.awesomeIcon}
                     iconText={el.iconText}
                     label={el.title}
                   />
-                </Nav.Link>
               </NavDropdown.Item>
             );
           })}

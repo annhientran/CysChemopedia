@@ -98,33 +98,35 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           onSubmit={fetchGeneByEntry}
         />
       </Row>
-      <Row>
-        <GeneMaps
-          compounds={compoundLabels[type]}
-          gene={searchGene}
-          setHockeyStickCompound={setSearchCompound}
-        />
-      </Row>
-      <Row>
-        <HockeyStickChart
-          compound={searchCompound}
-          setCompound={setSearchCompound}
-          compoundData={compoundLabels[type]}
-          cellData={cellData[type]}
-          searchType={type}
-          colsInDownloadCSV={[
-            "site",
-            "cysteine",
-            "entry",
-            "gene_symbol",
-            "prot_description",
-            "motif",
-            "sequence",
-            "cell_line",
-            "engaged"
-          ]}
-        />
-      </Row>
+      <React.StrictMode>
+        <Row>
+          <GeneMaps
+            compounds={compoundLabels[type]}
+            gene={searchGene}
+            setHockeyStickCompound={setSearchCompound}
+          />
+        </Row>
+        <Row>
+          <HockeyStickChart
+            compound={searchCompound}
+            setCompound={setSearchCompound}
+            compoundData={compoundLabels[type]}
+            cellData={cellData[type]}
+            searchType={type}
+            colsInDownloadCSV={[
+              "site",
+              "cysteine",
+              "entry",
+              "gene_symbol",
+              "prot_description",
+              "motif",
+              "sequence",
+              "cell_line",
+              "engaged"
+            ]}
+          />
+        </Row>
+      </React.StrictMode>
     </>
   );
 };
