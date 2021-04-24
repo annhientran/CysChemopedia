@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 // import SEO from "components/seo";
-import toastNoti from "cogo-toast";
+import { notify } from "react-notify-toast";
 import SiteSearchBar from "components/SearchBar";
 import GeneMaps from "components/GeneMaps";
 import HockeyStickChart from "components/HockeyStickChart";
@@ -66,20 +66,19 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
     const geneOnCell = site.getGeneOnCell(cellData[type], entry);
 
     if (!geneOnCell)
-      toastNoti.error(
-        "The uniprot accession or gene symbol does not exist on cell data.",
-        {
-          hideAfter: 5,
-          position: "top-center"
-        }
+      notify.show(
+        <b>
+          The uniprot accession or gene symbol does not exist on cell data.
+        </b>,
+        "error",
+        5000
       );
     else if (!geneOnFasta)
-      toastNoti.warn(
-        "The uniprot accession or gene symbol has no mapped values",
-        {
-          hideAfter: 5,
-          position: "top-center"
-        }
+      notify.show(
+        <b>The uniprot accession or gene symbol has no mapped values.</b>,
+        "custom",
+        5000,
+        { background: "#FFCC00", text: "#000000" }
       );
     else setSearchGene({ fasta: geneOnFasta, cell: geneOnCell });
   };

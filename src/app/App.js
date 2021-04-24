@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "containers/HeaderMenu/Header";
 import Footer from "containers/Footer";
 import Routes from "app/Routes";
+import Notifications from "react-notify-toast";
 import Preloader from "components/Preloader/FullPagePreloader/index";
 import "styles/App.css";
 
@@ -12,6 +13,7 @@ const App = () => {
   return (
     <div className="app-body-cover">
       <Preloader content={loading} />
+      <Notifications /> 
       <div className={`app-body-cover ${blindsPreloader}`}>
         <Header />
         <div
