@@ -70,7 +70,7 @@ class GeneMaps extends Component {
       label: compoundLabels[i].name
     }));
     const filtered = labeledRvals.filter(e => e.R_Value);
-    const sorted = _.sortBy(filtered, e => e.R_Value);
+    const sorted = _.orderBy(filtered, ['R_Value'], ['desc']);
     const sortedR_Values = _.map(sorted, "R_Value");
     const sortedCompoundLabels = _.map(sorted, "label");
 
