@@ -119,7 +119,7 @@ export function getGeneOnFasta(fastaData, gene) {
   if (!gene || _.isEmpty(fastaData)) return null;
 
   const proteinOnFasta = fastaData.filter(
-    b => b.Entry === gene || b["Gene names (primary)"] === gene
+    b => b.Entry === gene
   );
 
   if (_.isEmpty(proteinOnFasta)) return null;
@@ -131,7 +131,7 @@ export function getGeneOnCell(cellData, gene) {
   if (!gene || _.isEmpty(cellData)) return null;
 
   const proteinOnCelltbl = cellData.filter(
-    b => b.entry === gene || b.gene_symbol === gene
+    b => b.entry === gene
   );
 
   if (_.isEmpty(proteinOnCelltbl)) return null;
@@ -194,7 +194,7 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
 
     if (existedCysPos >= 0 && cellLinePos >= 0) {
       cysCellData[existedCysPos].data[cellLinePos].y = parseInt(site.engaged);
-
+debugger;
       const val = compounds.map(label => {
         return site[label.name];
       });
@@ -219,10 +219,11 @@ export function getSearchTags(fastaData, cellData) {
     };
   });
   const cellTags = cellData.map(site => {
+    const gene = site.gene_symbol.toUpperCase();
     return {
       entry: site.entry,
-      geneSym: site.gene_symbol,
-      label: `${site.entry} — ${site.gene_symbol}`
+      geneSym: gene,
+      label: `${site.entry} — ${gene}`
     };
   });
   // temp solution to deal with empty value data
