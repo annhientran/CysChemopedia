@@ -194,7 +194,7 @@ export function parseGeneData(proteinOnFasta, proteinOnCell, compounds) {
 
     if (existedCysPos >= 0 && cellLinePos >= 0) {
       cysCellData[existedCysPos].data[cellLinePos].y = parseInt(site.engaged);
-debugger;
+
       const val = compounds.map(label => {
         return site[label.name];
       });

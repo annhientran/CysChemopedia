@@ -13,6 +13,8 @@ isMapped = 0
     Return the uniprot accession with isoform 
     extracted from site column
 """
+
+
 def getEntry(site):
     com = site.split("|")
     return com[1]
@@ -54,6 +56,26 @@ def getCompoundNames(type):
     return nameList
 
 
+def cleanNA(startPos, row):
+    for index in range(startPos, len(row)):
+        if (row[index] == 'NA'):
+            row[index] = ""
+
+
+def mergeDuplicates(startPos, row1, row2):
+    for index in range(startPos, len(row1)):
+        if(row1[index] != "" and row2[index] != "" and row2[index] != "NA"):
+            row1[index] = row2[index] if (
+                float(row1[index]) < float(row2[index])) else row1[index]
+            if(index != startPos):
+                print(
+                    "Overlapping R value found while merging duplicates of site name ", row1[0])
+        elif (row1[index] == "" and row2[index] != "" and row2[index] != "NA"):
+            row1[index] = row2[index]
+
+    return row1
+
+
 def writeToFile(dest, action, header, rows):
     now = datetime.now().strftime("%m-%d-%Y-%H%M%S")
 
@@ -62,7 +84,7 @@ def writeToFile(dest, action, header, rows):
         # creating a csv writer object
         csvwriter = csv.writer(csvfile)
 
-        # writing the fields
+        # writing the header
         if (header):
             csvwriter.writerow(header)
 
@@ -74,8 +96,8 @@ def writeToFile(dest, action, header, rows):
 
 def addToDatabase(filename, isHuman):
     rows = []
-    currfields = []
-    fields = []
+    currheader = []
+    header = []
     compoundNames = []
     compoundPos = []
     dest = ""
@@ -93,7 +115,7 @@ def addToDatabase(filename, isHuman):
         csvreader = csv.reader(csvfile)
 
         # extracting field names through first row
-        currfields = next(csvreader)
+        currheader = next(csvreader)
 
         print("Number of rows before adding: %d" % (csvreader.line_num - 1))
 
@@ -106,17 +128,17 @@ def addToDatabase(filename, isHuman):
         next(csvreader, None)
 
         for name in compoundNames:
-            compoundPos.append(fields.index(name))
+            compoundPos.append(header.index(name))
 
-        siteColPos = fields.index('site')
+        siteColPos = header.index('site')
 
         # extracting each data row one by one
         # get Sequence C Positions from each Cysteine and add to row
         for row in csvreader:
             isEngaged = checkEngaged(row, compoundPos)
-            row.insert(currfields.index('cysteine'),
+            row.insert(currheader.index('cysteine'),
                        getSiteCys(row[siteColPos]))
-            row.insert(currfields.index('engaged'), isEngaged)
+            row.insert(currheader.index('engaged'), isEngaged)
             rows.append(row)
 
         # get total number of rows
@@ -127,10 +149,10 @@ def addToDatabase(filename, isHuman):
 
 
 def createNewDatabase(filename, isHuman):
-    rows = []
-    fields = []
+    header = []
     compoundNames = []
     compoundPos = []
+    collection = {}
 
     if (isHuman):
         compoundNames = getCompoundNames("human")
@@ -145,48 +167,67 @@ def createNewDatabase(filename, isHuman):
         csvreader = csv.reader(csvfile)
 
         # extracting field names through first row
-        fields = next(csvreader)
+        header = next(csvreader)
 
-        # one client provided file had protein id instead of uniprot accession 
+        # one client provided file had protein id instead of uniprot accession
         # so need to produce uniprot accession col
-        # pid = fields.index('protein_id')
-        # fields.insert(pid, 'uniprot_accession')
+        # pid = header.index('protein_id')
+        # header.insert(pid, 'uniprot_accession')
         # for row in csvreader:
-            # s = row[pid].find('|') + 1
-            # e = row[pid].find('|', s)
-            # uniprot_accession = row[pid][s:e]
-            # row.insert(pid,uniprot_accession)
-            # rows.append(row)
+        # s = row[pid].find('|') + 1
+        # e = row[pid].find('|', s)
+        # uniprot_accession = row[pid][s:e]
+        # row.insert(pid,uniprot_accession)
+        # rows.append(row)
 
         for name in compoundNames:
-            compoundPos.append(fields.index(name))
+            compoundPos.append(header.index(name))
 
-        siteColPos= fields.index('site')
-        
-        # creating CYSTEINE column header next to SITE column
-        fields.insert(siteColPos + 1, 'cysteine')
+        siteColPos = header.index('site')
 
-        # creating ENTRY (canonical & isoform) column header next to UNIPROT_ACCESSION column
-        fields.insert(fields.index('uniprot_accession') + 1, 'entry')
-        
-        # creating ENGAGE column header next to CELL_LINE column
-        fields.insert(fields.index('cell_line') + 1, 'engaged')
+        # create CYSTEINE column header next to SITE column
+        header.insert(siteColPos + 1, 'cysteine')
 
-        # extracting each data row one by one
-        # get Sequence C Positions from each Cysteine and add to row
+        uniprotColPos = header.index('uniprot_accession')
+
+        # create ENTRY (canonical & isoform) column header next to UNIPROT_ACCESSION column
+        entryColPos = uniprotColPos + 1
+        header.insert(entryColPos, 'entry')
+
+        # delete UNIPROT_ACCESSION and ORGANISM columns
+        header.pop(uniprotColPos)
+        organismColPos = header.index('organism')
+        header.pop(organismColPos)
+
+        # create ENGAGE column header next to CELL_LINE column
+        engageColPos = header.index('cell_line') + 1
+        header.insert(engageColPos, 'engaged')
+
+        # extract each data row one by one
         for row in csvreader:
-            isEngaged = checkEngaged(row, compoundPos)
             row.insert(siteColPos + 1, getSiteCys(row[siteColPos]))
-            row.insert(fields.index('uniprot_accession') + 1, getEntry(row[siteColPos]))
+            row.insert(entryColPos, getEntry(row[siteColPos]))
+            row.pop(uniprotColPos)
+            row.pop(organismColPos)
 
-            row.insert(fields.index('cell_line') + 1, isEngaged)
-            rows.append(row)
+            isEngaged = checkEngaged(row, compoundPos)
+            row.insert(engageColPos, isEngaged)
+
+            site = row[siteColPos]
+            if site in collection:
+                modRow = mergeDuplicates(
+                    engageColPos, collection.get(site), row)
+                collection[site] = modRow
+            else:
+                cleanNA(engageColPos, row)
+                collection[site] = row
 
         # get total number of rows
         print("Total no. of rows in : %d" % (csvreader.line_num - 1))
 
+    rows = list(collection.values())
     file = humanCell if (isHuman) else mouseCell
-    writeToFile(file, 'w+', fields, rows)
+    writeToFile(file, 'w+', header, rows)
 
 
 def main():
