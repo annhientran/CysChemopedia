@@ -58,7 +58,7 @@ def getCompoundNames(type):
 
 def cleanNA(startPos, row):
     for index in range(startPos, len(row)):
-        if (row[index] == 'NA'):
+        if (row[index] == "NA" or row[index] == "inf"):
             row[index] = ""
 
 

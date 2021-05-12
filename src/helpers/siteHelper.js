@@ -83,7 +83,7 @@ export function fetchHockeyStickData(label, cellData) {
 
   const sortedData = _.sortBy(NaNfiltered, [
     function (site) {
-      return site[label];
+      return parseFloat(site[label]);
     }
   ]);
 
