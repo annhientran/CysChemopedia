@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { hockeyStick1stTabText } from "helpers/siteHelper";
 
 const engagedValue = 1.5;
 const isEngaged = 1;
@@ -229,7 +230,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
   };
 };
 
-export function getHockeyStickOptions() {
+export function getHockeyStickOptions(compoundName = "") {
   return {
     chart: {
       zoom: {
@@ -246,7 +247,10 @@ export function getHockeyStickOptions() {
       }
     },
     title: {
-      text: "Hockey Stick Chart",
+      text:
+        compoundName && compoundName !== hockeyStick1stTabText
+          ? `Hockey Stick Chart — ${compoundName}`
+          : "Hockey Stick Chart",
       align: "left",
       margin: 10,
       offsetX: 0,

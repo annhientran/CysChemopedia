@@ -38,6 +38,7 @@ class HockeyStickChart extends Component {
 
       this.setState({
         hockeyStickSeries: [series],
+        hockeyStickOptions: getHockeyStickOptions(compound),
         activeTab: String(seriesIndex + 1)
       });
     }
