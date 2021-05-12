@@ -2,6 +2,7 @@ import _ from "lodash";
 import React, { Component } from "react";
 import $ from "jquery";
 import {
+  Alert,
   Col,
   Row,
   Form,
@@ -14,6 +15,7 @@ import GeneInfo from "components/GeneInfo";
 import { parseGeneData } from "helpers/siteHelper";
 import * as chart from "helpers/chartHelper";
 import "styles/sites.css";
+import IconLabel from "./IconLabel";
 
 class GeneMaps extends Component {
   constructor(props) {
@@ -70,7 +72,7 @@ class GeneMaps extends Component {
       label: compoundLabels[i].name
     }));
     const filtered = labeledRvals.filter(e => e.R_Value);
-    const sorted = _.orderBy(filtered, ['R_Value'], ['desc']);
+    const sorted = _.orderBy(filtered, ["R_Value"], ["desc"]);
     const sortedR_Values = _.map(sorted, "R_Value");
     const sortedCompoundLabels = _.map(sorted, "label");
 
@@ -194,6 +196,11 @@ class GeneMaps extends Component {
                         <h2>Site Stoichiometry</h2>
                         <h3>Site: {this.state.cysNumber}</h3>
                       </div>
+                      <Alert key="bar-chart-direction" variant="info">
+                        <IconLabel awesomeIcon="info-circle" />
+                        Please click on the compound name to see its Hockey
+                        Stick plot
+                      </Alert>
                       <div className="barChartFrame">
                         <Chart
                           options={

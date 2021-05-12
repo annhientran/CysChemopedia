@@ -26,9 +26,6 @@ const Footer = () => {
       <script src="js/oximouse.js" type="text/javascript" />
       <script src="js/oximouse_analytics.js" type="text/javascript" />
       <script src="js/oximouse_general.js" type="text/javascript" />
-      {/* <script src="feature-viewer.nextprot.js"></script> */}
-      {/* <script src="assets/js/mouse_plots.js"></script>
-    <script src="assets/js/mouse_sites.js"></script> */}
     </footer>
   );
 };

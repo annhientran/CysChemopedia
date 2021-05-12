@@ -4,7 +4,6 @@ import Footer from "containers/Footer";
 import Routes from "app/Routes";
 import Notifications from "react-notify-toast";
 import Preloader from "components/Preloader/FullPagePreloader/index";
-import "styles/App.css";
 
 const App = () => {
   const [loading, setLoading] = useState(null);
