@@ -148,6 +148,7 @@ class HockeyStickChart extends Component {
       <>
         <Col className="d-flex justify-content-center align-items-center">
           <div
+            id="hockeyStickChart"
             className="card card-frame"
             style={{ height: "600px", width: "1200px" }}
           >

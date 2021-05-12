@@ -97,10 +97,19 @@ class GeneMaps extends Component {
     const { setHockeyStickCompound } = this.props;
     $(function () {
       $(".barchart-xlabel").each(function () {
-        let currId = $(this).attr("id");
-        let compound = $("#" + currId + " > title").text();
+        const currId = $(this).attr("id");
+        const compound = $("#" + currId + " > title").text();
 
         $("#" + currId).click(() => {
+          let offset = $(this).offset();
+
+          $("html, body").animate(
+            {
+              scrollTop: offset.top - 20,
+              scrollLeft: offset.left - 20
+            },
+            "1000"
+          );
           setHockeyStickCompound(compound);
         });
       });
