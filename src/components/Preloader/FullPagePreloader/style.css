@@ -1,0 +1,138 @@
+/* 
+  Just core preloader styling describes here
+
+  To extend styling for different projects you must
+  set rule for `fpl-loader` and `fpl-spinner` classes 
+  inside your project stylesheets (e.g. `App.css` file).
+*/
+
+#fullPagePreloader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  color: #5c6670;
+}
+
+/* low resolution, 480px and below */
+@media only screen and (max-width: 480px) {
+  #fullPagePreloader-circle {
+    margin: -38px 0 0 -38px;
+    border: 10px solid var(--gray);
+    border-radius: 50%;
+    border-top: 10px solid var(--primary);
+    width: 65px;
+    height: 65px;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+
+  #fullPagePreloader-label {
+    margin: 25px 0 0 -100px;
+    /* width: 100px; */
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+/* medium resolution, 481px to 1023px */
+@media only screen and (min-width: 481px) {
+  #fullPagePreloader-circle {
+    margin: -75px 0 0 -75px;
+    border: 8px solid var(--gray);
+    border-radius: 50%;
+    border-top: 8px solid var(--primary);
+    width: 80px;
+    height: 80px;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+
+  #fullPagePreloader-label {
+    margin: 35px 0 0 -110px;
+    /* width: 100px; */
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+/* high resolution, 1024px and higher */
+@media only screen and (min-width: 1024px) {
+  #fullPagePreloader-circle {
+    margin: -75px 0 0 -75px;
+    border: 5px solid var(--gray);
+    border-radius: 50%;
+    border-top: 5px solid var(--red);
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+  }
+
+  #fullPagePreloader-label {
+    margin: 35px 0 0 -110px;
+    /* width: 100px; */
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation for loading dots */
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+.dots::after {
+  content: "";
+  -webkit-animation: dots 1s linear infinite;
+  animation: dots 1s linear infinite;
+}
+/*** End dots animation ***/
+
+.Loaderlink .spinning.glyphicon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 1s infinite linear;
+}
+
+.blinds {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.half-blinds {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -1,0 +1,23 @@
+.divider {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.divider:after,
+.divider:before {
+  content: '';
+  display: block;
+  background: #ccc;
+  width: 50%;
+  height: 1px;
+}
+
+.divider:after {
+  margin-left: 15px;
+}
+
+.divider:before {
+  margin-right: 15px;
+}

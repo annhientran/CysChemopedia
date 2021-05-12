@@ -1,26 +1,55 @@
 {
-  "name": "oximouse",
-  "version": "1.0.0",
-  "type":"module",
-  "description": "Available at:\r https://oximouse.hms.harvard.edu/",
-  "main": "\u001b[D\u001b[Cindex.html",
-  "scripts": {
-    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nhientran210/oximouse.git"
-  },
-  "keywords": [
-    "oximouse"
-  ],
-  "author": "Zoey Le",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nhientran210/oximouse/issues"
-  },
-  "homepage": "https://github.com/nhientran210/oximouse#readme",
+  "name": "cyschemopedia",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "excel": "^1.0.1"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "apexcharts": "^3.25.0",
+    "chokidar": "^3.5.1",
+    "d3": "^6.5.0",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
+    "rc-select": "^8.4.4",
+    "rc-tabs": "^10.0.0",
+    "react": "^17.0.1",
+    "react-apexcharts": "^1.3.7",
+    "react-bootstrap": "^1.4.3",
+    "react-csv": "^2.0.3",
+    "react-d3": "^0.4.0",
+    "react-dom": "^17.0.1",
+    "react-notify-toast": "^0.5.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.2",
+    "serve": "^11.3.2",
+    "tippy.js": "^6.3.0",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start:prod": "serve -s build -l 3000",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
