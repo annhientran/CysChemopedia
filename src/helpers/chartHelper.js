@@ -7,6 +7,7 @@ const isMapped = 0;
 
 export const isUnmapped = 2;
 
+export const barChartDefaultWidth = 600;
 export const barChartSortOptions = [
   { label: "Compound", value: 1 },
   { label: "R-value", value: 2 }
@@ -126,23 +127,25 @@ export const getHeatmapOptions = (
       offsetY: 0,
       floating: false,
       style: {
-        fontSize: "16px",
-        color: "#263238"
+        fontSize: "20px",
+        fontFamily: "Helvetica",
+        fontWeight: "700",
+        color: "#32325d"
       }
     }
   };
 };
 
-export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
+export const getBarChartOptions = (site, compounds, linkXAxisLabelToHK) => {
   return {
     chart: {
       type: "bar",
       events: {
         mounted: function (chartContext, config) {
-          setXAxisLabelImages();
+          linkXAxisLabelToHK();
         },
         updated: function (chartContext, config) {
-          setXAxisLabelImages();
+          linkXAxisLabelToHK();
         }
       }
     },
@@ -162,9 +165,9 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       title: {
         text: "Compounds",
         style: {
-          fontSize: "15px",
-          fontFamily: "Source Sans Pro",
-          fontWeight: 900
+          fontSize: "16px",
+          fontFamily: "Helvetica",
+          fontWeight: 600
         }
       },
       labels: {
@@ -177,9 +180,9 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       title: {
         text: "R-values",
         style: {
-          fontSize: "15px",
-          fontFamily: "Source Sans Pro",
-          fontWeight: 900
+          fontSize: "16px",
+          fontFamily: "Helvetica",
+          fontWeight: 600
         }
       },
       labels: {
@@ -187,8 +190,10 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
           return val.toFixed(2);
         }
       },
-      tickAmount: 3,
-      max: 3
+      max: function (val) {
+        return val <= 3 ? 3 : val;
+      },
+      forceNiceScale: true
     },
     noData: {
       text: "No R values",
@@ -199,7 +204,7 @@ export const getBarChartOptions = (site, compounds, setXAxisLabelImages) => {
       style: {
         color: "black",
         fontSize: "20px",
-        fontFamily: "Source Sans Pro"
+        fontFamily: "Helvetica"
       }
     },
     annotations: {
@@ -257,8 +262,10 @@ export function getHockeyStickOptions(compoundName = "") {
       offsetY: 0,
       floating: false,
       style: {
-        fontSize: "16px",
-        color: "#263238"
+        fontSize: "20px",
+        fontFamily: "Helvetica",
+        fontWeight: "700",
+        color: "#32325d"
       }
     },
     dataLabels: {

@@ -60,7 +60,7 @@ class GeneMaps extends Component {
         barChartOptions: chart.getBarChartOptions(
           "none selected",
           _.map(compounds, "name"),
-          this.tooltipBarChartLabel
+          this.linkLabelToHKCompound
         )
       });
     }
@@ -82,18 +82,18 @@ class GeneMaps extends Component {
       barChartOptions: chart.getBarChartOptions(
         cysNumber,
         _.map(filtered, "label"),
-        this.tooltipBarChartLabel
+        this.linkLabelToHKCompound
       ),
       sortedBarChartSeries: [{ name: "R-values", data: sortedR_Values }],
       sortedBarChartOptions: chart.getBarChartOptions(
         cysNumber,
         sortedCompoundLabels,
-        this.tooltipBarChartLabel
+        this.linkLabelToHKCompound
       )
     });
   };
 
-  tooltipBarChartLabel = () => {
+  linkLabelToHKCompound = () => {
     const { setHockeyStickCompound } = this.props;
     $(function () {
       $(".barchart-xlabel").each(function () {
@@ -148,9 +148,9 @@ class GeneMaps extends Component {
     } = this.state;
 
     const barChartWidth =
-      barChartSeries && barChartSeries[0].data.length > 0
+      barChartSeries && barChartSeries[0].data.length > 0 && barChartSeries[0].data.length * 42 > chart.barChartDefaultWidth
         ? barChartSeries[0].data.length * 42
-        : "600";
+        : chart.barChartDefaultWidth;
 
     return (
       <>
