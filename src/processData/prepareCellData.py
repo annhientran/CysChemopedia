@@ -64,13 +64,12 @@ def cleanNA(startPos, row):
 
 def mergeDuplicates(startPos, row1, row2):
     for index in range(startPos, len(row1)):
-        if(row1[index] != "" and row2[index] != "" and row2[index] != "NA"):
+        if(row1[index] != "" and row2[index] != "" and row2[index] != "NA" and row2[index] != "inf"):
             row1[index] = row2[index] if (
                 float(row1[index]) < float(row2[index])) else row1[index]
-            if(index != startPos):
-                print(
-                    "Overlapping R value found while merging duplicates of site name ", row1[0])
-        elif (row1[index] == "" and row2[index] != "" and row2[index] != "NA"):
+            print(
+                "Overlapping R value found while merging duplicates of site name ", row1[0])
+        elif (row1[index] == "" and row2[index] != "" and row2[index] != "NA" and row2[index] != "inf"):
             row1[index] = row2[index]
 
     return row1
@@ -200,6 +199,7 @@ def createNewDatabase(filename, isHuman):
         header.pop(organismColPos)
 
         # create ENGAGE column header next to CELL_LINE column
+        cellLineColPos = header.index('cell_line')
         engageColPos = header.index('cell_line') + 1
         header.insert(engageColPos, 'engaged')
 
@@ -213,14 +213,14 @@ def createNewDatabase(filename, isHuman):
             isEngaged = checkEngaged(row, compoundPos)
             row.insert(engageColPos, isEngaged)
 
-            site = row[siteColPos]
-            if site in collection:
+            id = row[siteColPos]+"-"+row[cellLineColPos]
+            if id in collection:
                 modRow = mergeDuplicates(
-                    engageColPos, collection.get(site), row)
-                collection[site] = modRow
+                    engageColPos+1, collection.get(id), row)
+                collection[id] = modRow
             else:
                 cleanNA(engageColPos, row)
-                collection[site] = row
+                collection[id] = row
 
         # get total number of rows
         print("Total no. of rows in : %d" % (csvreader.line_num - 1))
