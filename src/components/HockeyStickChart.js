@@ -34,11 +34,15 @@ class HockeyStickChart extends Component {
 
     if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
       const seriesIndex = _.findIndex(compoundData, ["name", compound]);
-      const series = fetchHockeyStickData(compound, this.props.cellData);
+      const series =
+        seriesIndex === -1 && compound !== hockeyStick1stTabText
+          ? null
+          : fetchHockeyStickData(compound, this.props.cellData);
+      const lastPoint = series ? series.data[series.data.length - 1][0] : null;
 
       this.setState({
         hockeyStickSeries: [series],
-        hockeyStickOptions: getHockeyStickOptions(compound),
+        hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
         activeTab: String(seriesIndex + 1)
       });
     }
@@ -84,12 +88,8 @@ class HockeyStickChart extends Component {
   };
 
   renderTabContent = () => {
-    const {
-      activeTab,
-      hockeyStickSeries,
-      hockeyStickOptions,
-      csvData
-    } = this.state;
+    const { activeTab, hockeyStickSeries, hockeyStickOptions, csvData } =
+      this.state;
     const { compound } = this.props;
 
     return _.isNull(hockeyStickSeries) ? (

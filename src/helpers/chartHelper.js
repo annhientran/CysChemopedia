@@ -24,6 +24,7 @@ export const getHeatmapOptions = (
   const chartTitle = proteinOnFasta
     ? `Cys-Oxidation Stoichiometry: ${proteinOnFasta["Entry"]} — Gene: ${proteinOnFasta["Gene names (primary)"]}`
     : "";
+
   return {
     chart: {
       zoom: {
@@ -235,7 +236,9 @@ export const getBarChartOptions = (site, compounds, linkXAxisLabelToHK) => {
   };
 };
 
-export function getHockeyStickOptions(compoundName = "") {
+export function getHockeyStickOptions(compoundName = "", lastPt = 0) {
+  const XaxisMax = calculateXaxisMax(lastPt);
+
   return {
     chart: {
       zoom: {
@@ -248,7 +251,8 @@ export function getHockeyStickOptions(compoundName = "") {
         }
       },
       animations: {
-        enabled: false
+        enabled: true,
+        easing: "linear"
       }
     },
     title: {
@@ -336,28 +340,28 @@ export function getHockeyStickOptions(compoundName = "") {
       title: {
         text: "Cys Order",
         style: {
-          fontSize: "15px",
+          fontSize: "16px",
           fontFamily: "Helvetica",
           fontWeight: 600
         }
       },
-      tickAmount: 5,
+      tickAmount: XaxisMax / 5000,
       min: 0,
-      max: 25000,
+      max: XaxisMax,
       forceNiceScale: true
     },
     yaxis: {
       title: {
         text: "R-Values",
         style: {
-          fontSize: "15px",
+          fontSize: "16px",
           fontFamily: "Helvetica",
           fontWeight: 600
         }
       },
-      tickAmount: 8,
-      min: 0,
-      max: 9,
+      max: function (val) {
+        return val <= 9 ? 9 : val;
+      },
       forceNiceScale: true,
       labels: {
         formatter: function (val) {
@@ -380,4 +384,11 @@ const formatGeneString = (str, genePerLine) => {
         ? accumulator + ",<br />" + currentValue
         : accumulator + ", " + currentValue;
     }, "");
+};
+
+const calculateXaxisMax = lastPt => {
+  // round to multiple of 5000
+  if (lastPt < 25000) return 25000;
+
+  return Math.ceil(lastPt / 5000) * 5000;
 };

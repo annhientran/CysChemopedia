@@ -91,8 +91,9 @@ export function fetchHockeyStickData(label, cellData) {
   sortedData.forEach((site, i) => {
     const compoundVal = site[label] ? parseFloat(site[label]).toFixed(2) : null;
 
-    if (compoundVal && filteredData[compoundVal] && site.engaged === 1) {
+    if (compoundVal && filteredData[compoundVal] && site.engaged === "1") {
       filteredData[compoundVal].name += `, ${site.gene_symbol}`;
+      filteredData[compoundVal].index = i;
 
       if (filteredData[compoundVal].cysnumber.indexOf(site.cysteine) >= 0)
         filteredData[compoundVal].cysnumber += `, ${site.cysteine}`;
