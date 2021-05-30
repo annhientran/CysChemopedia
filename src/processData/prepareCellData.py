@@ -30,7 +30,7 @@ def getSiteCys(site):
 
 def checkEngaged(site, compoundPos):
     for pos in compoundPos:
-        if (site[pos] != 'NA' and float(site[pos]) >= engagedVal):
+        if (site[pos] != 'NA' and site[pos].strip() != '' and float(site[pos]) >= engagedVal):
             return isEngaged
 
     return isMapped
@@ -64,13 +64,13 @@ def cleanNA(startPos, row):
 
 def mergeDuplicates(startPos, row1, row2):
     for index in range(startPos, len(row1)):
-        if(row1[index] != "" and row2[index] != "" and row2[index] != "NA" and row2[index] != "inf"):
-            row1[index] = row2[index] if (
-                float(row1[index]) < float(row2[index])) else row1[index]
+        if(row1[index].strip() != "" and row2[index].strip() != "" and row2[index] != "NA" and row2[index] != "inf"):
+            row1[index] = row2[index].strip() if (
+                float(row1[index]) < float(row2[index])) else row1[index].strip()
             print(
                 "Overlapping R value found while merging duplicates of site name ", row1[0])
-        elif (row1[index] == "" and row2[index] != "" and row2[index] != "NA" and row2[index] != "inf"):
-            row1[index] = row2[index]
+        elif (row1[index].strip() == "" and row2[index].strip() != "" and row2[index] != "NA" and row2[index] != "inf"):
+            row1[index] = row2[index].strip()
 
     return row1
 

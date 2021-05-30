@@ -9,11 +9,7 @@ import Chart from "react-apexcharts";
 import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
 import CompoundImgTooltip from "components/CompoundImgTooltip";
-import {
-  getHockeyStickCSV,
-  fetchHockeyStickData,
-  hockeyStick1stTabText
-} from "helpers/siteHelper";
+import { getHockeyStickCSV, fetchHockeyStickData } from "helpers/siteHelper";
 import { getHockeyStickOptions } from "helpers/chartHelper";
 import "rc-tabs/assets/index.css";
 
@@ -24,73 +20,86 @@ class HockeyStickChart extends Component {
     this.state = {
       hockeyStickSeries: null,
       hockeyStickOptions: getHockeyStickOptions(),
-      activeTab: "0",
+      activeCellLine: "0",
       csvData: []
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const { cellData, colsInDownloadCSV, compoundData, compound } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      compoundIndex,
+      compound,
+      compoundCellLines,
+      cellData,
+      colsInDownloadCSV
+    } = this.props;
 
-    if (prevProps.compound !== compound && !_.isEmpty(compoundData)) {
-      const seriesIndex = _.findIndex(compoundData, ["name", compound]);
+    // select a compound tab
+    if (
+      !_.isEqual(prevProps.compoundCellLines, compoundCellLines) ||
+      !_.isEqual(prevProps.cellData, cellData)
+    ) {
+      const selectedCellLine = compoundCellLines[0];
+      const filteredCellData = !selectedCellLine
+        ? []
+        : _.filter(cellData, ["cell_line", selectedCellLine]);
+
       const series =
-        seriesIndex === -1 && compound !== hockeyStick1stTabText
-          ? null
-          : fetchHockeyStickData(compound, this.props.cellData);
+        compoundIndex === -1
+          ? null // return no series if unknown tab is passed in
+          : fetchHockeyStickData(compound, filteredCellData);
       const lastPoint = series ? series.data[series.data.length - 1][0] : null;
+      const csvData = series
+        ? getHockeyStickCSV(compound, filteredCellData, colsInDownloadCSV)
+        : [];
 
       this.setState({
         hockeyStickSeries: [series],
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
-        activeTab: String(seriesIndex + 1)
+        activeCellLine: "0",
+        csvData
+      });
+      // select a cell line tab of a compound tab
+    } else if (
+      prevState.activeCellLine !== this.state.activeCellLine &&
+      !_.isEmpty(cellData) &&
+      !_.isEmpty(compoundCellLines)
+    ) {
+      const selectedCellLine =
+        compoundCellLines[parseInt(this.state.activeCellLine)];
+      const filteredCellData = !selectedCellLine
+        ? []
+        : _.filter(cellData, ["cell_line", selectedCellLine]);
+      const series = fetchHockeyStickData(compound, filteredCellData);
+      const lastPoint = series ? series.data[series.data.length - 1][0] : null;
+      const csvData = series
+        ? getHockeyStickCSV(compound, filteredCellData, colsInDownloadCSV)
+        : [];
+
+      this.setState({
+        hockeyStickSeries: [series],
+        hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
+        csvData
       });
     }
-
-    if (
-      prevProps.compound !== compound &&
-      !_.isEmpty(cellData) &&
-      !_.isEmpty(compoundData)
-    ) {
-      const csv = getHockeyStickCSV(
-        this.state.activeTab,
-        cellData,
-        colsInDownloadCSV,
-        compound
-      );
-      this.setState({ csvData: csv });
-    }
   }
-
-  fetchCompound = label => {
-    this.setState({
-      hockeyStickSeries: fetchHockeyStickData(label, this.props.cellData)
-    });
-  };
 
   saveBar = bar => {
     this.bar = bar;
   };
 
   onTabChange = key => {
-    this.setState(
-      {
-        hockeyStickSeries: null,
-        activeTab: key
-      },
-      () => {
-        const keyInt = parseInt(key);
-
-        if (keyInt === 0) this.props.setCompound(hockeyStick1stTabText);
-        else this.props.setCompound(this.props.compoundData[keyInt - 1].name);
-      }
-    );
+    this.setState({
+      hockeyStickSeries: null,
+      activeCellLine: key
+    });
   };
 
   renderTabContent = () => {
-    const { activeTab, hockeyStickSeries, hockeyStickOptions, csvData } =
-      this.state;
-    const { compound } = this.props;
+    const { hockeyStickSeries, hockeyStickOptions, csvData } = this.state;
+    const { compound, compoundIndex, compoundCellLines } = this.props;
+    const selectedCellLine =
+      compoundCellLines[parseInt(this.state.activeCellLine)];
 
     return _.isNull(hockeyStickSeries) ? (
       <div className="card-body hockeyStickContent">
@@ -102,10 +111,10 @@ class HockeyStickChart extends Component {
           options={hockeyStickOptions}
           series={hockeyStickSeries}
           type="scatter"
-          height="480"
-          width="950"
+          height="430"
+          width="880"
         />
-        {hockeyStickSeries && parseInt(activeTab) !== 0 ? (
+        {hockeyStickSeries && parseInt(compoundIndex) !== 0 ? (
           <div style={{ float: "right" }}>
             <CompoundImgTooltip
               compound={compound}
@@ -116,13 +125,13 @@ class HockeyStickChart extends Component {
             {csvData && !_.isEmpty(csvData) && (
               <CSVLink
                 data={csvData}
-                filename={`${this.props.compound}.csv`}
+                filename={`${compound}-${selectedCellLine}.csv`}
                 className="btn btn-primary"
                 target="_blank"
               >
                 <IconLabel
                   awesomeIcon="download"
-                  label={`Download ${this.props.compound} CSV`}
+                  label={`Download ${compound} CSV`}
                 />
               </CSVLink>
             )}
@@ -133,15 +142,47 @@ class HockeyStickChart extends Component {
   };
 
   renderTabPane = () => {
-    return this.props.compoundData.map((compound, i) => {
-      return (
-        <TabPane tab={compound.name} key={i + 1} style={{ minHeight: 540 }}>
-          {parseInt(this.state.activeTab) !== i + 1
-            ? null
-            : this.renderTabContent()}
-        </TabPane>
-      );
-    });
+    return this.props.compoundCellLines.map((cellLine, i) => (
+      <TabPane tab={cellLine} key={i} style={{ Height: 540 }}>
+        {this.renderTabContent()}
+      </TabPane>
+    ));
+  };
+
+  renderView = () => {
+    return (
+      <>
+        {_.isEmpty(this.props.compoundCellLines) ? (
+          <div style={{ width: 950, height: 550 }}>
+            {this.renderTabContent()}
+          </div>
+        ) : (
+          <Tabs
+            activeKey={this.state.activeCellLine}
+            style={{ width: 900, height: 550 }}
+            tabBarPosition="bottom"
+            animated={false}
+            renderTabBar={() => (
+              <ScrollableInkTabBar
+                ref={this.saveBar}
+                onTabClick={this.onTabChange}
+                // nextIcon={<IconLabel awesomeIcon="caret-right" />}
+                // prevIcon={<IconLabel awesomeIcon="caret-left" />}
+              />
+            )}
+            renderTabContent={() => (
+              <TabContent
+                style={{ height: 500 }}
+                animated={false}
+                animatedWithMargin={false}
+              />
+            )}
+          >
+            {this.renderTabPane()}
+          </Tabs>
+        )}
+      </>
+    );
   };
 
   render() {
@@ -150,48 +191,15 @@ class HockeyStickChart extends Component {
         <Col className="d-flex justify-content-center align-items-center">
           <div
             id="hockeyStickChart"
-            className="card card-frame"
-            style={{ height: "600px", width: "1200px" }}
+            // className="card card-frame"
+            // style={{ height: "600px", width: "1200px" }}
           >
-            {_.isEmpty(this.props.compoundData) || !this.props.compound ? (
+            {!this.props.compoundCellLines || !this.props.compound ? (
               <div className="card-body hockeyStickContent">
                 <InlinePreloader />
               </div>
             ) : (
-              <div className="card-body">
-                <Tabs
-                  activeKey={this.state.activeTab}
-                  style={{ height: 550 }}
-                  tabBarPosition="left"
-                  animated={false}
-                  renderTabBar={() => (
-                    <ScrollableInkTabBar
-                      ref={this.saveBar}
-                      onTabClick={this.onTabChange}
-                      nextIcon={<IconLabel awesomeIcon="caret-down" />}
-                      prevIcon={<IconLabel awesomeIcon="caret-up" />}
-                    />
-                  )}
-                  renderTabContent={() => (
-                    <TabContent
-                      style={{ height: 550 }}
-                      animated={false}
-                      animatedWithMargin={false}
-                    />
-                  )}
-                >
-                  <TabPane
-                    tab={hockeyStick1stTabText}
-                    key={0}
-                    style={{ minHeight: 540 }}
-                  >
-                    {parseInt(this.state.activeTab) !== 0
-                      ? null
-                      : this.renderTabContent()}
-                  </TabPane>
-                  {this.renderTabPane()}
-                </Tabs>
-              </div>
+              <>{this.renderView()}</>
             )}
           </div>
         </Col>

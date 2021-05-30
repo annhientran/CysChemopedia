@@ -67,29 +67,29 @@ export function fetchCompoundList() {
   });
 }
 
-export function fetchHockeyStickData(label, cellData) {
-  if (!label) return null;
+export function fetchHockeyStickData(compoundLabel, cellData) {
+  if (!compoundLabel) return null;
 
   const defaultForEmpty = {
     name: hockeyStick1stTabText,
     data: [[0, 0, "", ""]]
   };
 
-  if (label === hockeyStick1stTabText) return defaultForEmpty;
+  if (compoundLabel === hockeyStick1stTabText) return defaultForEmpty;
 
-  const NaNfiltered = _.reject(cellData, [[label], ""]);
+  if (_.isEmpty(cellData)) return defaultForEmpty;
 
-  if (_.isEmpty(NaNfiltered)) return defaultForEmpty;
-
-  const sortedData = _.sortBy(NaNfiltered, [
+  const sortedData = _.sortBy(cellData, [
     function (site) {
-      return parseFloat(site[label]);
+      return parseFloat(site[compoundLabel]);
     }
   ]);
 
   let filteredData = {};
   sortedData.forEach((site, i) => {
-    const compoundVal = site[label] ? parseFloat(site[label]).toFixed(2) : null;
+    const compoundVal = site[compoundLabel]
+      ? parseFloat(site[compoundLabel]).toFixed(2)
+      : null;
 
     if (compoundVal && filteredData[compoundVal] && site.engaged === "1") {
       filteredData[compoundVal].name += `, ${site.gene_symbol}`;
@@ -106,22 +106,26 @@ export function fetchHockeyStickData(label, cellData) {
     }
   });
 
-  let seriesData = _.map(filteredData, (value, key) => [
+  const seriesData = _.map(filteredData, (value, key) => [
     value.index,
     parseFloat(key),
     value.name,
     value.cysnumber
   ]);
 
-  return { name: label, data: seriesData };
+  return { name: compoundLabel, data: seriesData };
+}
+
+export function fetchCompoundCellLines(compoundLabel, cellData) {
+  if (compoundLabel === hockeyStick1stTabText) return [];
+
+  return _.map(_.uniqBy(cellData, "cell_line"), "cell_line");
 }
 
 export function getGeneOnFasta(fastaData, gene) {
   if (!gene || _.isEmpty(fastaData)) return null;
 
-  const proteinOnFasta = fastaData.filter(
-    b => b.Entry === gene
-  );
+  const proteinOnFasta = fastaData.filter(b => b.Entry === gene);
 
   if (_.isEmpty(proteinOnFasta)) return null;
 
@@ -131,9 +135,7 @@ export function getGeneOnFasta(fastaData, gene) {
 export function getGeneOnCell(cellData, gene) {
   if (!gene || _.isEmpty(cellData)) return null;
 
-  const proteinOnCelltbl = cellData.filter(
-    b => b.entry === gene
-  );
+  const proteinOnCelltbl = cellData.filter(b => b.entry === gene);
 
   if (_.isEmpty(proteinOnCelltbl)) return null;
 
@@ -235,14 +237,12 @@ export function getSearchTags(fastaData, cellData) {
   return _.uniqBy(allTags, "label");
 }
 
-export function getHockeyStickCSV(activeTab, cellData, infoCols, compound) {
-  if (parseInt(activeTab) === 0) return [];
-
-  const NaNfiltered = _.reject(cellData, [[compound], ""]);
+export function getHockeyStickCSV(compound, cellData, infoCols) {
+  if (compound === hockeyStick1stTabText) return [];
 
   infoCols.push(compound);
 
-  return NaNfiltered.map(site => {
+  return cellData.map(site => {
     return _.pick(site, infoCols);
   });
 }

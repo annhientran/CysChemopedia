@@ -4,7 +4,7 @@ import { Row } from "react-bootstrap";
 import { notify } from "react-notify-toast";
 import SiteSearchBar from "components/SearchBar";
 import GeneMaps from "components/GeneMaps";
-import HockeyStickChart from "components/HockeyStickChart";
+import HockeyStickPanel from "components/HockeyStickPanel";
 import * as site from "helpers/siteHelper";
 import "styles/sites.css";
 
@@ -106,12 +106,11 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           />
         </Row>
         <Row>
-          <HockeyStickChart
+          <HockeyStickPanel
             compound={searchCompound}
             setCompound={setSearchCompound}
-            compoundData={compoundLabels[type]}
+            compoundList={compoundLabels[type]}
             cellData={cellData[type]}
-            searchType={type}
             colsInDownloadCSV={[
               "site",
               "cysteine",

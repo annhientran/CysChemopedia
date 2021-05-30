@@ -26,15 +26,6 @@ html {
   font-weight: 600;
 }
 /* Search bar */
-/* .input-group, .input-group-prepend {
-  padding: 0 10px;
-} */
- /* #searchBar {
-  padding: 45px;
-  max-width: 60vw;
-  margin: auto; 
-}*/
-
 .center-block {
   display: flex;
   align-items: center;
@@ -46,53 +37,6 @@ html {
   width: 100%;
   max-width: 850px;
 }
-/*
-#searchBarSelect::after {
-  content: "";
-  clear: both;
-  display: table;
-} */
-
-/* @media (max-width: 767px) {
-  .input-group,
-  #searchBarSelect {
-    padding: 0 10px;
-  }
-
-  #searchBarSelect {
-    padding-top: 40px;
-  }
-
-  #searchBarSelect li {
-    font-size: 22px;
-  }
-}
-
-#searchBarSelect {
-  float: left;
-  display: block;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 22px;
-  color: var(--gray);
-  list-style: none;
-  margin-bottom: 0;
-}
-
-#searchBarSelect:hover {
-  color: var(--gray-dark);
-}
-
-#searchBarSelect li {
-  display: inline-block;
-  padding: 20px;
-  cursor: pointer;
-}
-
-#searchBarSelect li.active {
-  color: var(--primary);
-  pointer-events: none;
-} */
 
 #searchBarSelect .btn-group-toggle .btn:nth-child(2) {
   border-radius: 0;
@@ -219,41 +163,6 @@ html {
 .barChart {
   padding: 30px 10px 20px 10px;
 }
-/* sort button on bar chart */
-/* .barChartSortWrapper {
-  display: table;
-  vertical-align: middle;
-  width: 100%;
-  border-collapse: separate;
-  z-index: 1;
-}
-
-.barChartText {
-  vertical-align: middle;
-  text-align: right;
-  display: table-cell;
-  padding: 0 10px;
-  width: 1%;
-  white-space: nowrap;
-}
-
-.barChartSort {
-  display: table-cell;
-}
-
-#barChartSortBtn {
-  width: 35%;
-  z-index: 2;
-}
-
-.barChartSortLabel {
-  border: 1px solid var(--primary);
-  display: inline-block;
-  padding: 5px;
-  position: relative;
-  text-align: center;
-  transition: background 600ms ease, color 600ms ease;
-} */
 
 .barChartFrame {
   min-width: 600px;
@@ -319,4 +228,13 @@ input[type="radio"].toggle:checked + label:after {
 .disabledSort {
   pointer-events: none;
   opacity: 0.4;
+}
+
+/* hockey stick chart */
+.hkChartFrame {
+  min-width: 950px;
+  max-width: 950px;
+  max-height: 550px;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
