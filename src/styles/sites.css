@@ -15,7 +15,8 @@ html {
   max-width: 33%;
 }
 
-.rc-tabs-tab-active, .rc-tabs-tab-active:hover {
+.rc-tabs-tab-active,
+.rc-tabs-tab-active:hover {
   color: var(--primary) !important;
   font-weight: 700 !important;
 }
@@ -228,6 +229,14 @@ input[type="radio"].toggle:checked + label:after {
 .disabledSort {
   pointer-events: none;
   opacity: 0.4;
+}
+
+.col-form-label {
+  font-weight: 700;
+}
+
+.hkChartFrame .row {
+  margin: auto 0;
 }
 
 /* hockey stick chart */

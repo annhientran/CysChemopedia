@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import Tabs, { TabPane } from "rc-tabs";
 import TabContent from "rc-tabs/lib/TabContent";
 import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
@@ -10,7 +10,10 @@ import IconLabel from "./IconLabel";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
 import CompoundImgTooltip from "components/CompoundImgTooltip";
 import { getHockeyStickCSV, fetchHockeyStickData } from "helpers/siteHelper";
-import { getHockeyStickOptions } from "helpers/chartHelper";
+import {
+  getHockeyStickOptions,
+  getPromiscuityScore
+} from "helpers/chartHelper";
 import "rc-tabs/assets/index.css";
 
 class HockeyStickChart extends Component {
@@ -57,7 +60,8 @@ class HockeyStickChart extends Component {
         hockeyStickSeries: [series],
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
         activeCellLine: "0",
-        csvData
+        csvData,
+        promiscuityScore: getPromiscuityScore(filteredCellData)
       });
       // select a cell line tab of a compound tab
     } else if (
@@ -79,7 +83,8 @@ class HockeyStickChart extends Component {
       this.setState({
         hockeyStickSeries: [series],
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
-        csvData
+        csvData,
+        promiscuityScore: getPromiscuityScore(filteredCellData)
       });
     }
   }
@@ -96,7 +101,8 @@ class HockeyStickChart extends Component {
   };
 
   renderTabContent = () => {
-    const { hockeyStickSeries, hockeyStickOptions, csvData } = this.state;
+    const { hockeyStickSeries, hockeyStickOptions, csvData, promiscuityScore } =
+      this.state;
     const { compound, compoundIndex, compoundCellLines } = this.props;
     const selectedCellLine =
       compoundCellLines[parseInt(this.state.activeCellLine)];
@@ -115,27 +121,36 @@ class HockeyStickChart extends Component {
           width="880"
         />
         {hockeyStickSeries && parseInt(compoundIndex) !== 0 ? (
-          <div style={{ float: "right" }}>
-            <CompoundImgTooltip
-              compound={compound}
-              placement="left"
-              width="150"
-              height="150"
-            />
-            {csvData && !_.isEmpty(csvData) && (
-              <CSVLink
-                data={csvData}
-                filename={`${compound}-${selectedCellLine}.csv`}
-                className="btn btn-primary"
-                target="_blank"
-              >
-                <IconLabel
-                  awesomeIcon="download"
-                  label={`Download ${compound} CSV`}
+          <Row>
+            <Col sm={3} md={3}>
+              <div class="col-form-label">
+                Promiscuity Score: {`${promiscuityScore}`}
+              </div>
+            </Col>
+            <Col sm={9} md={9}>
+              <div style={{ float: "right" }}>
+                <CompoundImgTooltip
+                  compound={compound}
+                  placement="left"
+                  width="150"
+                  height="150"
                 />
-              </CSVLink>
-            )}
-          </div>
+                {csvData && !_.isEmpty(csvData) && (
+                  <CSVLink
+                    data={csvData}
+                    filename={`${compound}-${selectedCellLine}.csv`}
+                    className="btn btn-primary"
+                    target="_blank"
+                  >
+                    <IconLabel
+                      awesomeIcon="download"
+                      label={`Download ${compound} CSV`}
+                    />
+                  </CSVLink>
+                )}
+              </div>
+            </Col>
+          </Row>
         ) : null}
       </>
     );

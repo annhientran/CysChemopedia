@@ -9,7 +9,7 @@ const Home = () => (
     {/* <SEO title="Home" /> */}
     <Row className="ml-5">
       <Col className="mt-5">
-        <h1 className="display-2">Welcome to OxiMouse!</h1>
+        <h1>Welcome to OxiMouse!</h1>
         <p className="mt-0 mb-5">
           Mammalian tissues engage in specialized physiology that is regulated
           through reversible modification of protein cysteine residues by

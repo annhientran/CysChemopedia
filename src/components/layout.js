@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 // import { withPrefix } from "gatsby";
 import Header from "components/Header/header";
 // import "./layout.css";
-import "styles/oximouse.css";
+// import "styles/oximouse.css";
 
 const Layout = ({ children }) => {
   // const data = useStaticQuery(graphql`
@@ -57,9 +57,9 @@ const Layout = ({ children }) => {
           Labs at HMS/DFCI.
         </p>
         {/* Oximouse JS --> */}
-        <script src="js/oximouse.js" type="text/javascript" />
+        {/* <script src="js/oximouse.js" type="text/javascript" />
         <script src="js/oximouse_analytics.js" type="text/javascript" />
-        <script src="js/oximouse_general.js" type="text/javascript" />
+        <script src="js/oximouse_general.js" type="text/javascript" /> */}
         {/* <script src="feature-viewer.nextprot.js"></script> */}
         {/* <script src="assets/js/mouse_plots.js"></script>
         <script src="assets/js/mouse_sites.js"></script> */}

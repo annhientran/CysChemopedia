@@ -148,7 +148,9 @@ class GeneMaps extends Component {
     } = this.state;
 
     const barChartWidth =
-      barChartSeries && barChartSeries[0].data.length > 0 && barChartSeries[0].data.length * 42 > chart.barChartDefaultWidth
+      barChartSeries &&
+      barChartSeries[0].data.length > 0 &&
+      barChartSeries[0].data.length * 42 > chart.barChartDefaultWidth
         ? barChartSeries[0].data.length * 42
         : chart.barChartDefaultWidth;
 
@@ -229,10 +231,14 @@ class GeneMaps extends Component {
                   </Row>
                   <Form.Group controlId="barChartSortRow">
                     <Form.Row>
-                      <Form.Label column lg={2}>
+                      <Form.Label column lg={2} className="col-form-label">
                         Sorted by:
                       </Form.Label>
-                      <Col sm={0} md={0}>
+                      <Col
+                        sm={0}
+                        md={0}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
                         <ToggleButtonGroup
                           type="radio"
                           name="barChartSortOptions"

@@ -392,3 +392,15 @@ const calculateXaxisMax = lastPt => {
 
   return Math.ceil(lastPt / 5000) * 5000;
 };
+
+export function getPromiscuityScore(cellData) {
+  if (!cellData) return 0;
+
+  const engagedSites = _.filter(cellData, [
+    "engaged",
+    String(isEngaged)
+  ]).length;
+  const totalSites = cellData.length;
+
+  return ((engagedSites * 100.0) / totalSites).toFixed(2);
+}

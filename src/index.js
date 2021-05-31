@@ -6,7 +6,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import "./index.css";
 import "styles/App.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "styles/oximouse.css";
 
 ReactDOM.render(
   <Router>

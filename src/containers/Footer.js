@@ -1,5 +1,4 @@
 import React from "react";
-import "styles/oximouse.css";
 
 const Footer = () => {
   return (
@@ -22,10 +21,6 @@ const Footer = () => {
         </a>{" "}
         Labs at HMS/DFCI.
       </p>
-      {/* Oximouse JS --> */}
-      <script src="js/oximouse.js" type="text/javascript" />
-      <script src="js/oximouse_analytics.js" type="text/javascript" />
-      <script src="js/oximouse_general.js" type="text/javascript" />
     </footer>
   );
 };

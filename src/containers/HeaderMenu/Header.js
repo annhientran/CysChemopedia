@@ -1,9 +1,7 @@
-// import { Link } from "gatsby";
 import React from "react";
 import { Navbar } from "react-bootstrap";
 import Logo from "containers/HeaderMenu/Logo";
 import ProgramMenu from "containers/HeaderMenu/ProgramMenu";
-import "styles/oximouse.css";
 
 const Header = () => {
   const expand = !(window.innerWidth < 1024);
