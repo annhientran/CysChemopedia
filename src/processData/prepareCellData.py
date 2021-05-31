@@ -60,10 +60,15 @@ def cleanNA(startPos, row):
     for index in range(startPos, len(row)):
         if (row[index] == "NA" or row[index] == "inf"):
             row[index] = ""
+        elif (str(row[index]).strip() != "" and float(row[index]) > 20):
+            row[index] = "20"
 
 
 def mergeDuplicates(startPos, row1, row2):
     for index in range(startPos, len(row1)):
+        if (row2[index] != "NA" and row2[index] != "inf" and str(row2[index]).strip() != "" and float(row2[index]) > 20):
+            row2[index] = "20"
+
         if(row1[index].strip() != "" and row2[index].strip() != "" and row2[index] != "NA" and row2[index] != "inf"):
             row1[index] = row2[index].strip() if (
                 float(row1[index]) < float(row2[index])) else row1[index].strip()
