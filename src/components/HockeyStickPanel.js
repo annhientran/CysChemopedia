@@ -51,30 +51,21 @@ class HockeyStickPanel extends Component {
   };
 
   onTabChange = key => {
-    this.setState(
-      {
-        activeCompound: key
-      },
-      // callback function
-      () => {
-        const keyInt = parseInt(key);
+    const keyInt = parseInt(key);
 
-        if (keyInt === 0) {
-          this.props.setCompound(hockeyStick1stTabText);
-        } else this.props.setCompound(this.props.compoundList[keyInt - 1].name);
-      }
-    );
+    if (keyInt === 0) {
+      this.props.setCompound(hockeyStick1stTabText);
+    } else this.props.setCompound(this.props.compoundList[keyInt - 1].name);
   };
 
   renderTabContent = () => {
-    const { activeCompound, filteredCellData, cellLineList } = this.state;
+    const { filteredCellData, cellLineList } = this.state;
     const { compound, colsInDownloadCSV } = this.props;
 
     return (
       <div class="hkChartFrame">
         <HockeyStickChart
           compound={compound}
-          compoundIndex={activeCompound}
           compoundCellLines={cellLineList}
           cellData={filteredCellData}
           colsInDownloadCSV={colsInDownloadCSV}

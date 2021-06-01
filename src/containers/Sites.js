@@ -17,7 +17,9 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [searchTags, setSearchTags] = useState({ human: [], mouse: [] });
   const [type, setType] = useState("human");
   const [searchGene, setSearchGene] = useState({ fasta: null, cell: null });
-  const [searchCompound, setSearchCompound] = useState("");
+  const [searchCompound, setSearchCompound] = useState(
+    site.hockeyStick1stTabText
+  );
 
   useEffect(() => {
     setPreloader({ text: "Parsing human data", cssClass: "blinds" });
@@ -40,9 +42,6 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           ...prevTags,
           human: site.getSearchTags(data.fasta, data.cell)
         }));
-
-        // set initial tab on hockey stick chart
-        setSearchCompound(site.hockeyStick1stTabText);
       })
       .then(() =>
         setPreloader({ text: "Parsing mouse data", cssClass: "half-blinds" })
