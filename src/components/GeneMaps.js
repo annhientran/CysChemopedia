@@ -12,10 +12,11 @@ import {
 import Chart from "react-apexcharts";
 import InlinePreloader from "components/Preloader/InlinePreloader/index";
 import GeneInfo from "components/GeneInfo";
+import IconLabel from "./IconLabel";
 import { parseGeneData } from "helpers/siteHelper";
 import * as chart from "helpers/chartHelper";
+
 import "styles/sites.css";
-import IconLabel from "./IconLabel";
 
 class GeneMaps extends Component {
   constructor(props) {
@@ -153,6 +154,10 @@ class GeneMaps extends Component {
       barChartSeries[0].data.length * 42 > chart.barChartDefaultWidth
         ? barChartSeries[0].data.length * 42
         : chart.barChartDefaultWidth;
+    const barSeries =
+      barChartSeries && barChartSeries[0].data.length > 0 && rvalsSorted
+        ? sortedBarChartSeries
+        : barChartSeries;
 
     return (
       <>
@@ -219,9 +224,7 @@ class GeneMaps extends Component {
                               ? sortedBarChartOptions
                               : barChartOptions
                           }
-                          series={
-                            rvalsSorted ? sortedBarChartSeries : barChartSeries
-                          }
+                          series={barSeries}
                           type="bar"
                           height="350"
                           width={barChartWidth}
