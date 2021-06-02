@@ -57,7 +57,7 @@ class HockeyStickChart extends Component {
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
         activeCellLine: "0",
         csvData,
-        promiscuityScore: getPromiscuityScore(filteredCellData)
+        promiscuityScore: getPromiscuityScore(compound, filteredCellData)
       });
 
       // select the "Select Compound" tab
@@ -103,7 +103,7 @@ class HockeyStickChart extends Component {
         hockeyStickSeries: [series],
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
         csvData,
-        promiscuityScore: getPromiscuityScore(filteredCellData)
+        promiscuityScore: getPromiscuityScore(compound, filteredCellData)
       });
     }
   }
@@ -142,14 +142,14 @@ class HockeyStickChart extends Component {
         />
         {hockeyStickSeries && compound !== hockeyStick1stTabText ? (
           <Row>
-            <Col sm={3} md={3}>
+            <Col sm={4} md={4}>
               {promiscuityScore && (
                 <div class="col-form-label">
                   Promiscuity Score: {`${promiscuityScore}`}
                 </div>
               )}
             </Col>
-            <Col sm={9} md={9}>
+            <Col sm={8} md={8}>
               <div style={{ float: "right" }}>
                 <CompoundImgTooltip
                   compound={compound}
@@ -166,7 +166,7 @@ class HockeyStickChart extends Component {
                   >
                     <IconLabel
                       awesomeIcon="download"
-                      label={`Download ${compound} CSV`}
+                      label={`Download CSV`}
                     />
                   </CSVLink>
                 )}

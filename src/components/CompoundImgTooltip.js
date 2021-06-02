@@ -23,7 +23,7 @@ const CompoundImgTooltip = ({ compound, placement, width, height }) => {
         <a href={`/images/${compound}.jpg`} download>
           <IconLabel
             awesomeIcon="file-image" //"sync"
-            label={`Download ${compound} Image`}
+            label={`Download Image`}
           />
         </a>
       </Button>

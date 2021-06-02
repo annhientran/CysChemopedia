@@ -2,6 +2,7 @@ import _ from "lodash";
 import { hockeyStick1stTabText } from "helpers/siteHelper";
 
 const engagedValue = 1.5;
+const promiscuityScoreLim = 2;
 const isEngaged = 1;
 const isMapped = 0;
 
@@ -393,14 +394,13 @@ const calculateXaxisMax = lastPt => {
   return Math.ceil(lastPt / 5000) * 5000;
 };
 
-export function getPromiscuityScore(cellData) {
-  if (!cellData) return 0;
+export function getPromiscuityScore(compoundLabel, cellData) {
+  if (!cellData || !compoundLabel) return "unknown";
 
-  const engagedSites = _.filter(cellData, [
-    "engaged",
-    String(isEngaged)
-  ]).length;
+  const engagedSites = _.filter(cellData, site => {
+    return parseFloat(site[compoundLabel]) >= promiscuityScoreLim;
+  }).length;
   const totalSites = cellData.length;
 
-  return ((engagedSites * 100.0) / totalSites).toFixed(2);
+  return ((engagedSites * 100.0) / totalSites).toFixed(4);
 }
