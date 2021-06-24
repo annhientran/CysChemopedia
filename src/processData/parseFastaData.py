@@ -10,8 +10,9 @@ import os
 from datetime import datetime
 from fasta2csv import converter
 
-humanFasta = 'D:\\HurdIT\\CysChemopedia\\src\\data\\HumanFasta.csv'
-mouseFasta = 'src/data/MouseFasta.csv'
+# humanFasta = 'D:\\HurdIT\\CysChemopedia\\src\\data\\HumanFasta.csv'
+humanFasta = 'src/data/realdata/HumanFasta.csv'
+mouseFasta = 'src/data/realdata/MouseFasta.csv'
 
 
 def cysSeqPositions(seq):
@@ -24,6 +25,21 @@ def cysSeqPositions(seq):
                 posArr.append(str(i+1))
 
         return ';'.join(posArr)
+
+def writeToFile(dest, action, header, rows):
+    now = datetime.now().strftime("%m-%d-%Y-%H%M%S")
+
+    # write to new empty csv file
+    with open(dest+"-"+now+".csv", action, newline='') as csvfile:
+        # creating a csv writer object
+        csvwriter = csv.writer(csvfile)
+
+        # writing the header
+        if (header):
+            csvwriter.writerow(header)
+
+        # writing the data rows
+        csvwriter.writerows(rows)
 
 
 # TODO: rework this sample function to fit the purpose
@@ -94,19 +110,20 @@ def createNewDatabase(filename, isHuman):
     # Convert fasta to csv
     seqs.pop(0)  # removing first (empty) item in seqs list i.e. fencepost
     
-    rows = [",".join(fields)+"\n"]
+    rows = []
     for seq in seqs:
         csv_line = ""
         for type in seq["seq_type_list"]:
             csv_line += (type + ",")
-        csv_line += (seq["sequence"] + ",")
-        csv_line += cysSeqPositions(seq["sequence"])
-        rows.append(csv_line+"\n")
+        seq["seq_type_list"].append(seq["sequence"])
+        seq["seq_type_list"].append(cysSeqPositions(seq["sequence"]))
+        rows.append(seq["seq_type_list"])
 
     # Output CSV file
-    file = open(fileDest, 'w')
-    file.writelines(rows)
-    file.close()
+    writeToFile(fileDest, 'w+', fields, rows)
+    # file = open(fileDest, 'w')
+    # file.writelines(rows)
+    # file.close()
 
 
 def main():
@@ -133,7 +150,8 @@ def main():
         elif event == "Add To Database":
             addToDatabase(values["-IN-"], values["-IN2-"])
             break
-
+        elif event == "Cancel":
+            break
 
 if __name__ == '__main__':
     main()
