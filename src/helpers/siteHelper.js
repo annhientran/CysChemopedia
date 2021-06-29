@@ -113,7 +113,9 @@ export function fetchHockeyStickData(compoundLabel, cellData) {
     value.cysnumber
   ]);
 
-  return { name: compoundLabel, data: seriesData };
+  return _.isEmpty(seriesData)
+    ? defaultForEmpty
+    : { name: compoundLabel, data: seriesData };
 }
 
 export function fetchCompoundCellLines(compoundLabel, cellData) {

@@ -185,7 +185,8 @@ def createNewDatabase(filename, isHuman):
         # rows.append(row)
 
         for name in compoundNames:
-            compoundPos.append(header.index(name))
+            if name in header:
+                compoundPos.append(header.index(name))
 
         siteColPos = header.index('site')
 

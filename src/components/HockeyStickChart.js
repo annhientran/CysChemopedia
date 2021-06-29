@@ -46,12 +46,13 @@ class HockeyStickChart extends Component {
       ]);
 
       const series = fetchHockeyStickData(compound, filteredCellData);
-      const lastPoint = series ? series.data[series.data.length - 1][0] : null;
+      const lastPoint = series.data[series.data.length - 1][0];
       const csvData = getHockeyStickCSV(
         compound,
         filteredCellData,
         colsInDownloadCSV
       );
+
       this.setState({
         hockeyStickSeries: [series],
         hockeyStickOptions: getHockeyStickOptions(compound, lastPoint),
@@ -94,10 +95,12 @@ class HockeyStickChart extends Component {
         selectedCellLine
       ]);
       const series = fetchHockeyStickData(compound, filteredCellData);
-      const lastPoint = series ? series.data[series.data.length - 1][0] : null;
-      const csvData = series
-        ? getHockeyStickCSV(compound, filteredCellData, colsInDownloadCSV)
-        : [];
+      const lastPoint = series.data[series.data.length - 1][0];
+      const csvData = getHockeyStickCSV(
+        compound,
+        filteredCellData,
+        colsInDownloadCSV
+      );
 
       this.setState({
         hockeyStickSeries: [series],
@@ -144,7 +147,7 @@ class HockeyStickChart extends Component {
           <Row>
             <Col sm={4} md={4}>
               {promiscuityScore && (
-                <div class="col-form-label">
+                <div className="col-form-label">
                   Promiscuity Score: {`${promiscuityScore}`}
                 </div>
               )}
@@ -164,10 +167,7 @@ class HockeyStickChart extends Component {
                     className="btn btn-primary"
                     target="_blank"
                   >
-                    <IconLabel
-                      awesomeIcon="download"
-                      label={`Download CSV`}
-                    />
+                    <IconLabel awesomeIcon="download" label={`Download CSV`} />
                   </CSVLink>
                 )}
               </div>

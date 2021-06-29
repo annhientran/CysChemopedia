@@ -7,11 +7,11 @@ import { typeOptions } from "helpers/siteHelper";
 
 const SearchBar = ({ searchTags, searchType, onSelectType, onSubmit }) => {
   const onFieldSubmit = enteredGene => {
-    const [entry, geneSym] = enteredGene.split("—");
+    const [entry, genesym] = enteredGene.split("—");
     const existingModel = _.find(searchTags, gene => {
       return (
         entry.trim().toUpperCase() === gene.entry.toUpperCase() &&
-        geneSym.trim().toUpperCase() === gene.geneSym.toUpperCase()
+        genesym.trim().toUpperCase() === gene.geneSym.toUpperCase()
       );
     });
 

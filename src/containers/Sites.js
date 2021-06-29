@@ -8,7 +8,7 @@ import HockeyStickPanel from "components/HockeyStickPanel";
 import * as site from "helpers/siteHelper";
 import "styles/sites.css";
 
-const defaultGene = "Q15910";
+const defaultGene = "Q15910-2";
 
 const Sites = ({ preloader = "Loading", setPreloader }) => {
   const [compoundLabels, setCompoundLabels] = useState({});
@@ -96,34 +96,32 @@ const Sites = ({ preloader = "Loading", setPreloader }) => {
           onSubmit={fetchGeneByEntry}
         />
       </Row>
-      <React.StrictMode>
-        <Row>
-          <GeneMaps
-            compounds={compoundLabels[type]}
-            gene={searchGene}
-            setHockeyStickCompound={setSearchCompound}
-          />
-        </Row>
-        <Row>
-          <HockeyStickPanel
-            compound={searchCompound}
-            setCompound={setSearchCompound}
-            compoundList={compoundLabels[type]}
-            cellData={cellData[type]}
-            colsInDownloadCSV={[
-              "site",
-              "cysteine",
-              "entry",
-              "gene_symbol",
-              "prot_description",
-              "motif",
-              "sequence",
-              "cell_line",
-              "engaged"
-            ]}
-          />
-        </Row>
-      </React.StrictMode>
+      <Row>
+        <GeneMaps
+          compounds={compoundLabels[type]}
+          gene={searchGene}
+          setHockeyStickCompound={setSearchCompound}
+        />
+      </Row>
+      <Row>
+        <HockeyStickPanel
+          compound={searchCompound}
+          setCompound={setSearchCompound}
+          compoundList={compoundLabels[type]}
+          cellData={cellData[type]}
+          colsInDownloadCSV={[
+            "site",
+            "cysteine",
+            "entry",
+            "gene_symbol",
+            "prot_description",
+            "motif",
+            "sequence",
+            "cell_line",
+            "engaged"
+          ]}
+        />
+      </Row>
     </>
   );
 };

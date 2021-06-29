@@ -17,7 +17,7 @@ class GeneAutocomplete extends Component {
 
     return options.map(type => {
       const { entry, label, geneSym } = type;
-      const params = { value: label, entry: entry, geneSym: geneSym };
+      const params = { value: label, entry: entry, genesym: geneSym };
 
       return <Option key={label} {...params}>{`Uniprot Accession: ${entry} — Gene: ${geneSym}`}</Option>;
     });

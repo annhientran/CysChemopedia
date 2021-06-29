@@ -63,7 +63,7 @@ class HockeyStickPanel extends Component {
     const { compound, colsInDownloadCSV } = this.props;
 
     return (
-      <div class="hkChartFrame">
+      <div className="hkChartFrame">
         <HockeyStickChart
           compound={compound}
           compoundCellLines={cellLineList}
