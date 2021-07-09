@@ -32,3 +32,4 @@ yarn-error.log*
 # files
 assets/data/**
 src/data/realdata/**
+src/data/mockdata/**

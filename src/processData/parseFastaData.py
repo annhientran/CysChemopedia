@@ -66,12 +66,10 @@ def addToDatabase(filename, isHuman):
         # get total number of rows
         print("Total no. of rows: %d" % (csvreader.line_num - 1))
 
-    file = humanFasta if (isHuman) else mouseFasta
+    fileDest = humanFasta if (isHuman) else mouseFasta
     
     # Output CSV file
-    file = open(fileDest, 'w')
-    file.writelines(rows)
-    file.close()
+    writeToFile(fileDest, 'w+', fields, rows)
 
 # TODO: optimize this process. especially the reading
 def createNewDatabase(filename, isHuman):
@@ -121,9 +119,6 @@ def createNewDatabase(filename, isHuman):
 
     # Output CSV file
     writeToFile(fileDest, 'w+', fields, rows)
-    # file = open(fileDest, 'w')
-    # file.writelines(rows)
-    # file.close()
 
 
 def main():
