@@ -1,6 +1,8 @@
 """
     Parse/convert FASTA files to csv files 
-    with added processed data columns to build database
+    with added processed data columns to build database.
+    Since FASTA file is retrieved from uniprot.org, it is 
+    better to create new database each time rather adding item row by row. 
 """
 
 import PySimpleGUI as sg
@@ -10,6 +12,7 @@ import os
 from datetime import datetime
 from fasta2csv import converter
 
+# file destination after processing
 # humanFasta = 'D:\\HurdIT\\CysChemopedia\\src\\data\\HumanFasta.csv'
 humanFasta = 'src/data/realdata/HumanFasta.csv'
 mouseFasta = 'src/data/realdata/MouseFasta.csv'
@@ -42,36 +45,6 @@ def writeToFile(dest, action, header, rows):
         csvwriter.writerows(rows)
 
 
-# TODO: rework this sample function to fit the purpose
-def addToDatabase(filename, isHuman):
-    rows = []
-    fields = []
-
-    # reading csv file
-    with open(filename, 'r') as csvfile:
-        # creating a csv reader object
-        csvreader = csv.reader(csvfile)
-
-        # extracting field names through first row
-        if fields:
-            fields = next(csvreader)
-        seqColPos = fields.index('Sequence')
-
-        # extracting each data row one by one
-        # get Sequence C Positions from each Cysteine and add to row
-        for row in csvreader:
-            row.append(cysSeqPositions(row[seqColPos]))
-            rows.append(row)
-
-        # get total number of rows
-        print("Total no. of rows: %d" % (csvreader.line_num - 1))
-
-    fileDest = humanFasta if (isHuman) else mouseFasta
-    
-    # Output CSV file
-    writeToFile(fileDest, 'w+', fields, rows)
-
-# TODO: optimize this process. especially the reading
 def createNewDatabase(filename, isHuman):
     fields = ["Entry", "Gene names (primary)",
               "Protein names", "Sequence", "Cysteine"]
@@ -106,7 +79,7 @@ def createNewDatabase(filename, isHuman):
     fasta.close()
 
     # Convert fasta to csv
-    seqs.pop(0)  # removing first (empty) item in seqs list i.e. fencepost
+    seqs.pop(0)  # removing first (empty) item in seqs list
     
     rows = []
     for seq in seqs:
